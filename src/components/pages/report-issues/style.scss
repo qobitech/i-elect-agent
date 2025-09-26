@@ -1,0 +1,22 @@
+.report-issue-item {
+	border: 1px solid #f0f0f0;
+	&.selected {
+		border: 1px solid green;
+		color: green;
+	}
+}
+
+.report-status {
+	border-radius: 50%;
+	width: 10px;
+	min-width: 10px;
+	height: 10px;
+	min-height: 10px;
+	background: gray;
+	&.Resolved {
+		background: green;
+	}
+	&.Unresolved {
+		background: red;
+	}
+}

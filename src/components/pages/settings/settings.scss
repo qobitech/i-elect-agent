@@ -1,0 +1,44 @@
+.settings-container {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	border: 1px solid #e5e5e5;
+	padding: 20px 20px 10px;
+	border-radius: 8px;
+
+	&_menuitem {
+		border-bottom: 1px solid #e5e5e5;
+		padding: 5px 0 15px;
+		display: flex;
+		align-items: center;
+		gap: 25px;
+		cursor: pointer;
+
+		&:last-child {
+			border-bottom: none;
+		}
+
+		h5 {
+			font-size: 15px;
+			margin: 0;
+		}
+
+		p {
+			font-size: 12px;
+			margin: 0;
+			color: #8d8d8d;
+		}
+
+		svg {
+			flex-shrink: 0;
+			margin-left: auto;
+		}
+	}
+}
+
+.page-header {
+	margin-bottom: 15px;
+	h2 {
+		font-size: 20px;
+	}
+}

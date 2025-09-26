@@ -1,0 +1,13 @@
+@import '../../../assets/style/variables.scss';
+
+.header-wrapper {
+	display: flex;
+	padding: 15px;
+	align-items: center;
+	z-index: 4;
+	background: #ffffff;
+	border-bottom: 1px solid #eaeaea;
+	width: 100%;
+	top: 0;
+	left: 0;
+}

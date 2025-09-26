@@ -1,0 +1,63 @@
+@import '../../../../assets/style/variables.scss';
+
+.page-container {
+	display: flex;
+	height: 100vh;
+}
+
+.section-container {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	@media (max-width: $md-breakpoint) {
+		width: 100%;
+	}
+}
+
+.image-section-container {
+	display: block;
+	width: 50%;
+	height: 100%;
+	@media (max-width: $md-breakpoint) {
+		display: none;
+	}
+}
+
+.image-section {
+	width: 100%;
+	background-image: url('../../../../assets/images/pexels-element5-1550337.jpg');
+	background-color: #e7e7e7;
+	height: 100%;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.login-form {
+	max-width: 90%;
+	width: 450px;
+	margin: 0 auto;
+	margin-top: 50px;
+	@media (max-width: $md-breakpoint) {
+		margin-top: 0px;
+	}
+}
+
+.logo-section {
+	max-width: 215px;
+	width: 80%;
+	margin: 0 auto;
+	margin-top: 40px;
+}
+
+.status-section {
+	text-align: center;
+	height: 20px;
+	margin-bottom: 10px;
+}
+
+.status-error-text {
+	color: red;
+	font-size: 14px;
+	margin: 0px;
+}

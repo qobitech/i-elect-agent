@@ -1,0 +1,59 @@
+// @import "../../../assets/style/theme-variables.scss";
+
+.type-input-search {
+	position: relative;
+	input {
+		width: 100%;
+		height: 3.125rem;
+		background: none;
+		border: 1px solid #a1a1a1;
+		border-radius: 0.1875rem;
+		padding: 0 1.24rem;
+		box-shadow: none;
+		box-sizing: border-box;
+		outline: none;
+		font-size: 16px;
+		&::placeholder {
+			color: #a1a1a1;
+			font-size: 0.8125rem;
+			font-style: normal;
+			font-weight: 300;
+			line-height: normal;
+		}
+		&:focus {
+			&.is-error {
+				border: 1px solid #f56e9d;
+			}
+		}
+		&.is-error {
+			border: 1px solid #f56e9d;
+			margin-bottom: 0.81rem;
+		}
+		&.isonlyview {
+			padding-left: 0;
+			border: none;
+		}
+	}
+	.search-container {
+		position: absolute;
+		top: 104%;
+		left: 0;
+		right: 0;
+		border: 1px solid #ccc;
+		background-color: #fff;
+		list-style: none;
+		margin: 0;
+		padding: 8px 0;
+		max-height: 200px;
+		overflow-y: auto;
+		z-index: 1000;
+		li {
+			padding: 8px 16px;
+			cursor: pointer;
+			&:hover {
+				background: #f1f1f1;
+				transition: 0.2s ease;
+			}
+		}
+	}
+}
