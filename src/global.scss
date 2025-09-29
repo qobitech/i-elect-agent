@@ -327,18 +327,49 @@ label {
 	box-sizing: border-box;
 	padding: 40px 0;
 
-	h1 {
-		font-size: 32px;
-		color: #131313;
-		margin: 0 0 13px;
-		padding: 0;
+	&_logo-container {
+		display: flex;
+		img {
+			margin: auto;
+			width: 150px;
+		}
 	}
 
-	p {
-		font-size: 14px;
-		color: #5b5b5b;
-		padding: 0;
-		margin: 0 0 35px;
+	&_header {
+		text-align: center;
+
+		h1 {
+			font-size: 28px;
+			color: #131313;
+			margin: 0 0 13px;
+			padding: 0;
+		}
+
+		p {
+			font-size: 14px;
+			color: #5b5b5b;
+			padding: 0;
+			margin: 0 0 35px;
+		}
+	}
+
+	&_error {
+		display: flex;
+		justify-content: center;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+
+		h1 {
+			font-size: 28px;
+			color: #131313;
+			margin: 0 0 13px;
+			padding: 0;
+		}
+
+		button {
+			margin: auto;
+		}
 	}
 }
 

@@ -132,7 +132,7 @@ export const candidateType = generateActionTypes([
 	'delete_Candidate',
 ]);
 
-export const volunteerType = generateActionTypes(['create_Volunteer']);
+export const volunteerType = generateActionTypes(['create_Volunteer', 'verify_Volunteer_Onboarding', 'onboard_Volunteer']);
 
 export const collationOfficerType = generateActionTypes([
 	'create_CollationOfficer',

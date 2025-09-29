@@ -34,3 +34,45 @@ export const create_Volunteer = ({
 		onSuccess,
 		auth: true,
 	});
+
+export const verify_Volunteer_Onboarding = ({
+	token,
+	onFailure,
+	onSuccess,
+}: IResponse & {
+	token: string;
+}) =>
+	utils.httpPostMethod({
+		apiData: {
+			url: `/api/v1/Volunteer/verify-token/${token}`,
+			header: utils.header(),
+		},
+		actionType: volunteerType.verify_Volunteer_Onboarding,
+		onFailure,
+		onSuccess,
+		auth: true,
+	});
+
+export const onboard_Volunteer = ({
+	data,
+	onFailure,
+	onSuccess,
+}: IResponse & {
+	data: {
+		volunteerId: number;
+		accountName: string;
+		accountNumber: string;
+		bankName: string;
+	};
+}) =>
+	utils.httpPostMethod({
+		apiData: {
+			url: '/api/v1/Auth/agent-onboarding',
+			header: utils.header(),
+			data,
+		},
+		actionType: volunteerType.onboard_Volunteer,
+		onFailure,
+		onSuccess,
+		auth: true,
+	});

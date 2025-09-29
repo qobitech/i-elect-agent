@@ -9,4 +9,23 @@ export interface IVolunteerAction {
 	}: IResponse & {
 		data: ICreateVolunteer;
 	}) => (dispatch: any) => void;
+	verify_Volunteer_Onboarding: ({
+		token,
+		onFailure,
+		onSuccess,
+	}: IResponse & {
+		token: string;
+	}) => (dispatch: any) => Promise<void>;
+	onboard_Volunteer: ({
+		data,
+		onFailure,
+		onSuccess,
+	}: IResponse & {
+		data: {
+			volunteerId: number;
+			accountName: string;
+			accountNumber: string;
+			bankName: string;
+		};
+	}) => (dispatch: any) => Promise<void>;
 }

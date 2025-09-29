@@ -9,8 +9,18 @@ import type { IInputSearchProps, IInputSearchResult } from '../input-search-new/
 import OTPInput from '../otp';
 import { TypeSelect } from '../select';
 import { TypeTextArea } from '../text-area';
+import { MediaUploadComponent } from '../upload-document';
 
-export type typecomponent = 'input' | 'input-search' | 'select' | 'text-area' | 'radio' | 'check-box' | 'password' | 'otp';
+export type typecomponent =
+	| 'input'
+	| 'input-search'
+	| 'select'
+	| 'text-area'
+	| 'radio'
+	| 'check-box'
+	| 'password'
+	| 'otp'
+	| 'file';
 
 interface ISelectOptions {
 	id: number;
@@ -122,6 +132,21 @@ const FormBuilder = <T extends FieldValues>({ formComponent, hookForm, min }: IF
 						minComponent={min}
 					/>
 				)}
+
+				{i.component === 'file' && (
+					<div>
+						<label>{i.label}</label>
+						<MediaUploadComponent
+							title=''
+							fileName=''
+							setMediaFile={(file) => {
+								hookForm.setValue(i.id as Path<T>, file as any);
+							}}
+							loadedFile={hookForm.watch(i.id as Path<T>)}
+						/>
+					</div>
+				)}
+
 				{i.component === 'input-search' && (
 					<TypeInputSearch
 						{...hookForm.register(i.id as Path<T>)}
