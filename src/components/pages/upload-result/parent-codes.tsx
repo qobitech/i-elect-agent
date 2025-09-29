@@ -81,6 +81,8 @@ const ParentCodesStage = () => {
 				req.states = getCode('EC8D');
 				return actions?.get_IRevStateDataModel;
 			}
+
+			return undefined;
 		};
 		getFunc?.()?.({ paged: true, data: req, onSuccess, onFailure });
 	};
