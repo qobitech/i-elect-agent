@@ -59,13 +59,11 @@ const LoginOTPPage: React.FC<ILoginPageChild> = () => {
 
 	return (
 		<div className='page-container'>
-			{/* <div className="image-section-container">
-        <div className="image-section" />
-      </div> */}
 			<div className='section-container text-center'>
 				<form
 					onSubmit={hookForm.handleSubmit(onLogin)}
 					className='login-form f-column-33 w-100'
+					style={{maxWidth: "600px"}}
 				>
 					<img
 						className='logo-section'
