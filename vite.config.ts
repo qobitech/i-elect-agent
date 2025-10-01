@@ -17,7 +17,7 @@ export default defineConfig(({ mode }) => {
 
 	const devServerOptions: Partial<ServerOptions> = {
 		host: 'ielect.agent.local',
-		port: 3000,
+		port: 3001,
 		strictPort: true,
 		https: {
 			cert: './.cert/cert.pem',
