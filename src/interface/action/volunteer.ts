@@ -1,3 +1,5 @@
+import { type IVolunteerResponse } from '@interface/state/IVolunteer';
+
 import type { IResponse } from '../../store/actions/core/election';
 import type { ICreateVolunteer } from '../../store/actions/core/volunteer';
 
@@ -13,7 +15,7 @@ export interface IVolunteerAction {
 		token,
 		onFailure,
 		onSuccess,
-	}: IResponse & {
+	}: IResponse<IVolunteerResponse> & {
 		token: string;
 	}) => (dispatch: any) => Promise<void>;
 	onboard_Volunteer: ({

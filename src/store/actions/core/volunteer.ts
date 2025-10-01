@@ -1,3 +1,5 @@
+import { type IVolunteerResponse } from '@interface/state/IVolunteer';
+
 import { volunteerType } from '../../types';
 import * as utils from '../utils';
 import type { IResponse } from './election';
@@ -39,7 +41,7 @@ export const verify_Volunteer_Onboarding = ({
 	token,
 	onFailure,
 	onSuccess,
-}: IResponse & {
+}: IResponse<IVolunteerResponse> & {
 	token: string;
 }) =>
 	utils.httpPostMethod({

@@ -137,6 +137,10 @@ export const ISSESSION = () =>
 
 export const ISADMINLOGGED = () => !!getUserData().user?.UserId;
 
+// export const COREAPI = 'https://core-ielect.ngrok.app';
+// export const COMMANDAPI = 'https://command-ielect.ngrok.app';
+// export const QUERYAPI = 'https://query-ielect.ngrok.app';
+// export const EXTRACTAPI = 'https://erms-ocr.ngrok.app';
 export const COREAPI = process.env.REACT_APP_BASE_CORE;
 export const COMMANDAPI = process.env.REACT_APP_BASE_COMMAND;
 export const QUERYAPI = process.env.REACT_APP_BASE_QUERY;

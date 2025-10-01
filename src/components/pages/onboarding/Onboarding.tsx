@@ -6,9 +6,9 @@ import { useGlobalContext } from '../../../context/global';
 import { useQuery } from '../../../hooks/useQuery';
 import { TypeButton } from '../../utils/button';
 import FormBuilder, { type IFormComponent } from '../../utils/form-builder';
-import { useFormHook } from '../../utils/hooks';
+import { HvcLoad, useFormHook } from '../../utils/hooks';
 import { AlertSVG, PulseSVG } from '../../utils/svgs';
-import { type IOnboardingHK, onboardingSchema } from './Onboarding.helpers';
+import { type IOnboardingHK, nigerianBanks, onboardingSchema } from './Onboarding.helpers';
 
 const Onboarding = () => {
 	const navigate = useNavigate();
@@ -16,6 +16,8 @@ const Onboarding = () => {
 	const [error, setError] = useState<string>('');
 	const queries = useQuery();
 	const { states, actions } = useGlobalContext();
+
+	const [success, setSuccess] = useState<boolean>(false);
 
 	const [hookForm] = useFormHook<IOnboardingHK>(onboardingSchema);
 
@@ -33,7 +35,13 @@ const Onboarding = () => {
 		{
 			id: 'bankName',
 			label: 'Bank Name',
-			component: 'input',
+			component: 'select',
+			initOptions: { id: 1, label: 'Select Bank', value: '' },
+			optionData: nigerianBanks.map((i, index) => ({
+				id: index,
+				label: i,
+				value: i,
+			})),
 		},
 		{
 			id: 'tandc',
@@ -62,12 +70,16 @@ const Onboarding = () => {
 	}, []);
 
 	const onSubmit = (data: IOnboardingHK) => {
+		const dataRes = states?._volunteer?.verify_Volunteer_Onboarding?.data;
 		actions?.onboard_Volunteer({
 			data: {
-				volunteerId: 0,
+				volunteerId: dataRes?.id ?? 0,
 				accountName: data.accountName ?? '',
 				accountNumber: data.accountNumber ?? '',
 				bankName: data.bankName ?? '',
+			},
+			onSuccess: () => {
+				setSuccess(true);
 			},
 		});
 	};
@@ -93,36 +105,57 @@ const Onboarding = () => {
 		);
 
 	return (
-		<div className='onboarding-form-container'>
-			<div className='box-shadow p-5 f-column-33 onboarding-form'>
-				<div className='onboarding-form-container_logo-container'>
-					<img
-						className='logo-section'
-						src={logo}
-					/>
-				</div>
-				<div className='onboarding-form-container_header'>
-					<h1>Complete your onboarding</h1>
-					<p>
-						Submit your personal details to verify your identity and finalize your registration as an election agent. Your
-						information is kept secure and confidential.
-					</p>
-				</div>
+		<>
+			<HvcLoad
+				view={!success}
+				className='onboarding-form-container'
+			>
+				<div className='box-shadow p-5 f-column-33 onboarding-form'>
+					<div className='onboarding-form-container_logo-container'>
+						<img
+							className='logo-section'
+							src={logo}
+						/>
+					</div>
+					<div className='onboarding-form-container_header'>
+						<h1>{success ? 'Onboarding Complete' : 'Complete your onboarding'}</h1>
+						{!success && (
+							<p>
+								Submit your personal details to verify your identity and finalize your registration as an election agent. Your
+								information is kept secure and confidential.
+							</p>
+						)}
+					</div>
 
-				<form
-					className='grid-wrapper-100 gap-33'
-					onSubmit={hookForm.handleSubmit(onSubmit)}
-				>
-					<FormBuilder
-						formComponent={fc}
-						hookForm={hookForm}
-						min
-					/>
-				</form>
-
-				<TypeButton title='Submit' />
-			</div>
-		</div>
+					{!success ? (
+						<>
+							<form
+								className='grid-wrapper-100 gap-33'
+								onSubmit={(e) => e.preventDefault()}
+							>
+								<FormBuilder
+									formComponent={fc}
+									hookForm={hookForm}
+									min
+								/>
+							</form>
+							{!success ? (
+								<TypeButton
+									title='Submit'
+									load={states?._volunteer?.verify_Volunteer_OnboardingLoading}
+									onClick={hookForm.handleSubmit(onSubmit)}
+								/>
+							) : (
+								<TypeButton
+									title='Login'
+									onClick={() => navigate('/login')}
+								/>
+							)}
+						</>
+					) : null}
+				</div>
+			</HvcLoad>
+		</>
 	);
 };
 
