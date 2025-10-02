@@ -44,6 +44,11 @@ const Onboarding = () => {
 			})),
 		},
 		{
+			id: 'accountNumber',
+			label: 'Account Number',
+			component: 'input',
+		},
+		{
 			id: 'tandc',
 			label: 'I agree to the Terms and Conditions.',
 			component: 'check-box',
@@ -69,8 +74,9 @@ const Onboarding = () => {
 		verify();
 	}, []);
 
+	const dataRes = states?._volunteer?.verify_Volunteer_Onboarding?.data;
+
 	const onSubmit = (data: IOnboardingHK) => {
-		const dataRes = states?._volunteer?.verify_Volunteer_Onboarding?.data;
 		actions?.onboard_Volunteer({
 			data: {
 				volunteerId: dataRes?.id ?? 0,
@@ -80,6 +86,9 @@ const Onboarding = () => {
 			},
 			onSuccess: () => {
 				setSuccess(true);
+			},
+			onFailure: () => {
+				setError('Something went wrong');
 			},
 		});
 	};

@@ -34,8 +34,8 @@ const App = () => (
 			}
 		>
 			<Routes>
-				{/* <Route
-					path='/'
+				<Route
+					path='/dashboard'
 					element={<AdminRoute />}
 				>
 					<Route
@@ -58,7 +58,7 @@ const App = () => (
 						path={pageurl.SETTINGSGOVERNMENTID}
 						element={<SettingsGovernmentID />}
 					/>
-				</Route> */}
+				</Route>
 				<Route
 					path='/'
 					element={<AuthRoute />}

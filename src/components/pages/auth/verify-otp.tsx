@@ -49,7 +49,7 @@ const VerifyOTP = () => {
 	const onSuccess = (data: ILogin) => {
 		if (data?.token) {
 			const user: IUserState = jwtDecode(data.token);
-			if (user.role.includes('Result Uploader')) {
+			if (user.role.includes('Party Agent')) {
 				notificationGlobal('OTP Verification Successful', true);
 				encodeData(data?.token, data?.refreshToken);
 				setTimeout(() => {

@@ -1,11 +1,11 @@
 export const pageurl = {
 	LOGIN: '/',
-	OVERVIEW: '/overview',
+	OVERVIEW: '/dashboard/overview',
 	VERIFYOTP: '/verify-otp',
 	REQUESTACCESS: '/request-access',
 	ONBOARDING: '/onboarding',
-	SETTINGS: '/settings',
-	SETTINGSPROFILE: '/settings/profile',
-	SETTINGSBANKDETAILS: '/settings/bank-details',
-	SETTINGSGOVERNMENTID: '/settings/government-id',
+	SETTINGS: '/dashboard/settings',
+	SETTINGSPROFILE: '/dashboard/settings/profile',
+	SETTINGSBANKDETAILS: '/dashboard/settings/bank-details',
+	SETTINGSGOVERNMENTID: '/dashboard/settings/government-id',
 };
