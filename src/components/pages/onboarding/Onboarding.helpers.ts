@@ -38,12 +38,18 @@ export interface IOnboardingHK {
 	accountNumber: string | null;
 	bankName: string | null;
 	governmentDocument: string | null;
+	votersNumber: string | null;
+	photoUrl: string | null;
+	documentUrl: string | null;
 }
 
 export const onboardingSchema = {
 	accountName: yup.string().required('Account name is required.'),
 	accountNumber: yup.string().required('Account number is required.'),
 	bankName: yup.string().required('Bank name is required.'),
+	votersNumber: yup.string().required('Voters Card ID is required.'),
+	photoUrl: yup.string().required('Your Face Photo is required.'),
+	documentUrl: yup.string().required('A Valid Government ID is required.'),
 };
 
 export const nigerianBanks = [

@@ -44,9 +44,19 @@ const Onboarding = () => {
 			})),
 		},
 		{
-			id: 'accountNumber',
-			label: 'Account Number',
+			id: 'votersNumber',
+			label: 'Enter your Voters Card ID',
 			component: 'input',
+		},
+		{
+			id: 'photoUrl',
+			label: 'Upload your Photo',
+			component: 'file',
+		},
+		{
+			id: 'documentUrl',
+			label: 'Upload a valid Government ID',
+			component: 'file',
 		},
 		{
 			id: 'tandc',
