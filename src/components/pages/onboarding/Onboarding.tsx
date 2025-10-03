@@ -163,11 +163,7 @@ const Onboarding = () => {
 						/>
 					</div>
 					<div className='onboarding-form-container_header'>
-						<h1>
-							{success
-								? 'Onboarding Complete'
-								: `Hello, ${dataRes?.firstName + ' ' + dataRes?.lastName} Kindly Complete your onboarding`}
-						</h1>
+						<h1>{success ? 'Onboarding Complete' : `Hello, ${dataRes?.firstName + ' ' + dataRes?.lastName}`}</h1>
 						{!success && (
 							<p>
 								Submit your personal details to verify your identity and finalize your registration as an election agent. Your
