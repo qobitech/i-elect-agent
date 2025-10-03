@@ -37,19 +37,32 @@ export interface IOnboardingHK {
 	accountName: string | null;
 	accountNumber: string | null;
 	bankName: string | null;
-	governmentDocument: string | null;
-	votersNumber: string | null;
-	photoUrl: string | null;
-	documentUrl: string | null;
+	governmentDocument: FileList | null;
+	profilePhoto: FileList | null;
+	votersCardId: string | null;
 }
+
+const fileValidation = (message: string, size: number) =>
+	yup
+		.mixed()
+		.required(message)
+		.test('fileType', 'Only images or PDFs are allowed', (value) => {
+			if (!value) return false;
+			const supportedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+			return supportedTypes.includes(value.type);
+		})
+		.test('fileSize', `File size is too large (max ${size}MB)`, (value) => {
+			if (!value) return false;
+			return value.size <= size * 1024 * 1024; // 5 MB
+		});
 
 export const onboardingSchema = {
 	accountName: yup.string().required('Account name is required.'),
 	accountNumber: yup.string().required('Account number is required.'),
 	bankName: yup.string().required('Bank name is required.'),
-	votersNumber: yup.string().required('Voters Card ID is required.'),
-	photoUrl: yup.string().required('Your Face Photo is required.'),
-	documentUrl: yup.string().required('A Valid Government ID is required.'),
+	governmentDocument: fileValidation('A valid Government ID is required.', 5),
+	profilePhoto: fileValidation('Your Face Photo is required.', 5),
+	votersCardId: yup.string().required('Voters Card ID is required.'),
 };
 
 export const nigerianBanks = [

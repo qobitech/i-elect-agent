@@ -89,6 +89,7 @@ export default defineConfig(({ mode }) => {
 						'https://core-ielect.ngrok.app/',
 						'https://query-ielect.ngrok.app',
 						'https://command-ielect.ngrok.app',
+						'https://media-manager-ielect.ngrok.app/api/FileManager/upload-image',
 						'blob:',
 						'data:',
 					],

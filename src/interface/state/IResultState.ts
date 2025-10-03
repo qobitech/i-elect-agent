@@ -36,3 +36,15 @@ export interface IResultStates {
 	total: number;
 	pageSize: number;
 }
+
+export interface IUploadFileResponse {
+	message: string;
+	data: {
+		publicId: string;
+		uri: string;
+		location: null;
+		organisation: null;
+		contentType: string;
+		createdAt: string;
+	};
+}

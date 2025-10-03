@@ -1,3 +1,5 @@
+import { type IUploadFileResponse } from '@interface/state/IResultState';
+
 import type { IGetQuery, IResponse } from '../../store/actions/core/election';
 import type { ICreateResult, IExtractResult, IResultDataModel, IUpdateResultData } from '../../store/actions/query/result';
 
@@ -14,11 +16,9 @@ export interface IResultAction {
 		data,
 		onFailure,
 		onSuccess,
-	}: IResponse & {
-		data: {
-			Upload: FormData;
-		};
-	}) => (dispatch: any) => void;
+	}: IResponse<IUploadFileResponse> & {
+		data: FormData;
+	}) => (dispatch: any) => Promise<void>;
 	push_ResultData: ({
 		data,
 		onFailure,

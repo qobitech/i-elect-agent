@@ -44,17 +44,17 @@ const Onboarding = () => {
 			})),
 		},
 		{
-			id: 'votersNumber',
+			id: 'votersCardId',
 			label: 'Enter your Voters Card ID',
 			component: 'input',
 		},
 		{
-			id: 'photoUrl',
-			label: 'Upload your Photo',
+			id: 'profilePhoto',
+			label: 'Upload your Face Photo',
 			component: 'file',
 		},
 		{
-			id: 'documentUrl',
+			id: 'governmentDocument',
 			label: 'Upload a valid Government ID',
 			component: 'file',
 		},
@@ -87,15 +87,41 @@ const Onboarding = () => {
 	const dataRes = states?._volunteer?.verify_Volunteer_Onboarding?.data;
 
 	const onSubmit = (data: IOnboardingHK) => {
-		actions?.onboard_Volunteer({
-			data: {
-				volunteerId: dataRes?.id ?? 0,
-				accountName: data.accountName ?? '',
-				accountNumber: data.accountNumber ?? '',
-				bankName: data.bankName ?? '',
-			},
-			onSuccess: () => {
-				setSuccess(true);
+		const governmentformData = new FormData();
+		governmentformData.append('Upload', data?.governmentDocument as unknown as File);
+
+		const profileformData = new FormData();
+		profileformData.append('Upload', data?.profilePhoto as unknown as File);
+
+		actions?.upload_Result({
+			data: governmentformData,
+			onSuccess: (govres) => {
+				const governmentDocUrl = govres.data.uri;
+				actions?.upload_Result({
+					data: profileformData,
+					onSuccess: (profileres) => {
+						const profileDocUrl = profileres.data.uri;
+
+						actions?.onboard_Volunteer({
+							data: {
+								volunteerId: dataRes?.id ?? 0,
+								accountName: data.accountName ?? '',
+								accountNumber: data.accountNumber ?? '',
+								bankName: data.bankName ?? '',
+								governmentDocument: governmentDocUrl,
+								profilePhoto: profileDocUrl,
+								votersCardId: data.votersCardId ?? '',
+							},
+							onSuccess: () => {
+								setSuccess(true);
+								actions.notificationGlobal('Agent created.', true);
+							},
+							onFailure: () => {
+								actions.notificationGlobal('Onboarding unsuccessful.', false);
+							},
+						});
+					},
+				});
 			},
 			onFailure: () => {
 				setError('Something went wrong');
@@ -126,7 +152,7 @@ const Onboarding = () => {
 	return (
 		<>
 			<HvcLoad
-				view={!success}
+				view
 				className='onboarding-form-container'
 			>
 				<div className='box-shadow p-5 f-column-33 onboarding-form'>
@@ -137,7 +163,11 @@ const Onboarding = () => {
 						/>
 					</div>
 					<div className='onboarding-form-container_header'>
-						<h1>{success ? 'Onboarding Complete' : 'Complete your onboarding'}</h1>
+						<h1>
+							{success
+								? 'Onboarding Complete'
+								: `Hello, ${dataRes?.firstName + ' ' + dataRes?.lastName} Kindly Complete your onboarding`}
+						</h1>
 						{!success && (
 							<p>
 								Submit your personal details to verify your identity and finalize your registration as an election agent. Your
@@ -146,32 +176,34 @@ const Onboarding = () => {
 						)}
 					</div>
 
-					{!success ? (
-						<>
-							<form
-								className='grid-wrapper-100 gap-33'
-								onSubmit={(e) => e.preventDefault()}
-							>
+					<form
+						className='grid-wrapper-100 gap-33'
+						onSubmit={hookForm.handleSubmit(onSubmit)}
+					>
+						{!success ? (
+							<>
 								<FormBuilder
 									formComponent={fc}
 									hookForm={hookForm}
 									min
 								/>
-							</form>
-							{!success ? (
+
 								<TypeButton
 									title='Submit'
 									load={states?._volunteer?.verify_Volunteer_OnboardingLoading}
-									onClick={hookForm.handleSubmit(onSubmit)}
+									type='submit'
 								/>
-							) : (
+							</>
+						) : (
+							<div className='d-flex justify-content-center'>
 								<TypeButton
 									title='Login'
 									onClick={() => navigate('/login')}
+									type='button'
 								/>
-							)}
-						</>
-					) : null}
+							</div>
+						)}
+					</form>
 				</div>
 			</HvcLoad>
 		</>

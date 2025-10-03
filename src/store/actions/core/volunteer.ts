@@ -65,6 +65,9 @@ export const onboard_Volunteer = ({
 		accountName: string;
 		accountNumber: string;
 		bankName: string;
+		governmentDocument: string;
+		profilePhoto: string;
+		votersCardId: string;
 	};
 }) =>
 	utils.httpPostMethod({

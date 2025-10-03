@@ -28,6 +28,9 @@ export interface IVolunteerAction {
 			accountName: string;
 			accountNumber: string;
 			bankName: string;
+			governmentDocument: string;
+			profilePhoto: string;
+			votersCardId: string;
 		};
 	}) => (dispatch: any) => Promise<void>;
 }

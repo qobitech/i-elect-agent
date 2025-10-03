@@ -1,3 +1,5 @@
+import { type IUploadFileResponse } from '@interface/state/IResultState';
+
 import { EXTRACTAPI, QUERYAPI } from '../../../constants/global';
 import { resultType } from '../../types';
 import { getCommandQuery, type IGetQuery, type IResponse } from '../core/election';
@@ -76,21 +78,20 @@ export const upload_Result = ({
 	data,
 	onFailure,
 	onSuccess,
-}: IResponse & {
-	data: {
-		Upload: FormData;
-	};
+}: IResponse<IUploadFileResponse> & {
+	data: FormData;
 }) =>
 	utils.httpUploadMediaMethod({
 		apiData: {
 			url: '',
-			customurl: `${QUERYAPI}/api/v1/Result/upload-result`,
-			header: utils.header(),
+			customurl: 'https://media-manager-ielect.ngrok.app/api/FileManager/upload-image',
+			header: utils.headerMultipart(),
 			data,
 		},
 		actionType: resultType.upload_Result,
 		onFailure,
 		onSuccess,
+		auth: true,
 	});
 
 export const push_ResultData = ({
@@ -99,14 +100,17 @@ export const push_ResultData = ({
 	onSuccess,
 }: IResponse & {
 	data: {
-		Upload: FormData;
-		Data: string;
+		upload: FormData;
+		organization: {
+			id: number;
+			name?: string;
+		};
 	};
 }) =>
 	utils.httpUploadMediaMethod({
 		apiData: {
 			url: '',
-			customurl: `${QUERYAPI}/api/v1/Result/push-result-data`,
+			customurl: 'https://media-manager-ielect.ngrok.app/api/FileManager/upload-image',
 			header: utils.header(),
 			data,
 		},
@@ -116,7 +120,7 @@ export const push_ResultData = ({
 	});
 
 export interface IResultDataModel {
-	Upload: FormData;
+	upload: FormData;
 	Data: {
 		Id: string;
 		Election: string;
