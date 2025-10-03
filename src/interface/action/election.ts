@@ -8,6 +8,7 @@ import type {
 import type {
 	ICreateElectionCycleState,
 	ICreateElectionState,
+	IElectionOfficialsByQuery,
 	IElectionStates,
 	IGetElectionByID,
 	IGetElectionOfficial,
@@ -135,5 +136,17 @@ export interface IElectionAction {
 	}: IResponse & {
 		data: ICreateElectionOfficial;
 	}) => (dispatch: any) => Promise<void>;
-	get_ElectionOfficial: ({ onFailure, onSuccess }: IResponse<IGetElectionOfficial>) => (dispatch: any) => Promise<void>;
+	get_ElectionOfficial: ({
+		onFailure,
+		onSuccess,
+		paged,
+		query,
+	}: IGetQuery<IElectionOfficialsByQuery>) => (dispatch: any) => Promise<void>;
+	get_ElectionOfficialById: ({
+		onFailure,
+		onSuccess,
+		id,
+	}: IResponse<IGetElectionOfficial> & {
+		id: string;
+	}) => (dispatch: any) => Promise<void>;
 }

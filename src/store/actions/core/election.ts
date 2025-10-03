@@ -1,6 +1,8 @@
 import type {
 	ICreateElectionCycleState,
 	ICreateElectionState,
+	IElectionOfficialByQuery,
+	IElectionOfficialsByQuery,
 	IElectionStates,
 	IGetElectionByID,
 	IGetElectionOfficial,
@@ -388,13 +390,24 @@ export const create_ElectionOfficial = ({
 		onFailure,
 	});
 
-export const get_ElectionOfficial = ({ onFailure, onSuccess }: IResponse<IGetElectionOfficial>) =>
+export const get_ElectionOfficial = ({ onFailure, onSuccess, paged, query }: IGetQuery<IElectionOfficialsByQuery>) =>
 	utils.httpGetMethod({
 		apiData: {
-			url: '/api/v1/ElectionOfficial',
+			url: `/api/v1/ElectionOfficial${getQuery(paged, ...(query || []))}`,
 			header: utils.header(),
 		},
 		actionType: electionType.get_ElectionOfficial,
+		onSuccess,
+		onFailure,
+	});
+
+export const get_ElectionOfficialById = ({ onFailure, onSuccess, id }: IResponse<IGetElectionOfficial> & { id: string }) =>
+	utils.httpGetMethod({
+		apiData: {
+			url: `/api/v1/ElectionOfficial/${id}`,
+			header: utils.header(),
+		},
+		actionType: electionType.get_ElectionOfficialById,
 		onSuccess,
 		onFailure,
 	});

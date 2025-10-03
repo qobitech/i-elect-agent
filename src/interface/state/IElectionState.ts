@@ -1,3 +1,5 @@
+import { type ResultType } from '@constants/global';
+
 export interface IElectionState {
 	id: number;
 	name: string;
@@ -136,4 +138,24 @@ export interface IGetElectionByID {
 		candidates: [];
 		presidingOfficers: [];
 	};
+}
+
+export interface IElectionOfficialByQuery {
+	id: string;
+	userId: number;
+	electionId: number;
+	election: string;
+	name: string;
+	assignment: {
+		code: string;
+		name: string;
+		resultType: Lowercase<ResultType>;
+		isCompleted: boolean;
+	};
+}
+export interface IElectionOfficialsByQuery {
+	message: 'success';
+	isSuccessful: true;
+	statusCode: 200;
+	data: IElectionOfficialByQuery[];
 }

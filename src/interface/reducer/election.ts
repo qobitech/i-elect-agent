@@ -3,6 +3,7 @@ import type {
 	ICreateElectionCycleState,
 	IElectionCycleState,
 	IElectionCycleStates,
+	IElectionOfficialsByQuery,
 	IElectionStates,
 	IGetElectionByID,
 	IGetElectionOfficial,
@@ -31,4 +32,5 @@ export type IElectionReducer = GenerateReducerTypes<'create_Election', any> &
 	GenerateReducerTypes<'update_ElectionTypeByID', any> &
 	GenerateReducerTypes<'delete_ElectionTypeByID', any> &
 	GenerateReducerTypes<'create_ElectionOfficial', any> &
-	GenerateReducerTypes<'get_ElectionOfficial', IGetElectionOfficial>;
+	GenerateReducerTypes<'get_ElectionOfficial', IElectionOfficialsByQuery> &
+	GenerateReducerTypes<'get_ElectionOfficialById', IGetElectionOfficial>;

@@ -128,12 +128,12 @@ export const getUserData = (): ILogin => {
 export const PRIMARY_COLOR = '#286439';
 export const PRIMARY_COLOR_LIGHT = 'rgb(218, 239, 224)';
 
-export const ISSESSION = () =>
-	// const timestamp = getUserData()?.user?.exp || 0;
-	// if (!timestamp) return false;
-	// const currentTimestamp = Math.floor(Date.now() / 1000);
-	// return timestamp > currentTimestamp;
-	false;
+export const ISSESSION = () => {
+	const timestamp = getUserData()?.user?.exp || 0;
+	if (!timestamp) return false;
+	const currentTimestamp = Math.floor(Date.now() / 1000);
+	return timestamp > currentTimestamp;
+};
 
 export const ISADMINLOGGED = () => !!getUserData().user?.UserId;
 

@@ -16,8 +16,10 @@ const Overview = () => {
 	const { states, actions, global, rsProps } = useGlobalContext();
 	const { notificationGlobal, get_ElectionOfficial, get_ElectionByID, get_CountryStateByID } = actions!;
 
-	const electionOfficialData = states?._election?.get_ElectionOfficial?.data;
-	// const draftData = states?._draft?.get_DraftByID?.data
+	const electionOfficialData = states?._election?.get_ElectionOfficial?.data.find(
+		(i) => i.userId === Number(getUserData().user?.UserId)
+	);
+	const electionData = states?._election?.get_ElectionByID?.data;
 
 	const onError = () => {
 		notificationGlobal('Something went wrong', false);
@@ -25,30 +27,54 @@ const Overview = () => {
 
 	const getData = () => {
 		get_ElectionOfficial({
+			query: [
+				{
+					key: 'UserId',
+					value: getUserData().user?.UserId,
+				},
+			],
 			onFailure: () => {
 				onError();
 			},
 			onSuccess: (res) => {
-				get_ElectionByID({
-					id: res?.data?.election?.id + '',
-					onSuccess: (data) => {
-						get_CountryStateByID({
-							id: data?.data?.constituency?.stateId + '',
-						});
-					},
-				});
+				const electionOfficial = res.data.find((i) => i.userId === Number(getUserData().user?.UserId));
+
+				if (electionOfficial) {
+					get_ElectionByID({
+						id: String(electionOfficial.electionId),
+						onSuccess: (data) => {
+							get_CountryStateByID({
+								id: data?.data?.constituency?.stateId + '',
+							});
+						},
+					});
+				}
 			},
 		});
 	};
 
+	// const getUserById = () => {
+	// 	actions?.get_User({
+	// 		query: [
+	// {
+	// 	key: 'UserId',
+	// 	value: getUserData().user?.UserId,
+	// },
+	// 		],
+	// 	});
+	// };
+
 	useCallAPI(getData, !electionOfficialData);
+	// useCallAPI(getUserById, true);
 
 	const overviewSectionData = [
 		{
 			title: 'Election',
-			value: electionOfficialData?.election?.name || '',
+			value: electionData?.name || '',
 		},
 	];
+
+	console.log(getUserData(), 'juju');
 
 	const usersectiondata = [
 		{
@@ -70,7 +96,7 @@ const Overview = () => {
 		rsProps?.callSection({
 			action: 'create',
 			component: 'upload-result',
-			title: electionOfficialData?.election.name || '',
+			title: electionData?.name || '',
 			max: true,
 			resultType: type,
 			data: {
@@ -96,11 +122,12 @@ const Overview = () => {
 		});
 	};
 
-	const isAssignment =
-		!!electionOfficialData?.localGovernments?.length ||
-		!!electionOfficialData?.pollingUnits?.length ||
-		!!electionOfficialData?.states?.length ||
-		!!electionOfficialData?.wards?.length;
+	const isAssignment = !!electionOfficialData?.assignment.code;
+	// const isAssignment =
+	// 	!!electionOfficialData?.localGovernments?.length ||
+	// 	!!electionOfficialData?.pollingUnits?.length ||
+	// 	!!electionOfficialData?.states?.length ||
+	// 	!!electionOfficialData?.wards?.length;
 
 	const [isProfile, setIsProfile] = useState<boolean>(false);
 
@@ -142,7 +169,7 @@ const Overview = () => {
 					<div className='border-label rounded p-4 w-100'>
 						<CardItems
 							title='Election'
-							value={electionOfficialData?.election?.name || ''}
+							value={electionData?.name || ''}
 						/>
 					</div>
 					<p className='font-25'>You&apos;ve been assigned to submit the following election results</p>
@@ -152,32 +179,14 @@ const Overview = () => {
 					>
 						<div className='f-column-23'>
 							<div className='grid-wrapper-20 gap-13'>
-								{electionOfficialData?.pollingUnits?.length ? (
+								{electionOfficialData?.assignment.resultType === 'ec8a' ? (
 									<ActionItem
-										action={uploadResultAction('EC8A', electionOfficialData?.pollingUnits)}
+										action={uploadResultAction(
+											electionOfficialData?.assignment.resultType.toUpperCase() as ResultType,
+											electionOfficialData?.assignment as unknown as IElectionDivision[]
+										)}
 										icon={<UploadIconSVG />}
-										label='EC8A Result'
-									/>
-								) : null}
-								{electionOfficialData?.wards?.length ? (
-									<ActionItem
-										action={uploadResultAction('EC8B', electionOfficialData?.wards)}
-										icon={<UploadIconSVG />}
-										label='EC8B Result'
-									/>
-								) : null}
-								{electionOfficialData?.localGovernments?.length ? (
-									<ActionItem
-										action={uploadResultAction('EC8C', electionOfficialData?.localGovernments)}
-										icon={<UploadIconSVG />}
-										label='EC8C Result'
-									/>
-								) : null}
-								{electionOfficialData?.states?.length ? (
-									<ActionItem
-										action={uploadResultAction('EC8D', electionOfficialData?.states)}
-										icon={<UploadIconSVG />}
-										label='EC8D Result'
+										label={`${electionOfficialData?.assignment.resultType.toUpperCase()} Result`}
 									/>
 								) : null}
 							</div>

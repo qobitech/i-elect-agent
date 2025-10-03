@@ -78,6 +78,7 @@ export const electionType = generateActionTypes([
 	'delete_ElectionTypeByID',
 	'create_ElectionOfficial',
 	'get_ElectionOfficial',
+	'get_ElectionOfficialById',
 ]);
 
 export const electiveCategoryType = generateActionTypes([
