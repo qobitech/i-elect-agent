@@ -101,7 +101,7 @@ export const push_ResultData = ({
 }: IResponse & {
 	data: {
 		upload: FormData;
-		organization: {
+		organization?: {
 			id: number;
 			name?: string;
 		};

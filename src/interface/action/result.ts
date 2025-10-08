@@ -25,8 +25,11 @@ export interface IResultAction {
 		onSuccess,
 	}: IResponse & {
 		data: {
-			Upload: FormData;
-			Data: string;
+			upload: FormData;
+			organization?: {
+				id: number;
+				name?: string;
+			};
 		};
 	}) => (dispatch: any) => void;
 	push_ResultDataModel: ({
