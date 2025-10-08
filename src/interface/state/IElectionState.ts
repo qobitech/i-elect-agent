@@ -151,6 +151,7 @@ export interface IElectionOfficialByQuery {
 		name: string;
 		resultType: Lowercase<ResultType>;
 		isCompleted: boolean;
+		id: string;
 	};
 }
 export interface IElectionOfficialsByQuery {

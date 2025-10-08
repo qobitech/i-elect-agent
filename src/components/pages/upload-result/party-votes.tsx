@@ -44,7 +44,7 @@ const PartyVotes = () => {
 		const extractedVotes = states?._result?.extract_ResultUrl?.voteTabulation!;
 
 		const getVoteCount = (voteItem: IVoteCount) => {
-			const vote = extractedVotes.find((v) => v.politicalParty === voteItem.label);
+			const vote = extractedVotes?.find((v) => v.politicalParty === voteItem.label);
 			return vote?.votesInFigures || 0;
 		};
 
@@ -100,7 +100,7 @@ const PartyVotes = () => {
 			<div className='f-row-responsive-reverse-33  justify-content-between'>
 				<div className={`f-column-33 ${onExtract ? 'flex-basis-40' : 'w-100'}`}>
 					<div className='grid-wrapper-strict-40 gap-33'>
-						{partyVote.votes.sort(sortVotes).map((i, index) => (
+						{partyVote?.votes?.sort(sortVotes).map((i, index) => (
 							<TypeInput
 								key={index}
 								label={i.label}

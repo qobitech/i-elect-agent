@@ -39,12 +39,12 @@ const UploadResultStage = () => {
 	const onUploadDocument = () => {
 		const fd = new FormData();
 		files.forEach((i) => {
-			fd.append('Uploads', i);
+			fd.append('upload', i);
 		});
-		actions?.upload_IRevResult({
+		actions?.upload_Result({
 			data: fd,
 			onSuccess: (res) => {
-				updateState('uploadedFiles', res.data);
+				updateState('uploadedFiles', [res.data.uri]);
 				onStage('Upload Result Status');
 			},
 		});
@@ -74,7 +74,7 @@ const UploadResultStage = () => {
 					{!files.length ? (
 						<CardItems
 							title='Step 2'
-							value='Upload the elction results'
+							value='Upload the election results'
 						/>
 					) : null}
 					<MultipleMediaUploadComponent

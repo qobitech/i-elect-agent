@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 
 import { getUserData, type ResultType } from '../../../constants/global';
 import { useGlobalContext } from '../../../context/global';
-import type { IActions } from '../../../interface/IAction';
 import type { IElectionDivision } from '../../../interface/state/IElectionState';
 import { ActionItem } from '../../utils/action';
 import { TypeButton } from '../../utils/button';
@@ -53,19 +52,7 @@ const Overview = () => {
 		});
 	};
 
-	// const getUserById = () => {
-	// 	actions?.get_User({
-	// 		query: [
-	// {
-	// 	key: 'UserId',
-	// 	value: getUserData().user?.UserId,
-	// },
-	// 		],
-	// 	});
-	// };
-
 	useCallAPI(getData, !electionOfficialData);
-	// useCallAPI(getUserById, true);
 
 	const overviewSectionData = [
 		{
@@ -73,8 +60,6 @@ const Overview = () => {
 			value: electionData?.name || '',
 		},
 	];
-
-	console.log(getUserData(), 'juju');
 
 	const usersectiondata = [
 		{
@@ -179,16 +164,17 @@ const Overview = () => {
 					>
 						<div className='f-column-23'>
 							<div className='grid-wrapper-20 gap-13'>
-								{electionOfficialData?.assignment.resultType === 'ec8a' ? (
-									<ActionItem
-										action={uploadResultAction(
-											electionOfficialData?.assignment.resultType.toUpperCase() as ResultType,
-											electionOfficialData?.assignment as unknown as IElectionDivision[]
-										)}
-										icon={<UploadIconSVG />}
-										label={`${electionOfficialData?.assignment.resultType.toUpperCase()} Result`}
-									/>
-								) : null}
+								<ActionItem
+									action={uploadResultAction(electionOfficialData?.assignment.resultType.toUpperCase() as ResultType, [
+										{
+											id: Number(electionOfficialData?.assignment.id ?? '4'),
+											name: electionOfficialData?.assignment.name ?? '',
+											code: electionOfficialData?.assignment.code ?? '',
+										},
+									])}
+									icon={<UploadIconSVG />}
+									label={`${electionOfficialData?.assignment.resultType.toUpperCase()} Result`}
+								/>
 							</div>
 						</div>
 					</div>

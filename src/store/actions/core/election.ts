@@ -393,7 +393,7 @@ export const create_ElectionOfficial = ({
 export const get_ElectionOfficial = ({ onFailure, onSuccess, paged, query }: IGetQuery<IElectionOfficialsByQuery>) =>
 	utils.httpGetMethod({
 		apiData: {
-			url: `/api/v1/ElectionOfficial${getQuery(paged, ...(query || []))}`,
+			url: `/api/v1/ElectionOfficial/filter${getQuery(paged, ...(query || []))}`,
 			header: utils.header(),
 		},
 		actionType: electionType.get_ElectionOfficial,

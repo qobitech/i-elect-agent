@@ -82,21 +82,21 @@ export default defineConfig(({ mode }) => {
 					preload: true,
 				},
 				contentSecurityPolicy: {
-					imgSrc: ["'self'", 'data:', 'blob:'],
-
+					imgSrc: ["'self'", 'data:', 'blob:', 'https://media-ielect.ngrok.app/'],
 					connectSrc: [
 						"'self'",
 						'https://core-ielect.ngrok.app/',
 						'https://query-ielect.ngrok.app',
 						'https://command-ielect.ngrok.app',
 						'https://media-manager-ielect.ngrok.app/api/FileManager/upload-image',
+						'https://media-ielect.ngrok.app/',
 						'blob:',
 						'data:',
 					],
 					fontSrc: ["'self'"],
 					objectSrc: ["'none'"],
 					mediaSrc: ["'self'", 'data:'],
-					frameSrc: ["'none'"],
+					frameSrc: ["'self'", 'https://media-ielect.ngrok.app/'], // <-- changed
 					frameAncestors: ["'none'"],
 					formAction: ["'self'"],
 					workerSrc: ["'self'"],

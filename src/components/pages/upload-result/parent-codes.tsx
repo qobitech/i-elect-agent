@@ -53,7 +53,7 @@ const ParentCodesStage = () => {
 		const req = {
 			zones: [],
 			geoZones: [],
-			elections: [electionData.data.election.name],
+			elections: [electionData?.data?.election?.name],
 		} as IRrevDataReq;
 		const getFunc = () => {
 			if (resultType === 'EC8A') {
