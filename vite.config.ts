@@ -139,16 +139,16 @@ export default defineConfig(({ mode }) => {
 			},
 		],
 		resolve: {
-			alias: {
-				'root': path.resolve(__dirname, './'),
-				// 'BreetConfig': path.resolve(__dirname, './src/config'),
-				// 'IElectComponents': path.resolve(__dirname, './src/components'),
-				// 'BreetHelpers': path.resolve(__dirname, './src/helpers'),
-				// 'BreetHooks': path.resolve(__dirname, './src/hooks'),
-				// 'BreetRedux': path.resolve(__dirname, './src/redux'),
-				// 'BreetRoutes': path.resolve(__dirname, './src/routes'),
-				'@': path.resolve(__dirname, './src'),
-			},
+			// alias: {
+			// 	'root': path.resolve(__dirname, './'),
+			// 	// 'BreetConfig': path.resolve(__dirname, './src/config'),
+			// 	// 'IElectComponents': path.resolve(__dirname, './src/components'),
+			// 	// 'BreetHelpers': path.resolve(__dirname, './src/helpers'),
+			// 	// 'BreetHooks': path.resolve(__dirname, './src/hooks'),
+			// 	// 'BreetRedux': path.resolve(__dirname, './src/redux'),
+			// 	// 'BreetRoutes': path.resolve(__dirname, './src/routes'),
+			// 	'@': path.resolve(__dirname, './src'),
+			// },
 		},
 		test: {
 			globals: true,

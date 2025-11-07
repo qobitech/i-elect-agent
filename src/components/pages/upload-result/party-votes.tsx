@@ -12,7 +12,7 @@ import type { IPartyVotes, IVoteCount } from './utils';
 const PartyVotes = () => {
 	const {
 		global: {
-			state: { partyVotes, childCodes, selectedChildCode, selectedParentCode, resultType, onExtract },
+			state: { partyVotes, childCodes, selectedChildCode, selectedParentCode, resultType, onExtract, parentCodes },
 			updateState,
 		},
 		onStage,
@@ -38,7 +38,7 @@ const PartyVotes = () => {
 		}
 	};
 
-	const id = (isCode ? selectedChildCode?.codeId : selectedParentCode?.codeId) || 0;
+	const id = selectedChildCode?.codeId || selectedParentCode?.codeId;
 
 	useEffect(() => {
 		const extractedVotes = states?._result?.extract_ResultUrl?.voteTabulation!;
@@ -60,6 +60,8 @@ const PartyVotes = () => {
 	}, [states?._result?.extract_ResultUrl]);
 
 	const partyVote: IPartyVotes = id ? partyVotes.filter((i) => i.id === id)[0] : { id: 0, votes: [] };
+
+	console.log(partyVotes, id, parentCodes, selectedChildCode, 'juju');
 
 	const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { id, value } = e.target;

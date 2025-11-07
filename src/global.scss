@@ -132,7 +132,37 @@
 	.font-#{$i} {
 		font-size: #{$i}px;
 	}
+
+	.col-#{$i} {
+		@if $i <= 2 {
+			left: 0;
+		} @else {
+			left: 136px * ($i - 2);
+		}
+		z-index: 3;
+	}
 }
+
+.sticky-col {
+	position: sticky;
+	background: white;
+	z-index: 2;
+}
+
+.col-1 {
+	left: 0;
+	z-index: 3;
+}
+
+.col-2 {
+	left: 150px;
+	z-index: 2;
+
+	&.numbering {
+		left: 16px;
+	}
+}
+
 // FLEX COLUMN
 .f-column {
 	display: flex;

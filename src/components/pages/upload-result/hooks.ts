@@ -2,6 +2,7 @@ import { getUserData } from '../../../constants/global';
 import { useGlobalContext } from '../../../context/global';
 import type { IActions } from '../../../interface/IAction';
 import type { IStates } from '../../../interface/IReducer';
+import { type IGetElectionOfficial } from '../../../interface/state/IElectionState';
 import type { ILGAInState } from '../../../interface/state/ILGAState';
 import type { IPartyStates } from '../../../interface/state/IParty';
 import type { IPollingUnitInWardsState } from '../../../interface/state/IPollingUnitState';
@@ -106,8 +107,8 @@ export const useStateResultDataManager = ({ results }: { results: IResult[] }): 
 			name: getUserData().user?.FullName || '',
 		},
 		election: {
-			id: electionData?.data?.election?.id || 0,
-			name: electionData?.data?.election?.name || '',
+			id: electionData?.data?.[0]?.electionId || 0,
+			name: electionData?.data?.[0]?.election || '',
 		},
 		localGovernment: {
 			code: selectedParentCode?.code,
@@ -176,8 +177,8 @@ export const useLGAResultDataManager = ({ results }: { results: IResult[] }): { 
 			name: getUserData().user?.FullName || '',
 		},
 		election: {
-			id: electionData?.data?.election?.id || 0,
-			name: electionData?.data?.election?.name || '',
+			id: electionData?.data?.[0]?.electionId || 0,
+			name: electionData?.data?.[0]?.election || '',
 		},
 		localGovernment: {
 			code: selectedParentCode?.code,
@@ -245,8 +246,8 @@ export const useWardResultDataManager = ({ results }: { results: IResult[] }): {
 			name: getUserData().user?.FullName || '',
 		},
 		election: {
-			id: electionData?.data?.election?.id || 0,
-			name: electionData?.data?.election?.name || '',
+			id: electionData?.data?.[0]?.electionId || 0,
+			name: electionData?.data?.[0]?.election || '',
 		},
 		ward: {
 			code: selectedParentCode?.code,
@@ -305,8 +306,8 @@ export const usePollingUnitResultDataManager = ({ results }: { results: IResult[
 			name: getUserData().user?.FullName || '',
 		},
 		election: {
-			id: electionData?.data?.election?.id || 0,
-			name: electionData?.data?.election?.name || '',
+			id: electionData?.data?.[0]?.electionId || 0,
+			name: electionData?.data?.[0]?.election || '',
 		},
 		poolingUnitCode: selectedParentCode?.code,
 		presidingOfficer: {
@@ -343,7 +344,7 @@ export const useGetCodes = ({
 		const pv = partyVotes.filter((i) => i.id === id)[0];
 		if (!pv)
 			return {
-				id: selectedParentCode.codeId,
+				id,
 				votes: parties.data.map((vote) => ({
 					partyId: vote.id,
 					votes: 0,
@@ -373,23 +374,30 @@ export const useGetCodes = ({
 		const id = [selectedParentCode.codeId];
 
 		if (resultType === 'EC8A') {
-			actions?.get_PoolingUnitByCode({
-				poolingUnitCode: selectedParentCode?.code,
-				onSuccess: (res) => {
-					actions?.get_LGAById({
-						id: res.data?.[0]?.ward?.lgaId + '',
-					});
-					actions?.get_Party({
-						onSuccess: (parties) => {
-							updateState('partyVotes', [
-								{
-									...getPartyVotes(selectedParentCode.codeId, parties),
-								},
-							]);
+			// actions?.get_PoolingUnitByCode({
+			// 	poolingUnitCode: selectedParentCode?.code,
+			// 	onSuccess: (res) => {
+			// 		console.log(res, 'juju');
+			// 		actions?.get_LGAById({
+			// 			id: res.data.lga.id + '',
+			// 		});
+			actions?.get_Party({
+				onSuccess: (parties) => {
+					// updateState('partyVotes', [
+					// 	{
+					// 		...getPartyVotes(selectedParentCode.codeId, parties),
+					// 	},
+					// ]);
+
+					updateState('partyVotes', [
+						{
+							...getPartyVotes(Number(selectedParentCode?.codeId), parties),
 						},
-					});
+					]);
 				},
 			});
+			// 	},
+			// });
 		}
 		if (resultType === 'EC8B') {
 			actions?.get_PoolingUnitInWard({
@@ -401,11 +409,6 @@ export const useGetCodes = ({
 						updateState(
 							'childCodes',
 							res.data.map((i) => ({
-								// code: i.poolingUnitCode,
-								// parent: i.wardId,
-								// codeId: i.id,
-								// name: i.name,
-								// status: false
 								...getChildCodes(i, i.poolingUnitCode, i.wardId),
 							}))
 						);
@@ -414,13 +417,6 @@ export const useGetCodes = ({
 								updateState(
 									'partyVotes',
 									res.data.map((i) => ({
-										// id: i.id,
-										// votes: parties.data.map((vote) => ({
-										//   partyId: vote.id,
-										//   votes: 0,
-										//   label: vote.shortName,
-										//   logo: vote.logo
-										// }))
 										...getPartyVotes(i.id, parties),
 									}))
 								);
@@ -553,26 +549,26 @@ export const defaultReportIssues = {
 	email: '',
 };
 
-export const defaultElectionData = {
+export const defaultElectionData: IGetElectionOfficial = {
 	isSuccessful: false,
 	message: '',
 	statusCode: 0,
-	data: {
-		election: {
-			id: 0,
-			isSpecialElection: false,
+	data: [
+		{
+			id: '',
+			userId: 0,
+			electionId: 0,
+			election: '',
 			name: '',
+			assignment: {
+				id: 0,
+				code: '',
+				name: '',
+				resultType: 'EC8A',
+				isCompleted: false,
+			},
 		},
-		id: '',
-		localGovernments: [],
-		pollingUnits: [],
-		states: [],
-		user: {
-			id: 0,
-			name: '',
-		},
-		wards: [],
-	},
+	],
 };
 
 export const initComponentState = {

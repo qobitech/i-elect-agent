@@ -4,6 +4,7 @@ import { useGlobalContext } from '../../context/global';
 import ReportIssueStage from '../pages/report-issues';
 import ReportFeedbackItem from '../pages/report-issues/feedback-item';
 import ReportFeedbacks from '../pages/report-issues/feedbacks';
+import ReportResultIssueStage from '../pages/report-result-issues';
 import UploadResult from '../pages/upload-result';
 import PreviewMediaFile from '../pages/upload-result/preview-media-file';
 import RightSection, { type IGlobalRightSection } from '../utils/right-section';
@@ -28,6 +29,7 @@ const GlobalRightSection = ({ ...props }) => {
 				{rsProps.isView('view', 'report-feedback-item') ? <ReportFeedbackItem /> : null}
 				{rsProps.isView('view', 'side-menu-mobile') ? <SideMenuMobile /> : null}
 				{rsProps.isView('view', 'report-issues') ? <ReportIssueStage /> : null}
+				{rsProps.isView('view', 'report-result-issues') ? <ReportResultIssueStage /> : null}
 				{rsProps.isView('view', 'preview-media-file') ? <PreviewMediaFile /> : null}
 				<CompDisplay isView={rsProps.isView('create', 'upload-result')}>
 					<UploadResult />

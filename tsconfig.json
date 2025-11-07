@@ -26,9 +26,9 @@
 		"jsx": "preserve",
 		"incremental": true,
 		"allowSyntheticDefaultImports": true,
-		"paths": {
-			"@*": ["./src/*"]
-		},
+		// "paths": {
+		// 	"@*": ["./src/*"]
+		// },
 		"plugins": [
 			{
 				"name": "next"

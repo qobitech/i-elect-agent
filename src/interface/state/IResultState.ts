@@ -1,3 +1,4 @@
+import { type ResultType } from '../../constants/global';
 import type { IResult } from './IRev';
 
 export interface IResultState {
@@ -47,4 +48,30 @@ export interface IUploadFileResponse {
 		contentType: string;
 		createdAt: string;
 	};
+}
+
+export interface IGetResultAnalyticsData {
+	id: number;
+	electionId: number;
+	stateId: number;
+	lgaId: number;
+	wardId: number;
+	pollingUnitId: number;
+	resultType: Lowercase<ResultType>;
+	resultId: string;
+	code: string;
+	isUploaded: boolean;
+	createdBy?: string;
+	createdAt?: string;
+}
+
+export interface IGetResultAnalyticsResponse {
+	currentPage: number;
+	pageSize: number;
+	totalCount: number;
+	totalPages: number;
+	message: string;
+	statusCode: number;
+	isSuccessful: boolean;
+	data: IGetResultAnalyticsData[];
 }

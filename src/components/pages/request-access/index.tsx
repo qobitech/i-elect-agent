@@ -41,8 +41,6 @@ const RequestAccess = () => {
 		setStage('Preview');
 	};
 
-	console.log(req, 'juju');
-
 	return (
 		<>
 			<div className='f-column-33 py-5'>

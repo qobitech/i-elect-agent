@@ -7,11 +7,16 @@ import type {
 } from '../../store/actions/core/election';
 import type {
 	ICreateElectionCycleState,
+	ICreateElectionResultAnalytics,
 	ICreateElectionState,
 	IElectionOfficialsByQuery,
+	IElectionResultStatsResponse,
 	IElectionStates,
 	IGetElectionByID,
 	IGetElectionOfficial,
+	IReportResultRequest,
+	IResultAnalyticsDataResponse,
+	IUpdateElectionOfficialReqData,
 } from '../state/IElectionState';
 
 export interface IElectionAction {
@@ -22,6 +27,15 @@ export interface IElectionAction {
 	}: IResponse<ICreateElectionState> & {
 		data: ICreateElection;
 	}) => (dispatch: any) => void;
+	update_ElectionOfficialById: ({
+		onFailure,
+		onSuccess,
+		id,
+		data,
+	}: IResponse<any> & {
+		id: string;
+		data: IUpdateElectionOfficialReqData;
+	}) => (dispatch: any) => Promise<void>;
 	get_ElectionByID: ({
 		onFailure,
 		onSuccess,
@@ -148,5 +162,32 @@ export interface IElectionAction {
 		id,
 	}: IResponse<IGetElectionOfficial> & {
 		id: string;
+	}) => (dispatch: any) => Promise<void>;
+	get_ElectionResultAnalytics: ({
+		onFailure,
+		onSuccess,
+		query,
+		paged,
+	}: IGetQuery<IResultAnalyticsDataResponse>) => (dispatch: any) => Promise<void>;
+	create_ElectionResultAnalytics: ({
+		data,
+		onFailure,
+		onSuccess,
+	}: IResponse & {
+		data: ICreateElectionResultAnalytics;
+	}) => (dispatch: any) => Promise<void>;
+	create_ElectionReeport: ({
+		data,
+		onFailure,
+		onSuccess,
+	}: IResponse & {
+		data: IReportResultRequest;
+	}) => (dispatch: any) => Promise<void>;
+	get_ElectionResultAnalyticsStats: ({
+		onFailure,
+		onSuccess,
+		electionId,
+	}: IResponse<IElectionResultStatsResponse> & {
+		electionId: string;
 	}) => (dispatch: any) => Promise<void>;
 }

@@ -78,7 +78,7 @@ const Dashboard = ({ ...rest }: IDashboard) => {
 		if (ISADMINLOGGED() && global.state.selectedParentCode?.code) {
 			getCodeProps.handleCodes();
 		}
-	}, [global.state.selectedParentCode?.code]);
+	}, [global.state.parentCodes.length]);
 
 	return (
 		<>

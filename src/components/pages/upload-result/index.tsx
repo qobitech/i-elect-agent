@@ -119,7 +119,53 @@ const UploadResult = () => {
 
 	const onSubmit = () => {
 		const onSuccess = () => {
-			updateState('stage', 'Election Result Submission Status');
+			const data = states?._election.get_ElectionOfficial.data;
+
+			const obj: Partial<Record<ResultType, any>> = {
+				EC8A: pollingUnitResultData,
+				EC8B: wardResultData,
+				EC8C: lgaResultData,
+				EC8D: stateResultData,
+			};
+
+			const reqData = obj?.[resultType as ResultType];
+
+			const assignmentData = data?.find((i) => i.electionId === reqData.election.id);
+
+			if (!assignmentData) return;
+
+			const assignment = assignmentData.assignment;
+
+			actions?.update_ElectionOfficialById({
+				onSuccess: () => {
+					actions?.create_ElectionResultAnalytics({
+						data: {
+							resultId: 'string',
+							electionId: assignmentData.electionId,
+							resultType: assignmentData.assignment.resultType.toLowerCase() as Lowercase<ResultType>,
+							entityId: Number(assignmentData.assignment.id),
+						},
+						onSuccess: () => {
+							updateState('stage', 'Election Result Submission Status');
+						},
+					});
+				},
+				data: {
+					id: assignmentData.id,
+					userId: assignmentData.userId,
+					electionId: assignmentData.electionId,
+					election: assignmentData.election,
+					name: assignmentData.name,
+					assignment: {
+						id: Number(assignment.id),
+						code: assignment.code,
+						name: assignment.name,
+						resultType: assignment.resultType,
+						isCompleted: true,
+					},
+				},
+				id: assignmentData.id,
+			});
 		};
 		if (resultType === 'EC8D') {
 			actions?.push_IRevStateDataModel({

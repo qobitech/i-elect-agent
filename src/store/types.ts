@@ -79,6 +79,11 @@ export const electionType = generateActionTypes([
 	'create_ElectionOfficial',
 	'get_ElectionOfficial',
 	'get_ElectionOfficialById',
+	'update_ElectionOfficialById',
+	'get_ElectionResultAnalytics',
+	'create_ElectionResultAnalytics',
+	'get_ElectionResultAnalyticsStats',
+	'create_ElectionReeport',
 ]);
 
 export const electiveCategoryType = generateActionTypes([

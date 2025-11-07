@@ -194,7 +194,7 @@ const Onboarding = () => {
 							<div className='d-flex justify-content-center'>
 								<TypeButton
 									title='Login'
-									onClick={() => navigate('/login')}
+									onClick={() => navigate('/')}
 									type='button'
 								/>
 							</div>

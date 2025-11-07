@@ -7,6 +7,7 @@ import {
 	AngleDownSVG,
 	AngleRightSVG,
 	OverviewSVG,
+	ResultSVG,
 	SettingsSVG,
 	SwitchOffSVG,
 	// OverviewSVG,
@@ -50,6 +51,11 @@ export const menuData: IMenuItem[] = [
 		icon: <OverviewSVG />,
 		title: 'Home',
 		pageUrl: pageurl.OVERVIEW,
+	},
+	{
+		icon: <ResultSVG />,
+		title: 'Result Analytics',
+		pageUrl: pageurl.RESULTANALYTICS,
 	},
 	{
 		icon: <SettingsSVG />,
@@ -112,7 +118,12 @@ export const MenuItem: FC<IMenuItem> = ({ icon, title, pageUrl, action, sub }) =
 				style={{ height: '38.84px' }}
 			>
 				<div className='svg-container'>{icon}</div>
-				<p className='m-0 font-16'>{title}</p>
+				<p
+					className='m-0 font-11'
+					style={{ fontSize: '13px' }}
+				>
+					{title}
+				</p>
 				<div className='hw-mx ml-auto f-row align-items-center'>
 					{sub?.length ? isSub ? <AngleDownSVG /> : <AngleRightSVG /> : null}
 				</div>
@@ -128,12 +139,7 @@ export const MenuItem: FC<IMenuItem> = ({ icon, title, pageUrl, action, sub }) =
 						key={index}
 						onClick={() => onSubClick(i.url)}
 					>
-						<p
-							className={`m-0 color-label sub-menu ${_isUrl(i.url, location) ? 'active' : ''}`}
-							style={{ fontSize: '11px' }}
-						>
-							{i.title}
-						</p>
+						<p className={`m-0 color-label sub-menu font-13 ${_isUrl(i.url, location) ? 'active' : ''}`}>{i.title}</p>
 					</div>
 				))}
 			</Hvc>

@@ -8,8 +8,9 @@ import type { IElectionDivision } from '../../../interface/state/IElectionState'
 import { ActionItem } from '../../utils/action';
 import { TypeButton } from '../../utils/button';
 import { CardItems, Hvc, HvcLoad, useCallAPI } from '../../utils/hooks';
-import { AlertSVG, UploadIconSVG } from '../../utils/svgs';
+import { AlertSVG, CheckSVG, UploadIconSVG } from '../../utils/svgs';
 import { TabSection, useTabSection } from '../../utils/tab-section';
+import Table, { type ITableRecord } from '../../utils/table';
 
 const Overview = () => {
 	const { states, actions, global, rsProps } = useGlobalContext();
@@ -108,13 +109,50 @@ const Overview = () => {
 	};
 
 	const isAssignment = !!electionOfficialData?.assignment.code;
-	// const isAssignment =
-	// 	!!electionOfficialData?.localGovernments?.length ||
-	// 	!!electionOfficialData?.pollingUnits?.length ||
-	// 	!!electionOfficialData?.states?.length ||
-	// 	!!electionOfficialData?.wards?.length;
 
 	const [isProfile, setIsProfile] = useState<boolean>(false);
+
+	const taskRecord: ITableRecord[] = [
+		{
+			id: '1',
+			row: [
+				{
+					value: `${electionOfficialData?.assignment.resultType.toUpperCase()} Result`,
+				},
+				{
+					value: `${electionOfficialData?.assignment.name} [${electionOfficialData?.assignment.code}]`,
+				},
+				{
+					value: electionOfficialData?.assignment.isCompleted ? 'Completed' : 'Pending',
+				},
+			],
+			rowActions: [
+				{
+					actionType: 'btn-options',
+					options: [
+						{
+							label: 'Upload Election Result',
+							action: () => {
+								uploadResultAction(electionOfficialData?.assignment.resultType.toUpperCase() as ResultType, [
+									{
+										id: Number(electionOfficialData?.assignment.id ?? '4'),
+										name: electionOfficialData?.assignment.name ?? '',
+										code: electionOfficialData?.assignment.code ?? '',
+									},
+								])();
+							},
+							// disabled: electionOfficialData?.assignment.isCompleted,
+						},
+						{
+							label: 'View Result Analytics',
+							action: () => {},
+							disabled: !electionOfficialData?.assignment.isCompleted,
+						},
+					],
+				},
+			],
+		},
+	];
 
 	return (
 		<HvcLoad
@@ -140,16 +178,14 @@ const Overview = () => {
 				</div>
 				<Hvc
 					removeDOM
-					view={!isAssignment}
-					className='f-row-7 align-items-center align-items-start'
-				>
-					<AlertSVG />
-					<p className='color-label m-0 font-16'>No assignments</p>
-				</Hvc>
-				<Hvc
-					removeDOM
 					view={isAssignment}
 					className='f-column-33 align-items-start'
+					errorFallBack={
+						<div className='f-row-7 align-items-center align-items-start'>
+							<AlertSVG />
+							<p className='color-label m-0 font-16'>No assignments</p>
+						</div>
+					}
 				>
 					<div className='border-label rounded p-4 w-100'>
 						<CardItems
@@ -163,24 +199,52 @@ const Overview = () => {
 						style={{ overflow: 'auto' }}
 					>
 						<div className='f-column-23'>
-							<div className='grid-wrapper-20 gap-13'>
+							<div className='grid-wrapper-30 gap-23 border-label-bottom p d-none'>
 								<ActionItem
-									action={uploadResultAction(electionOfficialData?.assignment.resultType.toUpperCase() as ResultType, [
-										{
-											id: Number(electionOfficialData?.assignment.id ?? '4'),
-											name: electionOfficialData?.assignment.name ?? '',
-											code: electionOfficialData?.assignment.code ?? '',
-										},
-									])}
+									action={
+										electionOfficialData?.assignment.isCompleted
+											? undefined
+											: uploadResultAction(electionOfficialData?.assignment.resultType.toUpperCase() as ResultType, [
+													{
+														id: Number(electionOfficialData?.assignment.id ?? '4'),
+														name: electionOfficialData?.assignment.name ?? '',
+														code: electionOfficialData?.assignment.code ?? '',
+													},
+												])
+									}
 									icon={<UploadIconSVG />}
 									label={`${electionOfficialData?.assignment.resultType.toUpperCase()} Result`}
+									description={`${electionOfficialData?.assignment.name} [${electionOfficialData?.assignment.code}]`}
 								/>
+
+								{electionOfficialData?.assignment.isCompleted ? (
+									<div className='f-row-10 align-items-center ml-auto'>
+										<CheckSVG />
+										<p className='font-13 m-0'>Task Completed</p>
+									</div>
+								) : (
+									<div className='f-row-20 align-items-center ml-auto'>
+										<TypeButton
+											title='Continue with Draft'
+											buttonSize='little'
+											buttonType='outlined'
+										/>
+										<TypeButton
+											title='Start Afresh'
+											buttonSize='little'
+										/>
+									</div>
+								)}
 							</div>
+							<Table
+								header={['Result Type', 'Assignment', 'Status', '']}
+								record={taskRecord}
+							/>
 						</div>
 					</div>
 				</Hvc>
 			</div>
-			<div className='f-column-21'>
+			<div className='f-column-21 d-none'>
 				<div className='f-row justify-content-center'>
 					<TypeButton
 						title={!isProfile ? 'View Info' : 'Hide Info'}

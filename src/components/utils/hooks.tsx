@@ -2,7 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import axios from 'axios';
 import queryString from 'query-string';
 import type React from 'react';
-import { type RefObject, useCallback, useEffect, useReducer, useRef, useState } from 'react';
+import { type ReactNode, type RefObject, useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import {
 	type DefaultValues,
 	type FieldValues,
@@ -20,7 +20,6 @@ import { useGlobalContext } from '../../context/global';
 import type { IStates } from '../../interface/IReducer';
 import { TypeButton } from './button';
 import { AlertSVG, CheckSVG, CopySVG, PulseSVG, RefreshSVG } from './svgs';
-// import { useGlobalContext } from '../../context/global'
 
 export const useLocationHook = () => {
 	const location = useLocation();
@@ -301,9 +300,10 @@ interface IHVC extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivEleme
 	removeDOM?: boolean;
 	load?: boolean;
 	auth?: boolean;
+	errorFallBack?: ReactNode;
 }
 
-export const Hvc: React.FC<IHVC> = ({ view, children, className, removeDOM, load, auth, ...props }) => {
+export const Hvc: React.FC<IHVC> = ({ view, children, className, removeDOM, load, auth, errorFallBack, ...props }) => {
 	if (load) return <PulseSVG />;
 
 	if (removeDOM)
@@ -323,12 +323,15 @@ export const Hvc: React.FC<IHVC> = ({ view, children, className, removeDOM, load
 		);
 
 	return (
-		<div
-			className={`${view ? '' : 'd-none'} ${className}`}
-			{...props}
-		>
-			{children}
-		</div>
+		<>
+			<div
+				className={`${view ? '' : 'd-none'} ${className}`}
+				{...props}
+			>
+				{children}
+			</div>
+			{!view && errorFallBack}
+		</>
 	);
 };
 
@@ -338,8 +341,9 @@ interface IHVCLoad extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivE
 	removeDOM?: boolean;
 	load?: boolean;
 	loadTxt?: string;
+	onRefresh?: () => void;
 }
-export const HvcLoad: React.FC<IHVCLoad> = ({ view, children, className, removeDOM, load, loadTxt, ...props }) => {
+export const HvcLoad: React.FC<IHVCLoad> = ({ view, children, className, removeDOM, load, loadTxt, onRefresh, ...props }) => {
 	if (load)
 		return (
 			<div className='f-row-10 aic hw-mx'>
@@ -363,12 +367,22 @@ export const HvcLoad: React.FC<IHVCLoad> = ({ view, children, className, removeD
 		);
 
 	return (
-		<div
-			className={`${view ? '' : 'd-none'} ${className}`}
-			{...props}
-		>
-			{children}
-		</div>
+		<>
+			{onRefresh && (
+				<div className='pb-2 f-row justify-content-end'>
+					<RefreshComponent
+						onRefresh={onRefresh}
+						loadTxt={load ? 'Fetching data...' : 'Refresh'}
+					/>
+				</div>
+			)}
+			<div
+				className={`${view ? '' : 'd-none'} ${className}`}
+				{...props}
+			>
+				{children}
+			</div>
+		</>
 	);
 };
 
@@ -531,15 +545,17 @@ export const useCallAPI = (getData: () => void, data: boolean) => {
 export interface IRefreshProps {
 	load?: boolean;
 	onRefresh?: () => void;
+	loadTxt?: string;
 }
 
-export const RefreshComponent = ({ load, onRefresh }: IRefreshProps) => (
+export const RefreshComponent = ({ load, onRefresh, loadTxt }: IRefreshProps) => (
 	<div
-		className='text-center d-flex align-items-center justify-content-center'
+		className='text-center f-row-11 align-items-center justify-content-center'
 		onClick={onRefresh}
-		style={{ width: '25px' }}
+		style={{ width: 'max-content' }}
 	>
 		{load ? <PulseSVG /> : <RefreshSVG />}
+		{loadTxt ? <p className='m-0 font-11 text-decoratIon-underline cursor-pointer'>{loadTxt}</p> : null}
 	</div>
 );
 
@@ -862,15 +878,17 @@ export const MediaItem = ({ url, isCover }: { url: string; isCover?: boolean }) 
 			{mediaUrl.load ? (
 				<PulseSVG />
 			) : mediaUrl.type === 'image' ? (
-				<img
-					src={mediaUrl.url}
-					alt=''
-					style={{
-						objectFit: isCover ? 'cover' : 'contain',
-						height: isCover ? 'auto' : '100%',
-					}}
-					className='w-100'
-				/>
+				mediaUrl.url && (
+					<img
+						src={mediaUrl.url}
+						alt=''
+						style={{
+							objectFit: isCover ? 'cover' : 'contain',
+							height: isCover ? 'auto' : '100%',
+						}}
+						className='w-100'
+					/>
+				)
 			) : mediaUrl.type === 'doc' ? (
 				<iframe
 					src={mediaUrl.url.replace('?dl=0', '?raw=1')}

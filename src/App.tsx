@@ -10,6 +10,7 @@ import { pageurl } from './constants/pageurl';
 import AuthRoute from './routes/auth-route';
 
 const OverviewPage = React.lazy(async () => await import('./components/pages/overview'));
+const ResultAnalytics = React.lazy(async () => await import('./components/pages/result-analytics/ResultAnalytics'));
 const Settings = React.lazy(async () => await import('./components/pages/settings'));
 const SettingsProfile = React.lazy(async () => await import('./components/pages/settings/profile'));
 const SettingsBankDetails = React.lazy(async () => await import('./components/pages/settings/bank-details'));
@@ -41,6 +42,10 @@ const App = () => (
 					<Route
 						path={pageurl.OVERVIEW}
 						element={<OverviewPage />}
+					/>
+					<Route
+						path={pageurl.RESULTANALYTICS}
+						element={<ResultAnalytics />}
 					/>
 					<Route
 						path={pageurl.SETTINGS}

@@ -7,19 +7,14 @@ export interface IUserState {
 	FullName: string;
 	UserName: string;
 	Email: string;
+	PartyId: string;
 	PhoneNumber: string;
-	PollingUnitName: string;
-	PollingUnitId: string;
-	Election: string;
-	Ward: string;
-	LGA: string;
-	State: string;
-	Zone: string;
-	GeoZone: string;
-	role: string[];
+	role: string;
 	nbf: number;
 	exp: number;
 	iat: number;
+	iss: string;
+	aud: string;
 }
 
 export interface ILogin {

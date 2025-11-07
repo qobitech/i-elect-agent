@@ -146,7 +146,7 @@ export const push_IRevWardDataModel = ({
 	utils.httpPostMethod({
 		apiData: {
 			url: '',
-			customurl: `${COMMANDAPI}/api/v1/WardResult/create-ward-result`,
+			customurl: `${COMMANDAPI}/api/v1/i-elect/WardResult/create-ward-result`,
 			header: utils.header(),
 			data,
 		},
@@ -184,7 +184,7 @@ export const get_IRevPollingUnitDataModel = ({
 }: IGetQuery<IIRevResultStates> & { data?: IRrevDataReq }) =>
 	utils.httpPostMethod({
 		apiData: {
-			customurl: `${QUERYAPI}/api/v1/PollingUnitResult/get-all-multi-paged`,
+			customurl: `${QUERYAPI}/api/v1/i-elect/PollingUnitResult/get-all-multi-paged`,
 			url: '',
 			header: utils.header(),
 			data,
@@ -197,7 +197,7 @@ export const get_IRevPollingUnitDataModel = ({
 export const get_IRevWardDataModel = ({ onFailure, onSuccess, data }: IGetQuery<IIRevResultStates> & { data?: IRrevDataReq }) =>
 	utils.httpPostMethod({
 		apiData: {
-			customurl: `${QUERYAPI}/api/v1/WardResult/get-all-multi-paged`,
+			customurl: `${QUERYAPI}/api/v1/i-elect/WardResult/get-all-multi-paged`,
 			url: '',
 			header: utils.header(),
 			data,
@@ -292,7 +292,7 @@ export interface IAddFlagWardResult {
 export const get_IRevStateDataModel = ({ onFailure, onSuccess, data }: IGetQuery & { data?: IRrevDataReq }) =>
 	utils.httpPostMethod({
 		apiData: {
-			customurl: `${QUERYAPI}/api/v1/StateResult/get-all-multi-paged`,
+			customurl: `${QUERYAPI}/api/v1/i-elect/StateResult/get-all-multi-paged`,
 			url: '',
 			header: utils.header(),
 			data,
@@ -450,7 +450,7 @@ export const push_IRevLGADataModel = ({
 export const get_IRevLGADataModel = ({ onFailure, onSuccess, data }: IGetQuery<IIRevResultStates> & { data?: IRrevDataReq }) =>
 	utils.httpPostMethod({
 		apiData: {
-			customurl: `${QUERYAPI}/api/v1/LocalGovernmentResult/get-all-multi-paged`,
+			customurl: `${QUERYAPI}/api/v1/i-elect/LocalGovernmentResult/get-all-multi-paged`,
 			url: '',
 			header: utils.header(),
 			data,
@@ -522,7 +522,7 @@ export const push_IRevPollingUnitDataModel = ({
 	utils.httpPostMethod({
 		apiData: {
 			url: '',
-			customurl: `${COMMANDAPI}/api/v1/PollingUnitResult/create-polling-unit-result`,
+			customurl: `${COMMANDAPI}/api/v1/i-elect/PollingUnitResult/create-polling-unit-result`,
 			header: utils.header(),
 			data,
 		},
@@ -550,7 +550,7 @@ export const push_IRevPollingUnitDataExcelResult = ({
 	utils.httpPostMethod({
 		apiData: {
 			url: '',
-			customurl: `${COMMANDAPI}/api/v1/PollingUnitResult/create-polling-unit-result-from-excel`,
+			customurl: `${COMMANDAPI}/api/v1/i-elect/PollingUnitResult/create-polling-unit-result-from-excel`,
 			header: utils.header(),
 			data,
 		},
@@ -606,7 +606,7 @@ export interface IApproveDeleteRequest {
 export const addNote_IRevPollingUnitDataModel = ({ onFailure, onSuccess, data }: IGetQuery & { data: IAddNotes }) =>
 	utils.httpPostMethod({
 		apiData: {
-			customurl: `${COMMANDAPI}/api/v1/PollingUnitResult/add-notes`,
+			customurl: `${COMMANDAPI}/api/v1/i-elect/PollingUnitResult/add-notes`,
 			url: '',
 			header: utils.header(),
 			data,
@@ -619,7 +619,7 @@ export const addNote_IRevPollingUnitDataModel = ({ onFailure, onSuccess, data }:
 export const addFlag_IRevPollingUnitDataModel = ({ onFailure, onSuccess, data }: IGetQuery & { data: IFlag }) =>
 	utils.httpPostMethod({
 		apiData: {
-			customurl: `${COMMANDAPI}/api/v1/PollingUnitResult/add-flags`,
+			customurl: `${COMMANDAPI}/api/v1/i-elect/PollingUnitResult/add-flags`,
 			url: '',
 			header: utils.header(),
 			data,
@@ -632,7 +632,7 @@ export const addFlag_IRevPollingUnitDataModel = ({ onFailure, onSuccess, data }:
 export const deleteRequest_IRevPollingUnitDataModel = ({ onFailure, onSuccess, data }: IGetQuery & { data: IDeleteRequest }) =>
 	utils.httpPostMethod({
 		apiData: {
-			customurl: `${COMMANDAPI}/api/v1/PollingUnitResult/delete-pollingUnit-result-request`,
+			customurl: `${COMMANDAPI}/api/v1/i-elect/PollingUnitResult/delete-pollingUnit-result-request`,
 			url: '',
 			header: utils.header(),
 			data,
@@ -649,7 +649,7 @@ export const approveDeleteRequest_IRevPollingUnitDataModel = ({
 }: IGetQuery & { data: IApproveDeleteRequest }) =>
 	utils.httpPostMethod({
 		apiData: {
-			customurl: `${COMMANDAPI}/api/v1/PollingUnitResult/approve-delete-pollingUnit-result-request`,
+			customurl: `${COMMANDAPI}/api/v1/i-elect/PollingUnitResult/approve-delete-pollingUnit-result-request`,
 			url: '',
 			header: utils.header(),
 			data,
@@ -662,7 +662,7 @@ export const approveDeleteRequest_IRevPollingUnitDataModel = ({
 export const addNote_IRevWardDataModel = ({ onFailure, onSuccess, data }: IGetQuery & { data: IAddNotes }) =>
 	utils.httpPostMethod({
 		apiData: {
-			customurl: `${COMMANDAPI}/api/v1/WardResult/add-notes`,
+			customurl: `${COMMANDAPI}/api/v1/i-elect/WardResult/add-notes`,
 			url: '',
 			header: utils.header(),
 			data,
@@ -675,7 +675,7 @@ export const addNote_IRevWardDataModel = ({ onFailure, onSuccess, data }: IGetQu
 export const addFlag_IRevWardDataModel = ({ onFailure, onSuccess, data }: IGetQuery & { data: IFlag }) =>
 	utils.httpPostMethod({
 		apiData: {
-			customurl: `${COMMANDAPI}/api/v1/WardResult/add-flags`,
+			customurl: `${COMMANDAPI}/api/v1/i-elect/WardResult/add-flags`,
 			url: '',
 			header: utils.header(),
 			data,
@@ -688,7 +688,7 @@ export const addFlag_IRevWardDataModel = ({ onFailure, onSuccess, data }: IGetQu
 export const deleteRequest_IRevWardDataModel = ({ onFailure, onSuccess, data }: IGetQuery & { data: IDeleteRequest }) =>
 	utils.httpPostMethod({
 		apiData: {
-			customurl: `${COMMANDAPI}/api/v1/PollingUnitResult/delete-ward-result-request`,
+			customurl: `${COMMANDAPI}/api/v1/i-elect/PollingUnitResult/delete-ward-result-request`,
 			url: '',
 			header: utils.header(),
 			data,
@@ -705,7 +705,7 @@ export const approveDeleteRequest_IRevWardDataModel = ({
 }: IGetQuery & { data: IApproveDeleteRequest }) =>
 	utils.httpPostMethod({
 		apiData: {
-			customurl: `${COMMANDAPI}/api/v1/PollingUnitResult/approve-delete-ward-result-request`,
+			customurl: `${COMMANDAPI}/api/v1/i-elect/PollingUnitResult/approve-delete-ward-result-request`,
 			url: '',
 			header: utils.header(),
 			data,
@@ -718,7 +718,7 @@ export const approveDeleteRequest_IRevWardDataModel = ({
 export const addNote_IRevLGADataModel = ({ onFailure, onSuccess, data }: IGetQuery & { data: IAddNotes }) =>
 	utils.httpPostMethod({
 		apiData: {
-			customurl: `${COMMANDAPI}/api/v1/LocalGovernmentResult/add-notes`,
+			customurl: `${COMMANDAPI}/api/v1/i-elect/LocalGovernmentResult/add-notes`,
 			url: '',
 			header: utils.header(),
 			data,
@@ -731,7 +731,7 @@ export const addNote_IRevLGADataModel = ({ onFailure, onSuccess, data }: IGetQue
 export const addFlag_IRevLGADataModel = ({ onFailure, onSuccess, data }: IGetQuery & { data: IFlag }) =>
 	utils.httpPostMethod({
 		apiData: {
-			customurl: `${COMMANDAPI}/api/v1/LocalGovernmentResult/add-flags`,
+			customurl: `${COMMANDAPI}/api/v1/i-elect/LocalGovernmentResult/add-flags`,
 			url: '',
 			header: utils.header(),
 			data,
@@ -744,7 +744,7 @@ export const addFlag_IRevLGADataModel = ({ onFailure, onSuccess, data }: IGetQue
 export const deleteRequest_IRevLGADataModel = ({ onFailure, onSuccess, data }: IGetQuery & { data: IDeleteRequest }) =>
 	utils.httpPostMethod({
 		apiData: {
-			customurl: `${COMMANDAPI}/api/v1/LocalGovernmentResult/delete-local_government-result-request`,
+			customurl: `${COMMANDAPI}/api/v1/i-elect/LocalGovernmentResult/delete-local_government-result-request`,
 			url: '',
 			header: utils.header(),
 			data,
@@ -761,7 +761,7 @@ export const approveDeleteRequest_IRevLGADataModel = ({
 }: IGetQuery & { data: IApproveDeleteRequest }) =>
 	utils.httpPostMethod({
 		apiData: {
-			customurl: `${COMMANDAPI}/api/v1/LocalGovernmentResult/approve-delete-local_government-result-request`,
+			customurl: `${COMMANDAPI}/api/v1/i-elect/LocalGovernmentResult/approve-delete-local_government-result-request`,
 			url: '',
 			header: utils.header(),
 			data,
@@ -774,7 +774,7 @@ export const approveDeleteRequest_IRevLGADataModel = ({
 export const addNote_IRevStateDataModel = ({ onFailure, onSuccess, data }: IGetQuery & { data: IAddNotes }) =>
 	utils.httpPostMethod({
 		apiData: {
-			customurl: `${COMMANDAPI}/api/v1/StateResult/add-notes`,
+			customurl: `${COMMANDAPI}/api/v1/i-elect/StateResult/add-notes`,
 			url: '',
 			header: utils.header(),
 			data,
@@ -787,7 +787,7 @@ export const addNote_IRevStateDataModel = ({ onFailure, onSuccess, data }: IGetQ
 export const addFlag_IRevStateDataModel = ({ onFailure, onSuccess, data }: IGetQuery & { data: IFlag }) =>
 	utils.httpPostMethod({
 		apiData: {
-			customurl: `${COMMANDAPI}/api/v1/StateResult/add-flags`,
+			customurl: `${COMMANDAPI}/api/v1/i-elect/StateResult/add-flags`,
 			url: '',
 			header: utils.header(),
 			data,
@@ -800,7 +800,7 @@ export const addFlag_IRevStateDataModel = ({ onFailure, onSuccess, data }: IGetQ
 export const deleteRequest_IRevStateDataModel = ({ onFailure, onSuccess, data }: IGetQuery & { data: IDeleteRequest }) =>
 	utils.httpPostMethod({
 		apiData: {
-			customurl: `${COMMANDAPI}/api/v1/LocalGovernmentResult/delete-local_government-result-request`,
+			customurl: `${COMMANDAPI}/api/v1/i-elect/LocalGovernmentResult/delete-local_government-result-request`,
 			url: '',
 			header: utils.header(),
 			data,
@@ -817,7 +817,7 @@ export const approveDeleteRequest_IRevStateDataModel = ({
 }: IGetQuery & { data: IApproveDeleteRequest }) =>
 	utils.httpPostMethod({
 		apiData: {
-			customurl: `${COMMANDAPI}/api/v1/LocalGovernmentResult/approve-delete-local_government-result-request`,
+			customurl: `${COMMANDAPI}/api/v1/i-elect/LocalGovernmentResult/approve-delete-local_government-result-request`,
 			url: '',
 			header: utils.header(),
 			data,
@@ -831,7 +831,7 @@ export const approveDeleteRequest_IRevStateDataModel = ({
 export const get_IRevStateElectionDownloadRequest = ({ onFailure, onSuccess, data }: IGetQuery & { data: IAddNotes }) =>
 	utils.httpPostMethod({
 		apiData: {
-			customurl: `${QUERYAPI}/api/v1/StateResult/get-all-multi-paged`,
+			customurl: `${QUERYAPI}/api/v1/i-elect/StateResult/get-all-multi-paged`,
 			url: '',
 			header: utils.header(),
 			data,
@@ -844,7 +844,7 @@ export const get_IRevStateElectionDownloadRequest = ({ onFailure, onSuccess, dat
 export const get_IRevLGAElectionDownloadRequest = ({ onFailure, onSuccess, data }: IGetQuery & { data: IAddNotes }) =>
 	utils.httpPostMethod({
 		apiData: {
-			customurl: `${QUERYAPI}/api/v1/LocalGovernmentResult/get-all-multi-paged`,
+			customurl: `${QUERYAPI}/api/v1/i-elect/LocalGovernmentResult/get-all-multi-paged`,
 			url: '',
 			header: utils.header(),
 			data,
@@ -857,7 +857,7 @@ export const get_IRevLGAElectionDownloadRequest = ({ onFailure, onSuccess, data 
 export const get_IRevWardElectionDownloadRequest = ({ onFailure, onSuccess, data }: IGetQuery & { data: IAddNotes }) =>
 	utils.httpPostMethod({
 		apiData: {
-			customurl: `${QUERYAPI}/api/v1/WardResult/get-all-multi-paged`,
+			customurl: `${QUERYAPI}/api/v1/i-elect/WardResult/get-all-multi-paged`,
 			url: '',
 			header: utils.header(),
 			data,
@@ -870,7 +870,7 @@ export const get_IRevWardElectionDownloadRequest = ({ onFailure, onSuccess, data
 export const get_IRevPollingUnitElectionDownloadRequest = ({ onFailure, onSuccess, data }: IGetQuery & { data: IAddNotes }) =>
 	utils.httpPostMethod({
 		apiData: {
-			customurl: `${QUERYAPI}/api/v1/PollingUnitResult/get-all-multi-paged`,
+			customurl: `${QUERYAPI}/api/v1/i-elect/PollingUnitResult/get-all-multi-paged`,
 			url: '',
 			header: utils.header(),
 			data,

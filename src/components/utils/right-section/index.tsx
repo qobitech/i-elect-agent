@@ -37,6 +37,7 @@ export type actionComponent =
 	| 'side-menu-mobile'
 	| 'upload-result'
 	| 'report-issues'
+	| 'report-result-issues'
 	| 'preview-media-file'
 	| 'report-feedbacks'
 	| 'report-feedback-item'

@@ -1,11 +1,18 @@
+import { type ResultType } from '../../../constants/global';
 import type {
 	ICreateElectionCycleState,
+	ICreateElectionResultAnalytics,
 	ICreateElectionState,
 	IElectionOfficialByQuery,
 	IElectionOfficialsByQuery,
+	IElectionResultStatsResponse,
 	IElectionStates,
 	IGetElectionByID,
 	IGetElectionOfficial,
+	IGetResultAnalyticsStatsResponse,
+	IReportResultRequest,
+	IResultAnalyticsDataResponse,
+	IUpdateElectionOfficialReqData,
 } from '../../../interface/state/IElectionState';
 import { electionType } from '../../types';
 import * as utils from '../utils';
@@ -408,6 +415,96 @@ export const get_ElectionOfficialById = ({ onFailure, onSuccess, id }: IResponse
 			header: utils.header(),
 		},
 		actionType: electionType.get_ElectionOfficialById,
+		onSuccess,
+		onFailure,
+	});
+
+export const update_ElectionOfficialById = ({
+	onFailure,
+	onSuccess,
+	id,
+	data,
+}: IResponse<IGetElectionOfficial> & { id: string; data: IUpdateElectionOfficialReqData }) =>
+	utils.httpPutMethod({
+		apiData: {
+			url: `/api/v1/ElectionOfficial/update/${id}`,
+			header: utils.header(),
+			data,
+		},
+		actionType: electionType.update_ElectionOfficialById,
+		onSuccess,
+		onFailure,
+	});
+
+export const get_ResultStatsById = ({ onFailure, onSuccess, id }: IResponse<IGetResultAnalyticsStatsResponse> & { id: string }) =>
+	utils.httpGetMethod({
+		apiData: {
+			url: `/api/v1/get-stats/${id}`,
+			header: utils.header(),
+		},
+		actionType: electionType.get_ElectionOfficialById,
+		onSuccess,
+		onFailure,
+	});
+
+export const get_ElectionResultAnalytics = ({ onFailure, onSuccess, query, paged }: IGetQuery<IResultAnalyticsDataResponse>) =>
+	utils.httpGetMethod({
+		apiData: {
+			url: `/api/v1/ResultAnalytics${getQuery(paged, ...(query || []))}`,
+			header: utils.header(),
+		},
+		actionType: electionType.get_ElectionResultAnalytics,
+		onSuccess,
+		onFailure,
+	});
+
+export const get_ElectionResultAnalyticsStats = ({
+	onFailure,
+	onSuccess,
+	electionId,
+}: IResponse<IElectionResultStatsResponse> & { electionId: string }) =>
+	utils.httpGetMethod({
+		apiData: {
+			url: `/get-stats/${electionId}`,
+			header: utils.header(),
+		},
+		actionType: electionType.get_ElectionResultAnalyticsStats,
+		onSuccess,
+		onFailure,
+	});
+
+export const create_ElectionResultAnalytics = ({
+	data,
+	onFailure,
+	onSuccess,
+}: IResponse & {
+	data: ICreateElectionResultAnalytics;
+}) =>
+	utils.httpPostMethod({
+		apiData: {
+			url: '/result-created',
+			header: utils.header(),
+			data,
+		},
+		actionType: electionType.create_ElectionResultAnalytics,
+		onSuccess,
+		onFailure,
+	});
+
+export const create_ElectionReeport = ({
+	data,
+	onFailure,
+	onSuccess,
+}: IResponse & {
+	data: IReportResultRequest;
+}) =>
+	utils.httpPostMethod({
+		apiData: {
+			url: '/api/v1/ResultReport',
+			header: utils.header(),
+			data,
+		},
+		actionType: electionType.create_ElectionReeport,
 		onSuccess,
 		onFailure,
 	});

@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { type SVGProps } from 'react';
+
+export type SVGComponentProps = SVGProps<SVGSVGElement>;
 
 import { PRIMARY_COLOR } from '../../../constants/global';
-export interface ISVG {
+export interface ISVG extends SVGComponentProps {
 	width?: string;
 	height?: string;
 	color?: string;
@@ -63,13 +65,14 @@ export const AlertSVG = () => (
 	</svg>
 );
 
-export const CheckSVG = ({ width, height, color }: ISVG) => (
+export const CheckSVG = ({ width, height, color, ...rest }: ISVG) => (
 	<svg
 		xmlns='http://www.w3.org/2000/svg'
 		width={width || '15'}
 		height={height || '15'}
 		viewBox='0 0 29 29'
 		fill='none'
+		{...rest}
 	>
 		<path
 			fillRule='evenodd'
@@ -628,32 +631,37 @@ export const TrophySVG = () => (
 	</svg>
 );
 
-export const PulseSVG = () => (
-	<svg
-		width='24'
-		height='24'
-		viewBox='0 0 24 24'
-		xmlns='http://www.w3.org/2000/svg'
-		fill={PRIMARY_COLOR}
-	>
-		<style>
-			{
-				'.spinner_ZCsl{animation:spinner_qV4G 1.2s cubic-bezier(0.52,.6,.25,.99) infinite}.spinner_gaIW{animation-delay:.6s}@keyframes spinner_qV4G{0%{r:0;opacity:1}100%{r:11px;opacity:0}}'
-			}
-		</style>
-		<circle
-			className='spinner_ZCsl'
-			cx='12'
-			cy='12'
-			r='0'
-		/>
-		<circle
-			className='spinner_ZCsl spinner_gaIW'
-			cx='12'
-			cy='12'
-			r='0'
-		/>
-	</svg>
+export const PulseSVG = ({ noText }: { noText?: boolean }) => (
+	<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+		<svg
+			width='24'
+			height='24'
+			viewBox='0 0 24 24'
+			xmlns='http://www.w3.org/2000/svg'
+			fill={PRIMARY_COLOR}
+		>
+			<style>
+				{
+					'.spinner_ZCsl{animation:spinner_qV4G 1.2s cubic-bezier(0.52,.6,.25,.99) infinite}.spinner_gaIW{animation-delay:.6s}@keyframes spinner_qV4G{0%{r:0;opacity:1}100%{r:11px;opacity:0}}'
+				}
+			</style>
+			<circle
+				className='spinner_ZCsl'
+				cx='12'
+				cy='12'
+				r='0'
+			/>
+			<circle
+				className='spinner_ZCsl spinner_gaIW'
+				cx='12'
+				cy='12'
+				r='0'
+			/>
+		</svg>
+		{!noText ? (
+			<span style={{ fontSize: '14px', color: PRIMARY_COLOR, fontFamily: 'sans-serif' }}>Loading... please wait</span>
+		) : null}
+	</div>
 );
 
 export const VerifiedSVG = () => (
@@ -2573,6 +2581,72 @@ export const FlagSVG = () => (
 		<path
 			d='M12.3999 5.03268L15.9494 1.1832C16.0137 1.0802 16.017 0.950882 15.9584 0.844869C15.8993 0.738856 15.7877 0.673203 15.6667 0.673203H0.666667V0.333333C0.666667 0.148987 0.517647 0 0.333333 0C0.14902 0 0 0.14902 0 0.333333V1.00654V8.05882V9.05882V19.6667C0 19.851 0.148987 20 0.333333 20C0.51768 20 0.666667 19.851 0.666667 19.6667V9.39216H15.6667C15.7877 9.39216 15.8993 9.32647 15.9584 9.22013C16.017 9.11448 16.0137 8.9848 15.9494 8.8818L12.3999 5.03268ZM0.666699 8.72549V8.05882V1.33987H15.065L11.7239 4.85601C11.6562 4.96402 11.6562 5.10134 11.7239 5.20967L15.065 8.72549H0.666699Z'
 			fill='black'
+		/>
+	</svg>
+);
+
+export const CautionSvg = ({ ...rest }: SVGComponentProps) => (
+	<svg
+		xmlns='http://www.w3.org/2000/svg'
+		viewBox='0 0 24 24'
+		width='14'
+		height='14'
+		role='img'
+		aria-labelledby='cautionTitle cautionDesc'
+		focusable='false'
+		style={{ color: '#f6c23e' }}
+		{...rest}
+	>
+		<path
+			d='M1 21h22L12 2 1 21z'
+			fill='currentColor'
+		/>
+
+		<rect
+			x='11'
+			y='7.5'
+			width='2'
+			height='6'
+			rx='0.6'
+			fill='#fff'
+		/>
+		<circle
+			cx='12'
+			cy='17.2'
+			r='1.2'
+			fill='#fff'
+		/>
+	</svg>
+);
+
+export const ArrowDownSvg = ({ ...rest }: SVGComponentProps) => (
+	<svg
+		width='8'
+		height='11'
+		viewBox='0 0 8 11'
+		fill='none'
+		xmlns='http://www.w3.org/2000/svg'
+		{...rest}
+	>
+		<path
+			d='M4.37616 10.8509L7.82962 7.55087C8.01422 7.3654 8.07742 6.96865 7.87364 6.75165C7.66987 6.53538 7.28292 6.53609 7.07986 6.75452L4.54647 9.17231V0.549997C4.54647 0.246362 4.30222 0 4.00119 0C3.70015 0 3.4559 0.246362 3.4559 0.549997V9.17231L0.922516 6.75452C0.720161 6.53681 0.318306 6.52178 0.128729 6.75165C-0.0459325 6.96362 -0.0537411 7.35823 0.17275 7.55087L3.62621 10.8509C3.76537 10.9912 4.13245 11.1008 4.37598 10.8509H4.37616Z'
+			fill='red'
+		/>
+	</svg>
+);
+
+export const ArrowUpSvg = ({ ...rest }: SVGComponentProps) => (
+	<svg
+		width='8'
+		height='11'
+		viewBox='0 0 8 11'
+		fill='none'
+		xmlns='http://www.w3.org/2000/svg'
+		{...rest}
+	>
+		<path
+			d='M3.62384 0.149141L0.170379 3.44913C-0.0142176 3.6346 -0.0774155 4.03135 0.126359 4.24835C0.330131 4.46462 0.717081 4.46391 0.920145 4.24548L3.45353 1.82769L3.45353 10.45C3.45353 10.7536 3.69778 11 3.99881 11C4.29985 11 4.5441 10.7536 4.5441 10.45L4.5441 1.82769L7.07748 4.24548C7.27984 4.46319 7.68169 4.47822 7.87127 4.24835C8.04593 4.03638 8.05374 3.64177 7.82725 3.44913L4.37379 0.149141C4.23463 0.00877809 3.86755 -0.100796 3.62403 0.149141L3.62384 0.149141Z'
+			fill='#0C9F29'
 		/>
 	</svg>
 );

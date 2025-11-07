@@ -1,13 +1,17 @@
 import type { GenerateReducerTypes } from '../IReducer';
 import type {
 	ICreateElectionCycleState,
+	ICreateElectionResultAnalytics,
 	IElectionCycleState,
 	IElectionCycleStates,
 	IElectionOfficialsByQuery,
+	IElectionResultStatsResponse,
 	IElectionStates,
 	IGetElectionByID,
 	IGetElectionOfficial,
 	IGetElectionTypeStates,
+	IReportResultRequest,
+	IResultAnalyticsDataResponse,
 } from '../state/IElectionState';
 
 export type IElectionReducer = GenerateReducerTypes<'create_Election', any> &
@@ -33,4 +37,9 @@ export type IElectionReducer = GenerateReducerTypes<'create_Election', any> &
 	GenerateReducerTypes<'delete_ElectionTypeByID', any> &
 	GenerateReducerTypes<'create_ElectionOfficial', any> &
 	GenerateReducerTypes<'get_ElectionOfficial', IElectionOfficialsByQuery> &
+	GenerateReducerTypes<'update_ElectionOfficialById', any> &
+	GenerateReducerTypes<'get_ElectionResultAnalytics', IResultAnalyticsDataResponse> &
+	GenerateReducerTypes<'create_ElectionResultAnalytics', ICreateElectionResultAnalytics> &
+	GenerateReducerTypes<'create_ElectionReeport', IReportResultRequest> &
+	GenerateReducerTypes<'get_ElectionResultAnalyticsStats', IElectionResultStatsResponse> &
 	GenerateReducerTypes<'get_ElectionOfficialById', IGetElectionOfficial>;

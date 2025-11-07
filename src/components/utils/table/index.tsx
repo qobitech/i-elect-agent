@@ -111,7 +111,7 @@ export const useTableAction = (actionEnums?: Record<string, string> | null): ITa
 };
 
 export interface ICell {
-	value?: string | number;
+	value?: string | number | JSX.Element;
 	imageUrl?: string;
 	isLink?: boolean;
 	position?: number;
@@ -165,6 +165,7 @@ interface IResultTable {
 	handleTableAction?: () => void;
 	lastCardElementRef?: (node: any) => void;
 	ctaComponent?: JSX.Element | null;
+	stickyColumns?: 1 | 2 | 3;
 }
 
 const Table: React.FC<IResultTable> = ({
@@ -176,6 +177,7 @@ const Table: React.FC<IResultTable> = ({
 	handleTableAction,
 	lastCardElementRef,
 	ctaComponent,
+	stickyColumns,
 }) => {
 	const isRecord = record?.length > 0;
 	const isCheckedRow = (id: string) => !!tableAction?.selectedItems?.includes?.(id);
@@ -212,8 +214,20 @@ const Table: React.FC<IResultTable> = ({
 		}
 	};
 
+	const isSticky = stickyColumns !== undefined;
+
+	const stickyClass = (index: number) => {
+		if (!stickyColumns || index > stickyColumns) return '';
+		return index < (hideNumbering ? stickyColumns - 1 : stickyColumns)
+			? `sticky-col col-${index + (hideNumbering ? 1 : 2)} ${!hideNumbering && index < 1 ? 'numbering' : ''}`
+			: '';
+	};
+
 	return (
-		<div className='table-container rounded'>
+		<div
+			className='table-container rounded position-relative'
+			style={{ maxWidth: '1200px' }}
+		>
 			{!hideCheck ? (
 				<TableActionComponent
 					tableAction={tableAction}
@@ -222,35 +236,24 @@ const Table: React.FC<IResultTable> = ({
 			) : null}
 			{!isRecord ? null : (
 				<table className='reportTable'>
-					<thead className='thead_blue position-relative'>
-						<tr
-							style={{
-								position: 'sticky',
-								top: 0,
-								background: '#fff',
-							}}
-						>
-							{!hideNumbering && <th></th>}
-							{header.map((i, index) => {
-								if (index === 0) {
-									return (
-										<th key={index}>
-											{!hideCheck && (
-												<div style={{ marginRight: 25 }}>
-													<TypeCheckbox
-														onChange={handleSelectAll}
-														checked={selectedAll}
-													/>
-												</div>
-											)}
-											{i}
-										</th>
-									);
-								} else {
-									return <th key={index}>{i}</th>;
-								}
-							})}
-						</tr>
+					<thead className='thead_blue'>
+						{!hideNumbering && <th className={isSticky ? 'sticky-col col-1' : ''}></th>}
+						{header.map((i, index) => (
+							<th
+								key={index}
+								className={stickyClass(index)}
+							>
+								{index === 0 && !hideCheck && (
+									<div style={{ marginRight: 25 }}>
+										<TypeCheckbox
+											onChange={handleSelectAll}
+											checked={selectedAll}
+										/>
+									</div>
+								)}
+								{i}
+							</th>
+						))}
 					</thead>
 					<tbody>
 						{isRecord &&
@@ -261,45 +264,43 @@ const Table: React.FC<IResultTable> = ({
 									ref={jindex + 1 === record.length ? lastCardElementRef : null}
 								>
 									{!hideNumbering && (
-										<td style={{ padding: '10px 0px 10px 10px' }}>
+										<td
+											style={{ padding: '10px 0px 10px 10px' }}
+											className={isSticky ? 'sticky-col col-1' : ''}
+										>
 											<p style={{ margin: 0, fontSize: '11px' }}>{jindex + 1 + ((currentPage || 1) - 1) * PAGE_SIZE}</p>
 										</td>
 									)}
-									{i?.row?.map((j, index) => {
-										if (index === 0) {
-											return (
-												<td
-													key={index}
-													// width={`${100 / header.length}%`}
+									{i?.row?.map((j, index) => (
+										<td
+											key={index}
+											width={`${100 / header.length}%`}
+											className={stickyClass(index)}
+										>
+											{index === 0 ? (
+												<div
+													style={{
+														display: 'flex',
+														alignItems: 'center',
+														minHeight: '35px',
+													}}
 												>
-													<div
-														style={{
-															display: 'flex',
-															alignItems: 'center',
-															minHeight: '35px',
-														}}
-													>
-														{!hideCheck && (
-															<div style={{ marginRight: 25 }}>
-																<TypeCheckbox
-																	onChange={(e) => handleSelect(e, i)}
-																	checked={selectedAll || isCheckedRow(i.id)}
-																	id={i.id}
-																/>
-															</div>
-														)}
-														<CellValueComponent {...j} />
-													</div>
-												</td>
-											);
-										} else {
-											return (
-												<td key={index}>
+													{!hideCheck && (
+														<div style={{ marginRight: 25 }}>
+															<TypeCheckbox
+																onChange={(e) => handleSelect(e, i)}
+																checked={selectedAll || isCheckedRow(i.id)}
+																id={i.id}
+															/>
+														</div>
+													)}
 													<CellValueComponent {...j} />
-												</td>
-											);
-										}
-									})}
+												</div>
+											) : (
+												<CellValueComponent {...j} />
+											)}
+										</td>
+									))}
 									{i?.rowActions?.length ? (
 										<td>
 											<div className='table-cell-action'>
@@ -367,7 +368,7 @@ const CellValueComponent: React.FC<ICell> = ({
 
 interface ITDC {
 	action: (() => void) | undefined;
-	value: string | number | undefined;
+	value?: string | number | JSX.Element;
 	textLength: number;
 	cellWidth: string;
 	classProps: string;
@@ -406,11 +407,14 @@ const TDContent: React.FC<ITDC> = ({
 }) => {
 	const [summarizeText, setSummarizeText] = useState<boolean>(() => !!textLength);
 	const isSumm = value ? value?.toString().length > textLength : false;
-	const cellValue = value
-		? textLength
-			? value?.toString().substring(0, textLength) + (isSumm ? '...' : '')
-			: value?.toString()
-		: '';
+	const isElement = typeof value !== 'string' && typeof value !== 'number';
+	const cellValue = !isElement
+		? value
+			? textLength
+				? value?.toString().substring(0, textLength) + (isSumm ? '...' : '')
+				: value?.toString()
+			: ''
+		: value;
 
 	const isMutate = typeof mutate === 'function';
 
@@ -464,21 +468,25 @@ const TDContent: React.FC<ITDC> = ({
 					/>
 				</Hvc>
 				{/* text */}
-				<p className='m-0 d-flex align-items-center text-small'>
-					<span
-						className={`d-block ${classProps}`}
-						onClick={action}
-						style={{ width: cellWidth || '', fontSize: '12px' }}
-						role='button'
-					>
-						{summarizeText ? cellValue : value}
-					</span>
-					{textLength && isSumm ? (
-						<span onClick={() => setSummarizeText(!summarizeText)}>
-							<i className={`ml-2 table-cell-border p-1 rounded fas fa-angle-${summarizeText ? 'up' : 'down'}`} />
+				{isElement ? (
+					cellValue
+				) : (
+					<p className='m-0 d-flex align-items-center text-small'>
+						<span
+							className={`d-block ${classProps}`}
+							onClick={action}
+							style={{ width: cellWidth || '', fontSize: '12px' }}
+							role='button'
+						>
+							{summarizeText ? cellValue : value}
 						</span>
-					) : null}
-				</p>
+						{textLength && isSumm ? (
+							<span onClick={() => setSummarizeText(!summarizeText)}>
+								<i className={`ml-2 table-cell-border p-1 rounded fas fa-angle-${summarizeText ? 'up' : 'down'}`} />
+							</span>
+						) : null}
+					</p>
+				)}
 				{copy ? <div className='hw-mx cursor-pointer'>{copySuccess ? <CheckSVG /> : <CopySVG />}</div> : null}
 			</Hvc>
 		</>

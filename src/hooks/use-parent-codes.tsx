@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import { getUserData, type ResultType } from '../../../constants/global';
-import { useGlobalContext } from '../../../context/global';
-import type { IElectoralDivisionCode } from '../../../interface/state/IRev';
-import type { IRrevDataReq } from '../../../store/actions/query/irev';
-import { TypeButton } from '../../utils/button';
-import { Hvc, HvcLoad } from '../../utils/hooks';
-import { CheckSVG } from '../../utils/svgs';
-import type { ICode } from './utils';
+import { type ICode } from '../components/pages/upload-result/utils';
+import { getUserData, type ResultType } from '../constants/global';
+import { useGlobalContext } from '../context/global';
+import { type IElectoralDivisionCode } from '../interface/state/IRev';
+import { type IRrevDataReq } from '../store/actions/query/irev';
 
 const getResultCodeTitle = (resultType: ResultType) => {
 	switch (resultType) {
@@ -22,7 +19,7 @@ const getResultCodeTitle = (resultType: ResultType) => {
 	}
 };
 
-const ParentCodesStage = () => {
+export const useParentCodesStage = () => {
 	const {
 		global: {
 			state: { parentCodes, resultType, electionData, load },
@@ -113,16 +110,16 @@ const ParentCodesStage = () => {
 		let response: IElectoralDivisionCode[] = [];
 		const irev = states?._irev;
 		if (resultType === 'EC8A') {
-			response = irev?.get_IRevPollingUnitDataModel?.data?.map((i) => i.pollingUnit)!;
+			response = irev?.get_IRevPollingUnitDataModel?.data?.map((i) => i.pollingUnit) ?? [];
 		}
 		if (resultType === 'EC8B') {
-			response = irev?.get_IRevWardDataModel?.data?.map((i) => i.ward)!;
+			response = irev?.get_IRevWardDataModel?.data?.map((i) => i.ward) ?? [];
 		}
 		if (resultType === 'EC8C') {
-			response = irev?.get_IRevLGADataModel?.data?.map((i) => i.localGovernment)!;
+			response = irev?.get_IRevLGADataModel?.data?.map((i) => i.localGovernment) ?? [];
 		}
 		if (resultType === 'EC8D') {
-			response = irev?.get_IRevStateDataModel?.data?.map((i) => i.state)!;
+			response = irev?.get_IRevStateDataModel?.data?.map((i) => i.state) ?? [];
 		}
 		return response;
 	};
@@ -158,58 +155,12 @@ const ParentCodesStage = () => {
 
 	const isSubmitted = (code: string) => responseData?.map((j) => j?.code)?.includes(code);
 
-	return (
-		<HvcLoad
-			removeDOM
-			load={load}
-			view
-			className='f-column-33'
-		>
-			<div>{/* <h6 className="m-0">{title.parent}s</h6> */}</div>
-			<p className='m-0 text-little color-label'>
-				For every <b>{title.parent}</b> listed below, ensure you provide the required details and then submit.
-			</p>
-			{parentCodes.map((i) => (
-				<div
-					key={i.status + i?.code}
-					className='f-column-13'
-				>
-					<TypeButton
-						title={`${i.name} [ ${i?.code} ]`}
-						buttonType={isSubmitted(i?.code) ? 'disabled' : 'outlined'}
-						buttonSize='small'
-						className='w-100'
-						icon={isSubmitted(i?.code) ? <CheckSVG color='green' /> : <></>}
-						disabled={isSubmitted(i?.code)}
-						onClick={onParentCode(i)}
-						style={{ color: 'green', opacity: 1 }}
-					/>
-					<Hvc
-						removeDOM
-						view={promptUseDraft === i?.code}
-						className='f-column-13 border-label rounded p-4 text-center align-items-center'
-					>
-						<p className='text-little'>
-							Looks like you have a saved draft. Would you like to continue where you left off or start a new session?
-						</p>
-						<div className='f-row-20 justify-content-center'>
-							<TypeButton
-								title='Continue with Draft'
-								buttonSize='small'
-								buttonType='outlined'
-								onClick={() => continueWithDraft(i)}
-							/>
-							<TypeButton
-								title='Start Fresh'
-								buttonSize='small'
-								onClick={() => startAfresh(i)}
-							/>
-						</div>
-					</Hvc>
-				</div>
-			))}
-		</HvcLoad>
-	);
+	return {
+		isSubmitted,
+		title,
+		startAfresh,
+		continueWithDraft,
+		onParentCode,
+		promptUseDraft,
+	};
 };
-
-export default ParentCodesStage;

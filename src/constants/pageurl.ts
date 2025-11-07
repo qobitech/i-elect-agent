@@ -3,6 +3,7 @@ export const pageurl = {
 	OVERVIEW: '/dashboard/overview',
 	VERIFYOTP: '/verify-otp',
 	REQUESTACCESS: '/request-access',
+	RESULTANALYTICS: '/dashboard/result-analytics',
 	ONBOARDING: '/onboarding',
 	SETTINGS: '/dashboard/settings',
 	SETTINGSPROFILE: '/dashboard/settings/profile',

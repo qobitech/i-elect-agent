@@ -76,25 +76,37 @@ export interface IGetByPollingUnitCode {
 	message: string;
 	statusCode: number;
 	isSuccessful: boolean;
-	data: [
-		{
+	data: {
+		id: number;
+		poolingUnitCode: string;
+		name: string;
+		description: string;
+		registeredVoters: number;
+		wardId: number;
+		latitude: string | null;
+		longitude: string | null;
+		location: string | null;
+		ward: {
 			id: number;
-			poolingUnitCode: string;
 			name: string;
-			description: string;
-			registeredVoters: number;
-			wardId: number;
-			latitude: null;
-			longitude: null;
-			location: null;
-			ward: {
-				id: number;
-				name: string;
-				wardCode: string;
-				lgaId: number;
-			};
-		},
-	];
+			wardCode: string;
+			lgaId: number;
+		};
+		state: {
+			id: number;
+			name: string;
+		};
+		lga: {
+			id: number;
+			name: string;
+			lgaCode: string;
+			stateId: number;
+			description: string | null;
+			wardCount: number;
+			constituencyCount: number;
+			pollingUnitCount: number;
+		};
+	};
 }
 
 export interface IAllPollingUnit {
