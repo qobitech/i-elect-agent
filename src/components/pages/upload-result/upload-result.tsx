@@ -18,11 +18,9 @@ const UploadResultStage = () => {
 		onStage,
 	} = useGlobalContext();
 
-	// console.log(uploadedFiles, 'JUJU')
-
 	const isUploaded = !!uploadedFiles.length;
 
-	const load = states?._irev?.upload_IRevResultLoading;
+	const load = states?._result.upload_ResultLoading;
 
 	const handlePreviewFile = (index: number) => {
 		rsProps?.addRightSectionHistory();

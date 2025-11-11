@@ -226,7 +226,7 @@ const Table: React.FC<IResultTable> = ({
 	return (
 		<div
 			className='table-container rounded position-relative'
-			style={{ maxWidth: '1200px' }}
+			style={{ maxWidth: '1125px' }}
 		>
 			{!hideCheck ? (
 				<TableActionComponent

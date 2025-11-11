@@ -95,6 +95,8 @@ const ResultAnalytics = () => {
 
 	const statsResultType = getStatsResultType(resultType, electionResultStats!);
 
+	if (electionOfficialData?.assignment.resultType.toLowerCase() === 'ec8a') return <>Loading...</>;
+
 	return (
 		<HvcLoad
 			view

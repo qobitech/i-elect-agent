@@ -81,6 +81,8 @@ export const upload_IRevResult = ({
 
 export interface IWardResultMap {
 	pollingUnitId: number;
+	pollingUnitName: string;
+	pollingUnitCode: string;
 	partyId: number;
 	votes: number;
 }
@@ -469,6 +471,8 @@ export interface ICreatePUResult {
 		name: string;
 	};
 	poolingUnitCode: string;
+	poolingUnitName: string;
+	poolingUnitId: number;
 	presidingOfficer: {
 		id: string;
 		name: string;

@@ -146,17 +146,15 @@
 .sticky-col {
 	position: sticky;
 	background: white;
-	z-index: 2;
+	z-index: 3;
 }
 
 .col-1 {
 	left: 0;
-	z-index: 3;
 }
 
 .col-2 {
 	left: 150px;
-	z-index: 2;
 
 	&.numbering {
 		left: 16px;

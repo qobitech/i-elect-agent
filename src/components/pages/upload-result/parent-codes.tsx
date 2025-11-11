@@ -48,44 +48,44 @@ const ParentCodesStage = () => {
 		clearState('load');
 	};
 
-	const getAllResults = () => {
-		updateState('load', true);
-		const req = {
-			zones: [],
-			geoZones: [],
-			elections: [electionData?.data?.[0]?.election],
-		} as IRrevDataReq;
-		const getFunc = () => {
-			if (resultType === 'EC8A') {
-				req.localGovernments = [];
-				req.wards = [];
-				req.states = [];
-				req.pollingUnits = getCode('EC8A');
-				return actions?.get_IRevPollingUnitDataModel;
-			} else if (resultType === 'EC8B') {
-				req.localGovernments = [];
-				req.pollingUnits = [];
-				req.states = [];
-				req.wards = getCode('EC8B');
-				return actions?.get_IRevWardDataModel;
-			} else if (resultType === 'EC8C') {
-				req.pollingUnits = [];
-				req.wards = [];
-				req.states = [];
-				req.localGovernments = getCode('EC8C');
-				return actions?.get_IRevLGADataModel;
-			} else if (resultType === 'EC8D') {
-				req.pollingUnits = [];
-				req.wards = [];
-				req.localGovernments = [];
-				req.states = getCode('EC8D');
-				return actions?.get_IRevStateDataModel;
-			}
+	// const getAllResults = () => {
+	// 	updateState('load', true);
+	// 	const req = {
+	// 		zones: [],
+	// 		geoZones: [],
+	// 		elections: [electionData?.data?.[0]?.election],
+	// 	} as IRrevDataReq;
+	// 	const getFunc = () => {
+	// 		if (resultType === 'EC8A') {
+	// 			req.localGovernments = [];
+	// 			req.wards = [];
+	// 			req.states = [];
+	// 			req.pollingUnits = getCode('EC8A');
+	// 			return actions?.get_IRevPollingUnitDataModel;
+	// 		} else if (resultType === 'EC8B') {
+	// 			req.localGovernments = [];
+	// 			req.pollingUnits = [];
+	// 			req.states = [];
+	// 			req.wards = getCode('EC8B');
+	// 			return actions?.get_IRevWardDataModel;
+	// 		} else if (resultType === 'EC8C') {
+	// 			req.pollingUnits = [];
+	// 			req.wards = [];
+	// 			req.states = [];
+	// 			req.localGovernments = getCode('EC8C');
+	// 			return actions?.get_IRevLGADataModel;
+	// 		} else if (resultType === 'EC8D') {
+	// 			req.pollingUnits = [];
+	// 			req.wards = [];
+	// 			req.localGovernments = [];
+	// 			req.states = getCode('EC8D');
+	// 			return actions?.get_IRevStateDataModel;
+	// 		}
 
-			return undefined;
-		};
-		getFunc?.()?.({ paged: true, data: req, onSuccess, onFailure });
-	};
+	// 		return undefined;
+	// 	};
+	// 	getFunc?.()?.({ paged: true, data: req, onSuccess, onFailure });
+	// };
 
 	useEffect(() => {
 		clearDraftLocal();
@@ -105,7 +105,7 @@ const ParentCodesStage = () => {
 	useEffect(() => {
 		if (parentCodes.length) {
 			getDraft();
-			getAllResults();
+			// getAllResults();
 		}
 	}, [parentCodes]);
 

@@ -39,6 +39,8 @@ const ResultSummaryStage = () => {
 		states,
 	} = useGlobalContext();
 
+	console.log(resultSummary, 'juju');
+
 	function transformString(input: string): string {
 		// Step 1: Remove "Data" from the string
 		let result = input.replace(/^Data/, '');
@@ -62,26 +64,26 @@ const ResultSummaryStage = () => {
 		onStage('Preview');
 	};
 
-	useEffect(() => {
-		const extractedSummary = states?._result?.extract_ResultUrl?.pollingUnitDetails!;
+	// useEffect(() => {
+	// 	const extractedSummary = states?._result?.extract_ResultUrl?.pollingUnitDetails!;
 
-		const mapResultSummary = {
-			DataVotersOnRegister: extractedSummary?.numberOfVotersOnRegister || 0,
-			DataAccreditedVoters: extractedSummary?.numberOfAccreditedVoters || 0,
-			DataBallotPapersIssuedToPoolingUnit: extractedSummary?.numberOfBallotPapersIssued || 0,
-			DataUnusedBallotPapers: extractedSummary?.numberOfUnusedBallotPapers || 0,
-			DataRejectedBallot: extractedSummary?.numberOfRejectedBallots || 0,
-			DataTotalValidVotes: extractedSummary?.numberOfTotalValidVotes || 0,
-			DataTotalUsedBallotPapers: extractedSummary?.totalNumberOfUsedBallotPapers || 0,
-		};
+	// 	const mapResultSummary = {
+	// 		DataVotersOnRegister: extractedSummary?.numberOfVotersOnRegister || 0,
+	// 		DataAccreditedVoters: extractedSummary?.numberOfAccreditedVoters || 0,
+	// 		DataBallotPapersIssuedToPoolingUnit: extractedSummary?.numberOfBallotPapersIssued || 0,
+	// 		DataUnusedBallotPapers: extractedSummary?.numberOfUnusedBallotPapers || 0,
+	// 		DataRejectedBallot: extractedSummary?.numberOfRejectedBallots || 0,
+	// 		DataTotalValidVotes: extractedSummary?.numberOfTotalValidVotes || 0,
+	// 		DataTotalUsedBallotPapers: extractedSummary?.totalNumberOfUsedBallotPapers || 0,
+	// 	};
 
-		const res = {
-			...resultSummary,
-			...mapResultSummary,
-		};
+	// 	const res = {
+	// 		...resultSummary,
+	// 		...mapResultSummary,
+	// 	};
 
-		updateState('resultSummary', res);
-	}, [states?._result?.extract_ResultUrl]);
+	// 	updateState('resultSummary', res);
+	// }, [states?._result?.extract_ResultUrl]);
 
 	return (
 		<div className='f-column-33'>

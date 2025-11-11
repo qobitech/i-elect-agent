@@ -17,21 +17,13 @@ import type {
 	IStateResultMap,
 	IWardResultMap,
 } from '../../../store/actions/query/irev';
-// import jwtDecode from 'jwt-decode'
 import type { IComponentState } from '../../layout/component-state';
 import { type IUSH, useStateHook } from '../../layout/state-hook';
-import {
-	defaultSummary,
-	type IChildCode,
-	// IChildCode,
-	// ICode,
-	type IPartyVotes,
-	type IVoteCount,
-} from './utils';
+import { defaultSummary, type IChildCode, type IPartyVotes, type IVoteCount } from './utils';
 
 export const getResults = (states: IStates | undefined, partyVotes: IPartyVotes[]): IResult[] => {
 	const allParties = states?._party.get_Party?.data;
-	// Flatten and merge duplicates
+
 	const mergedOutput: IResult[] = partyVotes
 		? Array.from(
 				partyVotes
@@ -43,11 +35,8 @@ export const getResults = (states: IStates | undefined, partyVotes: IPartyVotes[
 					)
 					?.reduce((acc, curr) => {
 						if (acc.has(curr.partyId)) {
-							// Merge votes if partyId already exists
-
 							acc.get(curr.partyId)!.votes += parseInt(curr.votes + '');
 						} else {
-							// Add new entry
 							acc.set(curr.partyId, {
 								...curr,
 								partyName: allParties?.filter((j) => j.id === curr.partyId)?.[0]?.shortName || '',
@@ -77,7 +66,6 @@ export const useStateResultDataManager = ({ results }: { results: IResult[] }): 
 	} = useGlobalContext();
 	const geoZoneProps = getZoneProps(states);
 	const getStateResultsMap = () => {
-		// Flatten and merge duplicates
 		const transformedArray: IStateResultMap[] = partyVotes.flatMap((item) =>
 			item.votes.map(({ partyId, votes }: IVoteCount) => ({
 				lgaId: item.id,
@@ -146,7 +134,6 @@ export const useLGAResultDataManager = ({ results }: { results: IResult[] }): { 
 	} = useGlobalContext();
 
 	const getLGAResultsMap = () => {
-		// Flatten and merge duplicates
 		const transformedArray: ILGAResultMap[] = partyVotes.flatMap((item) =>
 			item.votes.map(({ partyId, votes }: IVoteCount) => ({
 				wardId: item.id,
@@ -215,10 +202,11 @@ export const useWardResultDataManager = ({ results }: { results: IResult[] }): {
 	} = useGlobalContext();
 	const geoZoneProps = getZoneProps(states);
 	const getWardResultsMap = () => {
-		// Flatten and merge duplicates
 		const transformedArray: IWardResultMap[] = partyVotes.flatMap((item) =>
 			item.votes.map(({ partyId, votes }: IVoteCount) => ({
 				pollingUnitId: item.id,
+				pollingUnitName: item.name,
+				pollingUnitCode: item.code,
 				partyId,
 				votes: parseInt(votes + '') || 0,
 			}))
@@ -286,7 +274,7 @@ export const usePollingUnitResultDataManager = ({ results }: { results: IResult[
 			state: { resultSummary, uploadedFiles, electionData, selectedParentCode },
 		},
 	} = useGlobalContext();
-	// const geoZoneProps = getZoneProps(states)
+
 	const data: ICreatePUResult = {
 		accreditedVoters: resultSummary.DataAccreditedVoters,
 		ballotPapersIssuedToPoolingUnit: resultSummary.DataBallotPapersIssuedToPoolingUnit,
@@ -310,6 +298,8 @@ export const usePollingUnitResultDataManager = ({ results }: { results: IResult[
 			name: electionData?.data?.[0]?.election || '',
 		},
 		poolingUnitCode: selectedParentCode?.code,
+		poolingUnitName: selectedParentCode?.name,
+		poolingUnitId: selectedParentCode?.codeId,
 		presidingOfficer: {
 			id: getUserData().user?.UserId || '',
 			name: getUserData().user?.FullName || '',
@@ -340,7 +330,7 @@ export const useGetCodes = ({
 		state: { childCodes, selectedParentCode, resultType, partyVotes },
 	} = global;
 
-	const getPartyVotes = (id: number, parties: IPartyStates): IPartyVotes => {
+	const getPartyVotes = (id: number, name: string, code: string, parties: IPartyStates): IPartyVotes => {
 		const pv = partyVotes.filter((i) => i.id === id)[0];
 		if (!pv)
 			return {
@@ -351,6 +341,8 @@ export const useGetCodes = ({
 					label: vote.shortName,
 					logo: vote.logo,
 				})),
+				name,
+				code,
 			};
 		return pv;
 	};
@@ -374,30 +366,15 @@ export const useGetCodes = ({
 		const id = [selectedParentCode.codeId];
 
 		if (resultType === 'EC8A') {
-			// actions?.get_PoolingUnitByCode({
-			// 	poolingUnitCode: selectedParentCode?.code,
-			// 	onSuccess: (res) => {
-			// 		console.log(res, 'juju');
-			// 		actions?.get_LGAById({
-			// 			id: res.data.lga.id + '',
-			// 		});
 			actions?.get_Party({
 				onSuccess: (parties) => {
-					// updateState('partyVotes', [
-					// 	{
-					// 		...getPartyVotes(selectedParentCode.codeId, parties),
-					// 	},
-					// ]);
-
 					updateState('partyVotes', [
 						{
-							...getPartyVotes(Number(selectedParentCode?.codeId), parties),
+							...getPartyVotes(Number(selectedParentCode?.codeId), selectedParentCode.name, selectedParentCode.code, parties),
 						},
 					]);
 				},
 			});
-			// 	},
-			// });
 		}
 		if (resultType === 'EC8B') {
 			actions?.get_PoolingUnitInWard({
@@ -417,7 +394,7 @@ export const useGetCodes = ({
 								updateState(
 									'partyVotes',
 									res.data.map((i) => ({
-										...getPartyVotes(i.id, parties),
+										...getPartyVotes(i.id, i.name, i.poolingUnitCode, parties),
 									}))
 								);
 							},
@@ -434,11 +411,6 @@ export const useGetCodes = ({
 						updateState(
 							'childCodes',
 							res.data.map((i) => ({
-								// code: i.wardCode,
-								// parent: i.lgaId,
-								// name: i.name,
-								// codeId: i.id,
-								// status: false
 								...getChildCodes(i, i.wardCode, i.lgaId),
 							}))
 						);
@@ -447,14 +419,7 @@ export const useGetCodes = ({
 								updateState(
 									'partyVotes',
 									res.data.map((i) => ({
-										// id: i.id,
-										// votes: parties.data.map((vote) => ({
-										//   partyId: vote.id,
-										//   votes: 0,
-										//   label: vote.shortName,
-										//   logo: vote.logo
-										// }))
-										...getPartyVotes(i.id, parties),
+										...getPartyVotes(i.id, i.name, i.wardCode, parties),
 									}))
 								);
 							},
@@ -471,11 +436,6 @@ export const useGetCodes = ({
 						updateState(
 							'childCodes',
 							res.data.map((i) => ({
-								// code: i.lgaCode,
-								// parent: i.stateId,
-								// codeId: i.id,
-								// name: i.name,
-								// status: false
 								...getChildCodes(i, i.lgaCode, i.stateId),
 							}))
 						);
@@ -484,14 +444,7 @@ export const useGetCodes = ({
 								updateState(
 									'partyVotes',
 									res.data.map((i) => ({
-										// id: i.id,
-										// votes: parties.data.map((vote) => ({
-										//   partyId: vote.id,
-										//   votes: 0,
-										//   label: vote.shortName,
-										//   logo: vote.logo
-										// }))
-										...getPartyVotes(i.id, parties),
+										...getPartyVotes(i.id, i.name, i.lgaCode, parties),
 									}))
 								);
 							},

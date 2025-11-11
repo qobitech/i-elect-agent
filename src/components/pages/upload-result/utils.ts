@@ -20,6 +20,8 @@ export interface IVoteCount {
 }
 export interface IPartyVotes {
 	id: number;
+	name: string;
+	code: string;
 	votes: IVoteCount[];
 }
 
