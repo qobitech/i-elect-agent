@@ -59,7 +59,7 @@ const PartyVotes = () => {
 		updateState('partyVotes', pv);
 	}, [states?._result?.extract_ResultUrl]);
 
-	const partyVote: IPartyVotes = id ? partyVotes.filter((i) => i.id === id)[0] : { id: 0, votes: [] };
+	const partyVote: IPartyVotes = id ? partyVotes.filter((i) => i.id === id)[0] : { id: 0, votes: [], name: '', code: '' };
 
 	console.log(partyVotes, id, parentCodes, selectedChildCode, 'juju');
 
