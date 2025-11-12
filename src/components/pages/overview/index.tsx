@@ -154,7 +154,7 @@ const Overview = () => {
 							action: () => {
 								navigate(pageurl.RESULTANALYTICS);
 							},
-							disabled: electionOfficialData?.assignment.resultType === 'ec8a',
+							disabled: electionOfficialData?.assignment?.resultType?.toLowerCase() === 'ec8a',
 						},
 					],
 				},
