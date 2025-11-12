@@ -14,7 +14,13 @@ import type {
 	IFlag,
 	IRrevDataReq,
 } from '../../store/actions/query/irev';
-import type { IIRevResultStates, IUploadIrevState } from '../state/IRev';
+import type {
+	IIrevAnalyticsResponse,
+	IIrevAnalyticsStatsRequestArg,
+	IIrevElectionSubmissionResponse,
+	IIRevResultStates,
+	IUploadIrevState,
+} from '../state/IRev';
 
 export interface IIRevAction {
 	push_IRevDataModel: (
@@ -23,7 +29,7 @@ export interface IIRevAction {
 		}
 	) => (dispatch: any) => void;
 	push_IRevWardDataModel: (
-		t: IResponse & {
+		t: IResponse<IIrevElectionSubmissionResponse> & {
 			data: ICreateWardResult;
 		}
 	) => (dispatch: any) => void;
@@ -53,21 +59,21 @@ export interface IIRevAction {
 		data,
 		onFailure,
 		onSuccess,
-	}: IResponse & {
+	}: IResponse<IIrevElectionSubmissionResponse> & {
 		data: ICreateLGAResult;
 	}) => (dispatch: any) => void;
 	push_IRevStateDataModel: ({
 		data,
 		onFailure,
 		onSuccess,
-	}: IResponse & {
+	}: IResponse<IIrevElectionSubmissionResponse> & {
 		data: ICreateStateResult;
 	}) => (dispatch: any) => void;
 	push_IRevPollingUnitDataModel: ({
 		data,
 		onFailure,
 		onSuccess,
-	}: IResponse & {
+	}: IResponse<IIrevElectionSubmissionResponse> & {
 		data: ICreatePUResult;
 	}) => (dispatch: any) => void;
 	delete_IRevWardDataModel: ({
@@ -216,5 +222,12 @@ export interface IIRevAction {
 		data,
 	}: IGetQuery<IIRevResultStates> & {
 		data?: IRrevDataReq;
+	}) => (dispatch: any) => Promise<void>;
+	get_IRevResultAnalyticsStats: ({
+		onFailure,
+		onSuccess,
+		data,
+	}: IResponse<IIrevAnalyticsResponse> & {
+		data: IIrevAnalyticsStatsRequestArg;
 	}) => (dispatch: any) => Promise<void>;
 }

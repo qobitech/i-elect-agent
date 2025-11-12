@@ -8,6 +8,7 @@ import {
 	type IElectionResultStatsDataValue,
 } from '../../../interface/state/IElectionState';
 import { type IGetResultAnalyticsData } from '../../../interface/state/IResultState';
+import { type IIrevAnalyticsResponseVoteSummary } from '../../../interface/state/IRev';
 import { type IRightSection } from '../../utils/right-section';
 import { type ITableRecord } from '../../utils/table';
 
@@ -513,9 +514,10 @@ export interface IResultAnalyticsSummary {
 }
 
 export interface IResultAnalyticsSummaryCard {
-	data: {
-		sourceA: IResultAnalyticsSummary;
-		sourceB: IResultAnalyticsSummary;
-	};
+	// data: {
+	// 	sourceA: IResultAnalyticsSummary;
+	// 	sourceB: IResultAnalyticsSummary;
+	// };
+	data: IIrevAnalyticsResponseVoteSummary | undefined;
 	source: 'sourceA' | 'sourceB';
 }

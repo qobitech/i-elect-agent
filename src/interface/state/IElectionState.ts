@@ -163,6 +163,7 @@ export interface IGetElectionByID {
 
 export interface IElectionOfficialByQuery {
 	id: string;
+	referenceId?: string;
 	userId: number;
 	electionId: number;
 	election: string;
@@ -184,6 +185,7 @@ export interface IElectionOfficialsByQuery {
 
 export interface IUpdateElectionOfficialReqData {
 	id: string;
+	referenceId: string;
 	userId: number;
 	electionId: number;
 	election: string;
@@ -223,6 +225,7 @@ export interface IResultAnalyticsDataResponse {
 	totalPages: number;
 	currentPage: number;
 	data: IResultAnalyticsData[];
+	statistics: { total: number; uploadedCount: number };
 }
 export interface IResultAnalyticsData {
 	id: number;

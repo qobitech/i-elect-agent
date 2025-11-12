@@ -15,6 +15,7 @@ export const header = () => ({
 	'Content-Type': 'application/json',
 	'Access-Control-Allow-Origin': '*',
 	'Authorization': getUserData().token ? `Bearer ${getUserData().token}` : '',
+	'PartyId': getUserData().user?.PartyId,
 });
 
 export const headerMultipart = () => ({

@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import type { ResultType } from '../../../constants/global';
 import { useGlobalContext } from '../../../context/global';
 import type { IElectionDivision, IGetElectionOfficial } from '../../../interface/state/IElectionState';
+import { type IIrevElectionSubmissionResponse } from '../../../interface/state/IRev';
 import { TypeButton } from '../../utils/button';
 import { handleScrollRightSection } from '../../utils/helper';
 import { Hvc } from '../../utils/hooks';
@@ -118,7 +119,7 @@ const UploadResult = () => {
 	});
 
 	const onSubmit = () => {
-		const onSuccess = () => {
+		const onSuccess = (res: IIrevElectionSubmissionResponse) => {
 			const data = states?._election.get_ElectionOfficial.data;
 
 			const obj: Partial<Record<ResultType, any>> = {
@@ -152,6 +153,7 @@ const UploadResult = () => {
 				},
 				data: {
 					id: assignmentData.id,
+					referenceId: res.referenceId,
 					userId: assignmentData.userId,
 					electionId: assignmentData.electionId,
 					election: assignmentData.election,

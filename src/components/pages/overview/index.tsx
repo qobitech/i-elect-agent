@@ -1,18 +1,21 @@
 import './style.scss';
 
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router';
 
 import { getUserData, type ResultType } from '../../../constants/global';
+import { pageurl } from '../../../constants/pageurl';
 import { useGlobalContext } from '../../../context/global';
 import type { IElectionDivision } from '../../../interface/state/IElectionState';
-import { ActionItem } from '../../utils/action';
 import { TypeButton } from '../../utils/button';
 import { CardItems, Hvc, HvcLoad, useCallAPI } from '../../utils/hooks';
-import { AlertSVG, CheckSVG, UploadIconSVG } from '../../utils/svgs';
-import { TabSection, useTabSection } from '../../utils/tab-section';
+import { AlertSVG } from '../../utils/svgs';
+import { useTabSection } from '../../utils/tab-section';
 import Table, { type ITableRecord } from '../../utils/table';
 
 const Overview = () => {
+	const navigate = useNavigate();
+
 	const { states, actions, global, rsProps } = useGlobalContext();
 	const { notificationGlobal, get_ElectionOfficial, get_ElectionByID, get_CountryStateByID } = actions!;
 
@@ -110,8 +113,6 @@ const Overview = () => {
 
 	const isAssignment = !!electionOfficialData?.assignment.code;
 
-	const [isProfile, setIsProfile] = useState<boolean>(false);
-
 	const taskRecord: ITableRecord[] = [
 		{
 			id: '1',
@@ -141,12 +142,19 @@ const Overview = () => {
 									},
 								])();
 							},
-							// disabled: electionOfficialData?.assignment.isCompleted,
+							disabled: electionOfficialData?.assignment.isCompleted,
+						},
+						{
+							label: 'View Uploaded Result',
+							action: () => {},
+							disabled: !electionOfficialData?.referenceId,
 						},
 						{
 							label: 'View Result Analytics',
-							action: () => {},
-							disabled: !electionOfficialData?.assignment.isCompleted,
+							action: () => {
+								navigate(pageurl.RESULTANALYTICS);
+							},
+							disabled: electionOfficialData?.assignment.resultType === 'ec8a',
 						},
 					],
 				},
@@ -194,106 +202,10 @@ const Overview = () => {
 						/>
 					</div>
 					<p className='font-25'>You&apos;ve been assigned to submit the following election results</p>
-					<div
-						className='w-100'
-						style={{ overflow: 'auto' }}
-					>
-						<div className='f-column-23'>
-							<div className='grid-wrapper-30 gap-23 border-label-bottom p d-none'>
-								<ActionItem
-									action={
-										electionOfficialData?.assignment.isCompleted
-											? undefined
-											: uploadResultAction(electionOfficialData?.assignment.resultType.toUpperCase() as ResultType, [
-													{
-														id: Number(electionOfficialData?.assignment.id ?? '4'),
-														name: electionOfficialData?.assignment.name ?? '',
-														code: electionOfficialData?.assignment.code ?? '',
-													},
-												])
-									}
-									icon={<UploadIconSVG />}
-									label={`${electionOfficialData?.assignment.resultType.toUpperCase()} Result`}
-									description={`${electionOfficialData?.assignment.name} [${electionOfficialData?.assignment.code}]`}
-								/>
-
-								{electionOfficialData?.assignment.isCompleted ? (
-									<div className='f-row-10 align-items-center ml-auto'>
-										<CheckSVG />
-										<p className='font-13 m-0'>Task Completed</p>
-									</div>
-								) : (
-									<div className='f-row-20 align-items-center ml-auto'>
-										<TypeButton
-											title='Continue with Draft'
-											buttonSize='little'
-											buttonType='outlined'
-										/>
-										<TypeButton
-											title='Start Afresh'
-											buttonSize='little'
-										/>
-									</div>
-								)}
-							</div>
-							<Table
-								header={['Result Type', 'Assignment', 'Status', '']}
-								record={taskRecord}
-							/>
-						</div>
-					</div>
-				</Hvc>
-			</div>
-			<div className='f-column-21 d-none'>
-				<div className='f-row justify-content-center'>
-					<TypeButton
-						title={!isProfile ? 'View Info' : 'Hide Info'}
-						buttonSize='small'
-						buttonType='outlined'
-						className='border-0'
-						icon={<AlertSVG />}
-						onClick={() => setIsProfile(!isProfile)}
+					<Table
+						header={['Result Type', 'Assignment', 'Status', '']}
+						record={taskRecord}
 					/>
-				</div>
-				<Hvc
-					removeDOM
-					view={isProfile}
-					className='body-column-left f-column-33'
-				>
-					<div className='f-column-15'>
-						<TabSection
-							tabProps={tabProps}
-							type='block'
-							position='start'
-							tabGap='10'
-						/>
-						<Hvc
-							removeDOM
-							view={isTab(tabs.ELECTION)}
-							className='grid-wrapper-30 gap-33 border-label rounded p-4'
-						>
-							{overviewSectionData.map((i, index) => (
-								<CardItems
-									title={i.title}
-									value={i.value}
-									key={index}
-								/>
-							))}
-						</Hvc>
-						<Hvc
-							removeDOM
-							view={isTab(tabs.PROFILE)}
-							className='grid-wrapper-30 gap-33 border-label rounded p-4'
-						>
-							{usersectiondata.map((i, index) => (
-								<CardItems
-									title={i.title}
-									value={i.value || ''}
-									key={index}
-								/>
-							))}
-						</Hvc>
-					</div>
 				</Hvc>
 			</div>
 			<div />

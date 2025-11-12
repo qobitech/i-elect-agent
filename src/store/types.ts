@@ -276,6 +276,7 @@ export const irevType = generateActionTypes([
 	'get_IRevWardElectionDownloadRequest',
 	'get_IRevPollingUnitElectionDownloadRequest',
 	'get_IRevPollingUnitDataModel',
+	'get_IRevResultAnalyticsStats',
 ]);
 
 export const searchType = generateActionTypes(['get_SearchElection']);

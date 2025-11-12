@@ -17,6 +17,16 @@ export const useResultAnalytics = (
 		EC8D: 'EC8C',
 	};
 
+	const electoralDivisionProps = (resultType: ResultType) => {
+		if (resultType !== electionOfficialData?.assignment.resultType.toUpperCase()) {
+			return { id: '', code: '' };
+		}
+		return {
+			id: electionOfficialData.assignment.id,
+			code: electionOfficialData.assignment.code,
+		};
+	};
+
 	const getResults = (pageNumber?: number) => {
 		actions?.get_ElectionResultAnalytics({
 			query: [
@@ -32,33 +42,37 @@ export const useResultAnalytics = (
 					key: 'ElectionId',
 					value: electionOfficialData?.electionId,
 				},
-				{
-					key: 'PartyId',
-					value: getUserData().user?.PartyId,
-				},
-				{
-					key: 'IsUploaded',
-					value: isUploaded,
-				},
+				// {
+				// 	key: 'PartyId',
+				// 	value: getUserData().user?.PartyId,
+				// },
+				// {
+				// 	key: 'IsUploaded',
+				// 	value: isUploaded,
+				// },
 				{
 					key: 'ResultType',
-					value: resultType[electionOfficialData?.assignment?.resultType?.toUpperCase() as ResultType],
+					value: resultType[electionOfficialData?.assignment?.resultType?.toUpperCase() as ResultType]?.toLowerCase(),
+				},
+				{
+					key: 'StateId',
+					value: electoralDivisionProps('EC8D').id,
+				},
+				{
+					key: 'LgaId',
+					value: electoralDivisionProps('EC8C').id,
+				},
+				{
+					key: 'WardId',
+					value: electoralDivisionProps('EC8B').id,
+				},
+				{
+					key: 'PollingUnitId',
+					value: electoralDivisionProps('EC8A').id,
 				},
 				// {
-				// 	key: 'StateId',
-				// 	value: getElectoralDivisionId('EC8D'),
-				// },
-				// {
-				// 	key: 'LgaId',
-				// 	value: getElectoralDivisionId('EC8C'),
-				// },
-				// {
-				// 	key: 'WardId',
-				// 	value: getElectoralDivisionId('EC8B'),
-				// },
-				// {
-				// 	key: 'PollingUnitId',
-				// 	value: getElectoralDivisionId('EC8A'),
+				// 	key: 'Code',
+				// 	value: electionOfficialData?.assignment?.code,
 				// },
 				// {
 				// 	key: 'IsAssigned',
@@ -67,10 +81,6 @@ export const useResultAnalytics = (
 				// {
 				// 	key: 'HasApplicant',
 				// 	value: '',
-				// },
-				// {
-				// 	key: 'Code',
-				// 	value: electionOfficialData?.assignment?.code,
 				// },
 			],
 		});

@@ -1,7 +1,13 @@
 import { COMMANDAPI, QUERYAPI } from '../../../constants/global';
-import type { IIRevResultStates, IUploadIrevState } from '../../../interface/state/IRev';
+import type {
+	IIrevAnalyticsResponse,
+	IIrevAnalyticsStatsRequestArg,
+	IIrevElectionSubmissionResponse,
+	IIRevResultStates,
+	IUploadIrevState,
+} from '../../../interface/state/IRev';
 import { irevType } from '../../types';
-import type { IGetQuery, IResponse } from '../core/election';
+import { getQuery, type IGetQuery, type IResponse } from '../core/election';
 import * as utils from '../utils';
 
 export interface IIrevDataModel {
@@ -142,7 +148,7 @@ export const push_IRevWardDataModel = ({
 	data,
 	onFailure,
 	onSuccess,
-}: IResponse & {
+}: IResponse<IIrevElectionSubmissionResponse> & {
 	data: ICreateWardResult;
 }) =>
 	utils.httpPostMethod({
@@ -360,7 +366,7 @@ export const push_IRevStateDataModel = ({
 	data,
 	onFailure,
 	onSuccess,
-}: IResponse & {
+}: IResponse<IIrevElectionSubmissionResponse> & {
 	data: ICreateStateResult;
 }) =>
 	utils.httpPostMethod({
@@ -434,7 +440,7 @@ export const push_IRevLGADataModel = ({
 	data,
 	onFailure,
 	onSuccess,
-}: IResponse & {
+}: IResponse<IIrevElectionSubmissionResponse> & {
 	data: ICreateLGAResult;
 }) =>
 	utils.httpPostMethod({
@@ -520,7 +526,7 @@ export const push_IRevPollingUnitDataModel = ({
 	data,
 	onFailure,
 	onSuccess,
-}: IResponse & {
+}: IResponse<IIrevElectionSubmissionResponse> & {
 	data: ICreatePUResult;
 }) =>
 	utils.httpPostMethod({
@@ -880,6 +886,23 @@ export const get_IRevPollingUnitElectionDownloadRequest = ({ onFailure, onSucces
 			data,
 		},
 		actionType: irevType.get_IRevPollingUnitElectionDownloadRequest,
+		onSuccess,
+		onFailure,
+	});
+
+export const get_IRevResultAnalyticsStats = ({
+	onFailure,
+	onSuccess,
+	data,
+}: IResponse<IIrevAnalyticsResponse> & { data: IIrevAnalyticsStatsRequestArg }) =>
+	utils.httpPostMethod({
+		apiData: {
+			url: '',
+			customurl: `${QUERYAPI}/api/v1/i-elect/Result/resultAnalytics`,
+			header: utils.header(),
+			data,
+		},
+		actionType: irevType.get_IRevResultAnalyticsStats,
 		onSuccess,
 		onFailure,
 	});

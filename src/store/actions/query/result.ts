@@ -1,6 +1,5 @@
-import { type IUploadFileResponse } from '@interface/state/IResultState';
-
 import { EXTRACTAPI, QUERYAPI } from '../../../constants/global';
+import { type IUploadFileResponse } from '../../../interface/state/IResultState';
 import { resultType } from '../../types';
 import { getCommandQuery, type IGetQuery, type IResponse } from '../core/election';
 import * as utils from '../utils';

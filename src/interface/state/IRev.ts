@@ -108,3 +108,49 @@ export interface IIRevResultStates {
 	total: number;
 	pageSize: number;
 }
+
+export interface IIrevElectionSubmissionResponse {
+	referenceId: string;
+	id: string | undefined;
+	message: string;
+	isSuccessful: boolean;
+	statusCode: number;
+	data: null;
+}
+
+export interface IIrevAnalyticsStatsRequestArg {
+	electionId: number;
+	resultTypeA: string;
+	resultTypeB: string;
+	entityCode: string;
+}
+
+export interface IIrevAnalyticsResponseDataSourceVouteCount {
+	partyName: string;
+	voteCount: number;
+}
+export interface IIrevAnalyticsResponseDataSource {
+	resultId: string;
+	voteCount: IIrevAnalyticsResponseDataSourceVouteCount[];
+}
+export interface IIrevAnalyticsResponseData {
+	entityName: string | null;
+	code: string | null;
+	sourceA: IIrevAnalyticsResponseDataSource | null;
+	sourceB: IIrevAnalyticsResponseDataSource | null;
+}
+export interface IIrevAnalyticsResponseVoteSummarySource {
+	registeredVoters: number;
+	accreditedVoters: number;
+	validVotes: number;
+	rejectedVotes: number;
+	totalVotes: number;
+}
+export interface IIrevAnalyticsResponseVoteSummary {
+	sourceA: IIrevAnalyticsResponseVoteSummarySource | null;
+	sourceB: IIrevAnalyticsResponseVoteSummarySource | null;
+}
+export interface IIrevAnalyticsResponse {
+	data: IIrevAnalyticsResponseData[];
+	voteSummary: IIrevAnalyticsResponseVoteSummary;
+}

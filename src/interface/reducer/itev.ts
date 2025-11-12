@@ -1,15 +1,15 @@
 import type { GenerateReducerTypes } from '../IReducer';
-import type { IIRevResultStates, IUploadIrevState } from '../state/IRev';
+import type { IIrevAnalyticsResponse, IIrevElectionSubmissionResponse, IIRevResultStates, IUploadIrevState } from '../state/IRev';
 
 export type IIrevReducer = GenerateReducerTypes<'push_IRevDataModel', any> &
-	GenerateReducerTypes<'push_IRevWardDataModel', any> &
+	GenerateReducerTypes<'push_IRevWardDataModel', IIrevElectionSubmissionResponse> &
 	GenerateReducerTypes<'get_IRevWardDataModel', IIRevResultStates> &
 	GenerateReducerTypes<'get_IRevStateDataModel', IIRevResultStates> &
 	GenerateReducerTypes<'get_IRevLGADataModel', IIRevResultStates> &
 	GenerateReducerTypes<'upload_IRevResult', IUploadIrevState> &
-	GenerateReducerTypes<'push_IRevLGADataModel', any> &
-	GenerateReducerTypes<'push_IRevStateDataModel', any> &
-	GenerateReducerTypes<'push_IRevPollingUnitDataModel', any> &
+	GenerateReducerTypes<'push_IRevLGADataModel', IIrevElectionSubmissionResponse> &
+	GenerateReducerTypes<'push_IRevStateDataModel', IIrevElectionSubmissionResponse> &
+	GenerateReducerTypes<'push_IRevPollingUnitDataModel', IIrevElectionSubmissionResponse> &
 	GenerateReducerTypes<'delete_IRevWardDataModel', any> &
 	GenerateReducerTypes<'approve_IRevWardDataModel', any> &
 	GenerateReducerTypes<'addNotes_IRevWardDataModel', any> &
@@ -30,4 +30,5 @@ export type IIrevReducer = GenerateReducerTypes<'push_IRevDataModel', any> &
 	GenerateReducerTypes<'approveDeleteRequest_IRevLGADataModel', any> &
 	GenerateReducerTypes<'deleteRequest_IRevStateDataModel', any> &
 	GenerateReducerTypes<'approveDeleteRequest_IRevStateDataModel', any> &
+	GenerateReducerTypes<'get_IRevResultAnalyticsStats', IIrevAnalyticsResponse> &
 	GenerateReducerTypes<'get_IRevPollingUnitDataModel', IIRevResultStates>;

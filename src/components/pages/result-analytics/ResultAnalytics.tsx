@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router';
 import { getUserData, type ResultType } from '../../../constants/global';
 import { pageurl } from '../../../constants/pageurl';
 import { useGlobalContext } from '../../../context/global';
-import { IElectionResultStatsData } from '../../../interface/state/IElectionState';
+import { useResultAnalytics } from '../../../hooks/useResultAnalytics';
+import { type IElectionOfficialByQuery } from '../../../interface/state/IElectionState';
 import { HvcLoad, useCallAPI } from '../../utils/hooks';
 import { PulseSVG } from '../../utils/svgs';
 import ResultAnalyticsHeader from './components/Header';
@@ -28,6 +29,17 @@ const ResultAnalytics = () => {
 		notificationGlobal('Something went wrong', false);
 	};
 
+	const getTableStats = (electionOfficialData: IElectionOfficialByQuery) => {
+		actions?.get_IRevResultAnalyticsStats({
+			data: {
+				electionId: electionOfficialData?.electionId,
+				resultTypeA: getAPIResultType[electionOfficialData?.assignment.resultType.toUpperCase() as ResultType]?.resultA || '',
+				resultTypeB: getAPIResultType[electionOfficialData?.assignment.resultType.toUpperCase() as ResultType]?.resultB || '',
+				entityCode: electionOfficialData?.assignment.code,
+			},
+		});
+	};
+
 	const getElectionOfficialData = () => {
 		get_ElectionOfficial({
 			query: [
@@ -46,12 +58,11 @@ const ResultAnalytics = () => {
 					get_ElectionByID({
 						id: String(electionOfficial.electionId),
 						onSuccess: () => {
-							// get_CountryStateByID({
-							// 	id: data?.data?.constituency?.stateId + '',
-							// });
 							actions?.get_ElectionResultAnalyticsStats({ electionId: String(electionOfficial.electionId) });
 						},
 					});
+
+					getTableStats(electionOfficial);
 				}
 			},
 		});
@@ -83,6 +94,12 @@ const ResultAnalytics = () => {
 	useCallAPI(getElectionOfficialData, !electionOfficialData);
 	useCallAPI(getPoliticalParties, !politicalParties);
 
+	const getAPIResultType: Partial<Record<ResultType, { resultA: ResultType; resultB: ResultType }>> = {
+		EC8B: { resultA: 'EC8B', resultB: 'EC8A' },
+		EC8C: { resultA: 'EC8C', resultB: 'EC8B' },
+		EC8D: { resultA: 'EC8D', resultB: 'EC8C' },
+	};
+
 	const electionResultStatsLoading = states?._election?.get_ElectionResultAnalyticsStatsLoading;
 	const electionResultStats = states?._election?.get_ElectionResultAnalyticsStats?.data;
 
@@ -93,7 +110,11 @@ const ResultAnalytics = () => {
 
 	const resultType = electionOfficialData?.assignment.resultType.toUpperCase() as ResultType;
 
+	const { refresh, data, load } = useResultAnalytics(actions, states, electionOfficialData, true);
+
 	const statsResultType = getStatsResultType(resultType, electionResultStats!);
+
+	const analyticsData = states?._irev?.get_IRevResultAnalyticsStats;
 
 	if (electionOfficialData?.assignment.resultType.toLowerCase() === 'ec8a') return <>Loading...</>;
 
@@ -106,8 +127,8 @@ const ResultAnalytics = () => {
 
 			<ResultAnalyticsKPICard
 				label={`${statsResultType?.sourceA.resultType} Results (Source A)`}
-				expected={statsResultType?.sourceA?.stats?.totalCount}
-				uploaded={statsResultType?.sourceA?.stats?.uploadedCount}
+				expected={data?.statistics?.total}
+				uploaded={data?.statistics?.uploadedCount}
 			/>
 
 			<ResultSourceWrapperSection resultType={resultType}>
@@ -119,7 +140,7 @@ const ResultAnalytics = () => {
 							<div className='grid-wrapper-100 gap-33'>
 								<ResultAnalyticsSummary
 									source={source}
-									data={sampleTableDataSummary}
+									data={analyticsData?.voteSummary}
 								/>
 							</div>
 
@@ -127,6 +148,7 @@ const ResultAnalytics = () => {
 								source={source}
 								resultType={resultType}
 								politicalParties={politicalParties}
+								analyticsData={analyticsData?.data}
 							/>
 						</>
 					)
