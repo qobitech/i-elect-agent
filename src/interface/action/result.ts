@@ -1,7 +1,6 @@
-import { type IUploadFileResponse } from '@interface/state/IResultState';
-
 import type { IGetQuery, IResponse } from '../../store/actions/core/election';
 import type { ICreateResult, IExtractResult, IResultDataModel, IUpdateResultData } from '../../store/actions/query/result';
+import { type IUploadFileResponse } from '../state/IResultState';
 
 export interface IResultAction {
 	create_Result: ({

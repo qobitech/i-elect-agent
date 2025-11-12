@@ -1,4 +1,4 @@
-import { type ResultType } from '@constants/global';
+import { type ResultType } from '../../constants/global';
 
 export interface IVolunteerResponse {
 	message: string;

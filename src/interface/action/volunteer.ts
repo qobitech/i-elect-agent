@@ -1,7 +1,6 @@
-import { type IVolunteerResponse } from '@interface/state/IVolunteer';
-
 import type { IResponse } from '../../store/actions/core/election';
 import type { ICreateVolunteer } from '../../store/actions/core/volunteer';
+import { type IVolunteerResponse } from '../state/IVolunteer';
 
 export interface IVolunteerAction {
 	create_Volunteer: ({

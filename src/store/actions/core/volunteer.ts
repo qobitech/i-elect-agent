@@ -1,5 +1,4 @@
-import { type IVolunteerResponse } from '@interface/state/IVolunteer';
-
+import { type IVolunteerResponse } from '../../../interface/state/IVolunteer';
 import { volunteerType } from '../../types';
 import * as utils from '../utils';
 import type { IResponse } from './election';

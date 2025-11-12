@@ -1,5 +1,6 @@
-import { type ResultType } from '@constants/global';
 import * as yup from 'yup';
+
+import { type ResultType } from '../../../constants/global';
 
 export interface IVolunteer {
 	id: number;
