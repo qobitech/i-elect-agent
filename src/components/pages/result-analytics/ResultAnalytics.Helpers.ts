@@ -514,10 +514,6 @@ export interface IResultAnalyticsSummary {
 }
 
 export interface IResultAnalyticsSummaryCard {
-	// data: {
-	// 	sourceA: IResultAnalyticsSummary;
-	// 	sourceB: IResultAnalyticsSummary;
-	// };
 	data: IIrevAnalyticsResponseVoteSummary | undefined;
 	source: 'sourceA' | 'sourceB';
 }

@@ -100,6 +100,7 @@ export interface ICreateWardResult {
 		id: number;
 		name: string;
 	};
+	resultSource: number;
 	ward: {
 		code: string;
 		name: string;
@@ -322,6 +323,7 @@ export interface ICreateStateResult {
 		id: number;
 		name: string;
 	};
+	resultSource: number;
 	localGovernment: {
 		code: string;
 		name: string;
@@ -421,6 +423,7 @@ export interface ICreateLGAResult {
 		id: string;
 		name: string;
 	};
+	resultSource: number;
 	votersOnRegister: number;
 	accreditedVoters: number;
 	ballotPapersIssuedToPoolingUnit: number;
@@ -483,6 +486,7 @@ export interface ICreatePUResult {
 		id: string;
 		name: string;
 	};
+	resultSource: number;
 	votersOnRegister: number;
 	accreditedVoters: number;
 	ballotPapersIssuedToPoolingUnit: number;

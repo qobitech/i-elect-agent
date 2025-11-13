@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import type { ResultType } from '../../../constants/global';
 import { useGlobalContext } from '../../../context/global';
 import { TypeButton } from '../../utils/button';
-import { Hvc } from '../../utils/hooks';
+import { Hvc, RefreshComponent } from '../../utils/hooks';
 import { BackArrowSVG } from '../../utils/svgs';
 import ChildCodesStage from './child-codes';
 import PartyVotes from './party-votes';
@@ -27,8 +27,11 @@ const PartyVotesStage = () => {
 			state: { isPreview: preview, partyVoteStage, childCodes, resultType },
 			updateState,
 		},
+		getCodeProps,
 		onStage,
 	} = useGlobalContext();
+
+	const { handleCodes, load } = getCodeProps;
 
 	const isCode = resultType !== 'EC8A';
 
@@ -105,6 +108,13 @@ const PartyVotesStage = () => {
 				view={partyVoteStage === 'Party Votes'}
 				className='f-column-33'
 			>
+				<div className='f-row-7 align-items-center hw-mx cursor-pointer'>
+					<p className='m-0 text-little color-label'>Refresh</p>
+					<RefreshComponent
+						onRefresh={handleCodes}
+						load={load}
+					/>
+				</div>
 				<PartyVotes />
 			</Hvc>
 		</div>

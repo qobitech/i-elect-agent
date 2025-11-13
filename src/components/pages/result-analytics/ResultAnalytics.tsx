@@ -20,7 +20,7 @@ export interface IDashboard {
 }
 
 const ResultAnalytics = () => {
-	const { states, actions, global, rsProps } = useGlobalContext();
+	const { states, actions } = useGlobalContext();
 	const { notificationGlobal, get_ElectionOfficial, get_ElectionByID, get_CountryStateByID, get_Party } = actions!;
 
 	const navigate = useNavigate();

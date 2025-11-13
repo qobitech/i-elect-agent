@@ -84,6 +84,7 @@ export const useStateResultDataManager = ({ results }: { results: IResult[] }): 
 		votersOnRegister: resultSummary.DataVotersOnRegister,
 		rejectedBallot: resultSummary.DataRejectedBallot,
 		documentUrls: uploadedFiles,
+		resultSource: 2,
 		results: results.map((i) => ({
 			partyId: i.partyId,
 			partyName: i.partyName,
@@ -146,6 +147,7 @@ export const useLGAResultDataManager = ({ results }: { results: IResult[] }): { 
 	const geoZoneProps = getZoneProps(states);
 	const data: ICreateLGAResult = {
 		accreditedVoters: resultSummary.DataAccreditedVoters,
+		resultSource: 2,
 		ballotPapersIssuedToPoolingUnit: resultSummary.DataBallotPapersIssuedToPoolingUnit,
 		totalUsedBallotPapers: resultSummary.DataTotalUsedBallotPapers,
 		totalValidVotes: resultSummary.DataTotalValidVotes,
@@ -216,6 +218,7 @@ export const useWardResultDataManager = ({ results }: { results: IResult[] }): {
 	const lga = states?._ward?.get_WardByCode?.data?.[0]?.lga;
 	const data: ICreateWardResult = {
 		accreditedVoters: resultSummary.DataAccreditedVoters,
+		resultSource: 2,
 		ballotPapersIssuedToPoolingUnit: resultSummary.DataBallotPapersIssuedToPoolingUnit,
 		totalUsedBallotPapers: resultSummary.DataTotalUsedBallotPapers,
 		totalValidVotes: resultSummary.DataTotalValidVotes,
@@ -280,6 +283,7 @@ export const usePollingUnitResultDataManager = ({ results }: { results: IResult[
 		ballotPapersIssuedToPoolingUnit: resultSummary.DataBallotPapersIssuedToPoolingUnit,
 		totalUsedBallotPapers: resultSummary.DataTotalUsedBallotPapers,
 		totalValidVotes: resultSummary.DataTotalValidVotes,
+		resultSource: 2,
 		unusedBallotPapers: resultSummary.DataUnusedBallotPapers,
 		votersOnRegister: resultSummary.DataVotersOnRegister,
 		rejectedBallot: resultSummary.DataRejectedBallot,

@@ -139,17 +139,7 @@ const UploadResult = () => {
 
 			actions?.update_ElectionOfficialById({
 				onSuccess: () => {
-					actions?.create_ElectionResultAnalytics({
-						data: {
-							resultId: 'string',
-							electionId: assignmentData.electionId,
-							resultType: assignmentData.assignment.resultType.toLowerCase() as Lowercase<ResultType>,
-							entityId: Number(assignmentData.assignment.id),
-						},
-						onSuccess: () => {
-							updateState('stage', 'Election Result Submission Status');
-						},
-					});
+					updateState('stage', 'Election Result Submission Status');
 				},
 				data: {
 					id: assignmentData.id,

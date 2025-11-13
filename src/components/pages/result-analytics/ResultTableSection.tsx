@@ -1,11 +1,7 @@
-import { boolean } from 'yup';
-
 import { type ResultType } from '../../../constants/global';
 import { type IPartyState } from '../../../interface/state/IParty';
-import { type IIrevAnalyticsResponse, type IIrevAnalyticsResponseData } from '../../../interface/state/IRev';
-import { ArrowDownSvg, ArrowLeftSVG, ArrowUpSvg, CautionSvg, CheckSVG } from '../../utils/svgs';
+import { type IIrevAnalyticsResponseData } from '../../../interface/state/IRev';
 import Table, { type ITableRecord } from '../../utils/table';
-import { sampleTableData } from './ResultAnalytics.Helpers';
 import { Indicator } from './ResultTableSection.Indicator';
 
 interface IResultTableSection {
@@ -67,35 +63,6 @@ const ResultTableSection = ({ source, resultType, politicalParties, analyticsDat
 			],
 		};
 	}) as ITableRecord[];
-	// const tableRecord: ITableRecord[] = sampleTableData.map((item) => ({
-	// 	id: item.entityName,
-	// 	row: [
-	// 		{
-	// 			value: item.entityName,
-	// 			cellWidth: '150px',
-	// 		},
-	// 		{
-	// 			value: item.code,
-	// 			cellWidth: '120px',
-	// 		},
-	// 		...item[source].voteCount.map((e, index) => ({
-	// 			value: (
-	// 				<div
-	// 					className='f-row-15 align-items-center'
-	// 					style={{ width: '150px' }}
-	// 				>
-	// 					<p className='font-14 m-0'>{e.voteCount.toLocaleString()}</p>
-
-	// 					<Indicator
-	// 						isValid={e.voteCount === item[oppositeSource].voteCount[index].voteCount}
-	// 						value={item[oppositeSource].voteCount[index].voteCount}
-	// 						position={e.voteCount > item[oppositeSource].voteCount[index].voteCount ? 'up' : 'down'}
-	// 					/>
-	// 				</div>
-	// 			),
-	// 		})),
-	// 	],
-	// }));
 
 	return (
 		<div style={{ overflow: 'auto', width: '100%', position: 'relative', minHeight: '400px' }}>

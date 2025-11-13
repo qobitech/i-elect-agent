@@ -142,7 +142,7 @@ const Overview = () => {
 									},
 								])();
 							},
-							disabled: electionOfficialData?.assignment.isCompleted,
+							// disabled: electionOfficialData?.assignment.isCompleted,
 						},
 						{
 							label: 'View Uploaded Result',

@@ -61,19 +61,17 @@ const PartyVotes = () => {
 
 	const partyVote: IPartyVotes = id ? partyVotes.filter((i) => i.id === id)[0] : { id: 0, votes: [], name: '', code: '' };
 
-	console.log(partyVotes, id, parentCodes, selectedChildCode, 'juju');
-
 	const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { id, value } = e.target;
-		const p: IPartyVotes[] = partyVotes.map((j) => ({
-			...j,
+		const p: IPartyVotes[] = partyVotes.map((partyVoteItem) => ({
+			...partyVoteItem,
 			votes:
-				partyVote.id === j.id
-					? j.votes.map((vote) => ({
+				partyVote.id === partyVoteItem.id
+					? partyVoteItem.votes.map((vote) => ({
 							...vote,
 							votes: vote.partyId + '' === id ? parseInt(value) : vote.votes,
 						}))
-					: j.votes,
+					: partyVoteItem.votes,
 		}));
 		updateState('partyVotes', [...p]);
 	};
