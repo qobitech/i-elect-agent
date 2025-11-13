@@ -33,8 +33,8 @@ const ResultAnalytics = () => {
 		actions?.get_IRevResultAnalyticsStats({
 			data: {
 				electionId: electionOfficialData?.electionId,
-				resultTypeA: getAPIResultType[electionOfficialData?.assignment.resultType.toUpperCase() as ResultType]?.resultA || '',
-				resultTypeB: getAPIResultType[electionOfficialData?.assignment.resultType.toUpperCase() as ResultType]?.resultB || '',
+				resultTypeA: getAPIResultType[electionOfficialData?.assignment.resultType.toUpperCase() as ResultType]?.resultB || '',
+				resultTypeB: getAPIResultType[electionOfficialData?.assignment.resultType.toUpperCase() as ResultType]?.resultA || '',
 				entityCode: electionOfficialData?.assignment.code,
 			},
 		});

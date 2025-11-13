@@ -14,6 +14,7 @@ export interface IChildCode {
 
 export interface IVoteCount {
 	partyId: number;
+	partyName: string;
 	votes: number;
 	label: string;
 	logo: string;

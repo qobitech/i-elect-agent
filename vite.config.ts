@@ -61,9 +61,9 @@ export default defineConfig(({ mode }) => {
 			rollupOptions: {
 				treeshake: true,
 				output: {
-					// entryFileNames: `${currentDate}/[name].[hash].js`,
-					// chunkFileNames: `${currentDate}/[name].[hash].js`,
-					// assetFileNames: `${currentDate}/[name].[hash][extname]`,
+					entryFileNames: `${currentDate}/[name].[hash].js`,
+					chunkFileNames: `${currentDate}/[name].[hash].js`,
+					assetFileNames: `${currentDate}/[name].[hash][extname]`,
 					manualChunks: {
 						'form-hook': ['@hookform/resolvers', 'react-hook-form', 'yup'],
 						'react': ['react', 'react-dom'],
@@ -90,6 +90,8 @@ export default defineConfig(({ mode }) => {
 						'https://command-ielect.ngrok.app',
 						'https://media-manager-ielect.ngrok.app/api/FileManager/upload-image',
 						'https://media-ielect.ngrok.app/',
+						'https://e464fe81f852.ngrok-free.app/',
+						'https://f6a4f0f4da85.ngrok-free.app',
 						'blob:',
 						'data:',
 					],

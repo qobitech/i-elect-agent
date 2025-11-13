@@ -143,6 +143,8 @@ export const ISADMINLOGGED = () => !!getUserData().user?.UserId;
 // export const EXTRACTAPI = 'https://erms-ocr.ngrok.app';
 export const COREAPI = process.env.REACT_APP_BASE_CORE;
 export const COMMANDAPI = process.env.REACT_APP_BASE_COMMAND;
+// export const COMMANDAPI = 'https://e464fe81f852.ngrok-free.app';
+// export const QUERYAPI = 'https://f6a4f0f4da85.ngrok-free.app';
 export const QUERYAPI = process.env.REACT_APP_BASE_QUERY;
 export const EXTRACTAPI = process.env.REACT_APP_BASE_EXTRACT;
 

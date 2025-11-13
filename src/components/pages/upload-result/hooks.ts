@@ -205,10 +205,11 @@ export const useWardResultDataManager = ({ results }: { results: IResult[] }): {
 	const geoZoneProps = getZoneProps(states);
 	const getWardResultsMap = () => {
 		const transformedArray: IWardResultMap[] = partyVotes.flatMap((item) =>
-			item.votes.map(({ partyId, votes }: IVoteCount) => ({
+			item.votes.map(({ partyId, votes, partyName }: IVoteCount) => ({
 				pollingUnitId: item.id,
 				pollingUnitName: item.name,
 				pollingUnitCode: item.code,
+				partyName,
 				partyId,
 				votes: parseInt(votes + '') || 0,
 			}))
@@ -344,6 +345,7 @@ export const useGetCodes = ({
 					votes: 0,
 					label: vote.shortName,
 					logo: vote.logo,
+					partyName: vote.shortName,
 				})),
 				name,
 				code,
