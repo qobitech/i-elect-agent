@@ -3,6 +3,7 @@ import type {
 	IIrevAnalyticsResponse,
 	IIrevAnalyticsStatsRequestArg,
 	IIrevElectionSubmissionResponse,
+	IIRevResultState,
 	IIRevResultStates,
 	IUploadIrevState,
 } from '../../../interface/state/IRev';
@@ -907,6 +908,70 @@ export const get_IRevResultAnalyticsStats = ({
 			data,
 		},
 		actionType: irevType.get_IRevResultAnalyticsStats,
+		onSuccess,
+		onFailure,
+	});
+
+export const get_PollingUnitResultByRefId = ({
+	onFailure,
+	onSuccess,
+	referenceId,
+}: IResponse<IIRevResultState> & { referenceId: string }) =>
+	utils.httpGetMethod({
+		apiData: {
+			url: '',
+			customurl: `${QUERYAPI}/api/v1/i-elect/PollingUnitResult/get-by-referenceid/${referenceId}`,
+			header: utils.header(),
+		},
+		actionType: irevType.get_PollingUnitResultByRefId,
+		onSuccess,
+		onFailure,
+	});
+
+export const get_WardResultByRefId = ({
+	onFailure,
+	onSuccess,
+	referenceId,
+}: IResponse<IIRevResultState> & { referenceId: string }) =>
+	utils.httpGetMethod({
+		apiData: {
+			url: '',
+			customurl: `${QUERYAPI}/api/v1/i-elect/WardResult/get-by-referenceid/${referenceId}`,
+			header: utils.header(),
+		},
+		actionType: irevType.get_WardResultByRefId,
+		onSuccess,
+		onFailure,
+	});
+
+export const get_LgaResultByRefId = ({
+	onFailure,
+	onSuccess,
+	referenceId,
+}: IResponse<IIRevResultState> & { referenceId: string }) =>
+	utils.httpGetMethod({
+		apiData: {
+			url: '',
+			customurl: `${QUERYAPI}/api/v1/i-elect/LocalGovernmentResult/get-by-referenceid/${referenceId}`,
+			header: utils.header(),
+		},
+		actionType: irevType.get_LgaResultByRefId,
+		onSuccess,
+		onFailure,
+	});
+
+export const get_StateResultByRefId = ({
+	onFailure,
+	onSuccess,
+	referenceId,
+}: IResponse<IIRevResultState> & { referenceId: string }) =>
+	utils.httpGetMethod({
+		apiData: {
+			url: '',
+			customurl: `${QUERYAPI}/api/v1/i-elect/StateResult/get-by-referenceid/${referenceId}`,
+			header: utils.header(),
+		},
+		actionType: irevType.get_StateResultByRefId,
 		onSuccess,
 		onFailure,
 	});

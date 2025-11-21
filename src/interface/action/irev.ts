@@ -18,6 +18,7 @@ import type {
 	IIrevAnalyticsResponse,
 	IIrevAnalyticsStatsRequestArg,
 	IIrevElectionSubmissionResponse,
+	IIRevResultState,
 	IIRevResultStates,
 	IUploadIrevState,
 } from '../state/IRev';
@@ -229,5 +230,33 @@ export interface IIRevAction {
 		data,
 	}: IResponse<IIrevAnalyticsResponse> & {
 		data: IIrevAnalyticsStatsRequestArg;
+	}) => (dispatch: any) => Promise<void>;
+	get_PollingUnitResultByRefId: ({
+		onFailure,
+		onSuccess,
+		referenceId,
+	}: IResponse<IIRevResultState> & {
+		referenceId: string;
+	}) => (dispatch: any) => Promise<void>;
+	get_WardResultByRefId: ({
+		onFailure,
+		onSuccess,
+		referenceId,
+	}: IResponse<IIRevResultState> & {
+		referenceId: string;
+	}) => (dispatch: any) => Promise<void>;
+	get_LgaResultByRefId: ({
+		onFailure,
+		onSuccess,
+		referenceId,
+	}: IResponse<IIRevResultState> & {
+		referenceId: string;
+	}) => (dispatch: any) => Promise<void>;
+	get_StateResultByRefId: ({
+		onFailure,
+		onSuccess,
+		referenceId,
+	}: IResponse<IIRevResultState> & {
+		referenceId: string;
 	}) => (dispatch: any) => Promise<void>;
 }

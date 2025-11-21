@@ -162,25 +162,53 @@ const UploadResult = () => {
 		if (resultType === 'EC8D') {
 			actions?.push_IRevStateDataModel({
 				data: stateResultData,
-				onSuccess,
+				onSuccess: (data) => {
+					actions?.get_StateResultByRefId({
+						referenceId: data.referenceId,
+						onSuccess: () => {
+							onSuccess(data);
+						},
+					});
+				},
 			});
 		}
 		if (resultType === 'EC8C') {
 			actions?.push_IRevLGADataModel({
 				data: lgaResultData,
-				onSuccess,
+				onSuccess: (data) => {
+					actions?.get_LgaResultByRefId({
+						referenceId: data.referenceId,
+						onSuccess: () => {
+							onSuccess(data);
+						},
+					});
+				},
 			});
 		}
 		if (resultType === 'EC8B') {
 			actions?.push_IRevWardDataModel({
 				data: wardResultData,
-				onSuccess,
+				onSuccess: (data) => {
+					actions?.get_WardResultByRefId({
+						referenceId: data.referenceId,
+						onSuccess: () => {
+							onSuccess(data);
+						},
+					});
+				},
 			});
 		}
 		if (resultType === 'EC8A') {
 			actions?.push_IRevPollingUnitDataModel({
 				data: pollingUnitResultData,
-				onSuccess,
+				onSuccess: (data) => {
+					actions?.get_PollingUnitResultByRefId({
+						referenceId: data.referenceId,
+						onSuccess: () => {
+							onSuccess(data);
+						},
+					});
+				},
 			});
 		}
 	};

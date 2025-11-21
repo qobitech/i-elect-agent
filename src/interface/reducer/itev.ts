@@ -1,5 +1,11 @@
 import type { GenerateReducerTypes } from '../IReducer';
-import type { IIrevAnalyticsResponse, IIrevElectionSubmissionResponse, IIRevResultStates, IUploadIrevState } from '../state/IRev';
+import type {
+	IIrevAnalyticsResponse,
+	IIrevElectionSubmissionResponse,
+	IIRevResultState,
+	IIRevResultStates,
+	IUploadIrevState,
+} from '../state/IRev';
 
 export type IIrevReducer = GenerateReducerTypes<'push_IRevDataModel', any> &
 	GenerateReducerTypes<'push_IRevWardDataModel', IIrevElectionSubmissionResponse> &
@@ -31,4 +37,8 @@ export type IIrevReducer = GenerateReducerTypes<'push_IRevDataModel', any> &
 	GenerateReducerTypes<'deleteRequest_IRevStateDataModel', any> &
 	GenerateReducerTypes<'approveDeleteRequest_IRevStateDataModel', any> &
 	GenerateReducerTypes<'get_IRevResultAnalyticsStats', IIrevAnalyticsResponse> &
+	GenerateReducerTypes<'get_PollingUnitResultByRefId', IIRevResultState> &
+	GenerateReducerTypes<'get_WardResultByRefId', IIRevResultState> &
+	GenerateReducerTypes<'get_LgaResultByRefId', IIRevResultState> &
+	GenerateReducerTypes<'get_StateResultByRefId', IIRevResultState> &
 	GenerateReducerTypes<'get_IRevPollingUnitDataModel', IIRevResultStates>;
