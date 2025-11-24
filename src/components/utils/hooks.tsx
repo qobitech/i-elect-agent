@@ -20,6 +20,7 @@ import { useGlobalContext } from '../../context/global';
 import type { IStates } from '../../interface/IReducer';
 import { TypeButton } from './button';
 import { AlertSVG, CheckSVG, CopySVG, PulseSVG, RefreshSVG } from './svgs';
+import ToolTip from './tool-tip';
 
 export const useLocationHook = () => {
 	const location = useLocation();
@@ -423,9 +424,10 @@ export interface ICardItem {
 	url?: boolean;
 	onUrlClick?: () => void;
 	copy?: boolean;
+	description?: string;
 }
 
-export const CardItems = ({ title, value, url, onUrlClick, copy }: ICardItem) => {
+export const CardItems = ({ title, value, url, onUrlClick, copy, description }: ICardItem) => {
 	const copyProps = useCopy();
 	const onCopy = () => {
 		copyProps.copy(value as string);
@@ -469,6 +471,7 @@ export const CardItems = ({ title, value, url, onUrlClick, copy }: ICardItem) =>
 							{copyProps?.copySuccess ? <CheckSVG color='green' /> : <CopySVG />}
 						</div>
 					) : null}
+					{description && <ToolTip tip={description} />}
 				</div>
 			</div>
 		</>

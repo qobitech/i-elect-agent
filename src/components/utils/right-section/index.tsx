@@ -41,6 +41,7 @@ export type actionComponent =
 	| 'preview-media-file'
 	| 'report-feedbacks'
 	| 'report-feedback-item'
+	| 'view-submitted-result'
 	| null;
 export type actionId = string | null;
 

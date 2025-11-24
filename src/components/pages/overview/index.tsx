@@ -142,11 +142,25 @@ const Overview = () => {
 									},
 								])();
 							},
-							// disabled: electionOfficialData?.assignment.isCompleted,
 						},
 						{
 							label: 'View Uploaded Result',
-							action: () => {},
+							action: () => {
+								rsProps?.callSection({
+									action: 'view',
+									component: 'view-submitted-result',
+									title: `View Result - ${electionOfficialData?.election}`,
+									data: {
+										electionName: electionOfficialData?.election,
+										electoralDivision: {
+											name: electionOfficialData?.assignment.name,
+											value: electionOfficialData?.assignment.id,
+										},
+										referenceId: electionOfficialData?.referenceId,
+										id: electionOfficialData?.id,
+									},
+								});
+							},
 							disabled: !electionOfficialData?.referenceId,
 						},
 						{

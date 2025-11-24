@@ -7,6 +7,7 @@ import ReportFeedbacks from '../pages/report-issues/feedbacks';
 import ReportResultIssueStage from '../pages/report-result-issues';
 import UploadResult from '../pages/upload-result';
 import PreviewMediaFile from '../pages/upload-result/preview-media-file';
+import ViewSubmittedResultPage from '../pages/view-submited-result/page';
 import RightSection, { type IGlobalRightSection } from '../utils/right-section';
 import SideMenuMobile from './side-menu-mobile';
 
@@ -31,6 +32,7 @@ const GlobalRightSection = ({ ...props }) => {
 				{rsProps.isView('view', 'report-issues') ? <ReportIssueStage /> : null}
 				{rsProps.isView('view', 'report-result-issues') ? <ReportResultIssueStage /> : null}
 				{rsProps.isView('view', 'preview-media-file') ? <PreviewMediaFile /> : null}
+				{rsProps.isView('view', 'view-submitted-result') ? <ViewSubmittedResultPage /> : null}
 				<CompDisplay isView={rsProps.isView('create', 'upload-result')}>
 					<UploadResult />
 				</CompDisplay>
