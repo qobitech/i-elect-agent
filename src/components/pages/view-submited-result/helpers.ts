@@ -1,4 +1,5 @@
-import { type IIRevResultState } from '../../../interface/state/IRev';
+import { type IIRevResultState, type IIRevResultStates } from '../../../interface/state/IRev';
+import { type IRrevDataReq } from '../../../store/actions/query/irev';
 
 export interface IElectoralDivisionCode {
 	code: string;
@@ -187,4 +188,14 @@ export function _codeSeparator(code: string) {
 	return {
 		state: code,
 	};
+}
+
+export interface IUGR {
+	getResults: (data?: IRrevDataReq) => void;
+	response: IIRevResultStates;
+}
+
+export interface IUGRefId {
+	getResults: (refId: string) => void;
+	response: IIRevResultState;
 }

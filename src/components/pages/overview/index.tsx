@@ -159,6 +159,7 @@ const Overview = () => {
 										referenceId: electionOfficialData?.referenceId,
 										id: electionOfficialData?.id,
 									},
+									resultType: electionOfficialData?.assignment.resultType as ResultType,
 								});
 							},
 							disabled: !electionOfficialData?.referenceId,

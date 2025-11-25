@@ -1,11 +1,9 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { useGlobalContext } from '../../../context/global';
-import { IStates } from '../../../interface/IReducer';
-import { useStateHook } from '../../layout/state-hook';
 import { ActionComponent, type IOptionAction } from '../../utils/action-component';
 import { handleScrollRightSection } from '../../utils/helper';
-import { Hvc, HvcLoad, useFormHook } from '../../utils/hooks';
+import { Hvc, HvcLoad } from '../../utils/hooks';
 import { FlagSVG, LeftNavSVG, NotesSVG, RightNavSVG, TrashSVG } from '../../utils/svgs';
 import { TabSection, useTabSection } from '../../utils/tab-section';
 import Flags from './flag-result';
@@ -14,22 +12,18 @@ import {
 	formatINECDate,
 	type IEditElectionResultState,
 	type IElectoralDivisionCode,
-	type IHF,
 	type reviewType,
 	tabs,
 } from './helpers';
 import ResultInfo from './result-info';
 import ReviewAction from './review-action';
-import { useGetResultsByID } from './use-get-result-by-id';
-import { useGetResultsByProps } from './use-get-result-by-props';
 import { useGetResultsByRefID } from './use-get-result-by-ref-id';
 import UserNotes from './user-notes';
-import { useReviewActions } from './useReviewAcions';
 
 const ViewSubmitedResult = () => {
-	const { states, rsProps: rightPanel } = useGlobalContext();
+	const { rsProps: rightPanel } = useGlobalContext();
 
-	const { electionName, electoralDivision, referenceId, id } = rightPanel?.data as {
+	const { referenceId } = rightPanel?.data as {
 		electionName: string;
 		electoralDivision: {
 			name: string;
@@ -49,65 +43,30 @@ const ViewSubmitedResult = () => {
 		navIndex: 0,
 	};
 
-	const global = useStateHook<IEditElectionResultState>(initComponentState);
+	const [global, setGlobal] = useState<IEditElectionResultState>(initComponentState);
 
-	const {
-		state: { review, navIndex, resultLoading },
-		updateState,
-	} = global;
-
-	const resultByProps = useGetResultsByProps({
-		rstype: rightPanel?.resultType!,
-		onSuccess: () => {
-			updateState('resultLoading', false);
-		},
-		onFailure: () => {
-			updateState('resultLoading', false);
-		},
-	});
+	const { review, navIndex, resultLoading } = global;
 
 	const resultByIdRefIdProps = useGetResultsByRefID({
 		rstype: rightPanel?.resultType!,
 		onSuccess: () => {
-			updateState('resultLoading', false);
+			setGlobal((prev) => ({ ...prev, resultLoading: false }));
 		},
 		onFailure: () => {
-			updateState('resultLoading', false);
-		},
-	});
-
-	const resultByIdProps = useGetResultsByID({
-		rstype: rightPanel?.resultType!,
-		onSuccess: () => {
-			updateState('resultLoading', false);
-		},
-		onFailure: () => {
-			updateState('resultLoading', false);
+			setGlobal((prev) => ({ ...prev, resultLoading: true }));
 		},
 	});
 
 	const onRefresh = () => {
-		if (id) {
-			resultByIdProps.getResults(id);
-		}
-		if (referenceId) {
-			resultByIdRefIdProps.getResults(referenceId);
-		} else {
-			resultByProps.getResults({
-				elections: [electionName],
-				[electoralDivision?.name]: [electoralDivision?.value?.name],
-				geoZones: [],
-				zones: [],
-			});
-		}
+		resultByIdRefIdProps.getResults(referenceId);
 	};
 
 	useEffect(() => {
-		updateState('resultLoading', true);
+		setGlobal((prev) => ({ ...prev, resultLoading: true }));
 		onRefresh();
 	}, []);
 
-	const response = id ? resultByIdProps.response : referenceId ? resultByIdRefIdProps.response : resultByProps.response.data[0];
+	const response = resultByIdRefIdProps.response;
 
 	const result = useMemo(() => response || defaultResultState, [response]);
 
@@ -117,35 +76,11 @@ const ViewSubmitedResult = () => {
 
 	const navigate = (nav: 'prev' | 'next') => () => {
 		const vigate = nav === 'prev' ? Math.max(0, navIndex - 1) : Math.min(total - 1, navIndex + 1);
-		updateState('navIndex', vigate);
+		setGlobal((prev) => ({ ...prev, navIndex: vigate }));
 	};
-
-	const [hookForm] = useFormHook<IHF>({});
-
-	const { addNotes, approveDeleteResult, deleteResultRequest } = useReviewActions({
-		global,
-		hookForm,
-		result,
-		resultType: rightPanel?.resultType,
-		onRefresh,
-	});
 
 	const onReview = (review: reviewType) => () => {
-		updateState('review', review);
-		updateState('error', '');
-	};
-
-	const successTxt = useMemo(() => {
-		if (review === 'add notes') return 'User Notes added successfully';
-		if (review === 'approve') return 'Election result approved successfully';
-		if (review === 'flag') return 'Election result flagged successfully';
-		if (review === 'approve delete request') return 'Election result deleted successfully';
-		return '';
-	}, [review]);
-
-	const onClose = () => {
-		updateState('success', false);
-		rightPanel?.closeSection();
+		setGlobal((prev) => ({ ...prev, review, error: '' }));
 	};
 
 	const options: IOptionAction[] = [
@@ -200,12 +135,12 @@ const ViewSubmitedResult = () => {
 		},
 		{
 			label: rightPanel?.resultType === 'EC8D' ? '' : 'LGA',
-			value: result?.localGovernment?.name || '',
+			value: result?.localGovernment?.name || 'no data',
 			copy: false,
 		},
 		{
 			label: rightPanel?.resultType === 'EC8D' ? '' : 'LGA Code',
-			value: result?.localGovernment?.code || '',
+			value: result?.localGovernment?.code || 'no data',
 			copy: false,
 		},
 		{
@@ -230,7 +165,7 @@ const ViewSubmitedResult = () => {
 		},
 		{
 			label: 'Presiding Officer',
-			value: result?.presidingOfficer?.name || '',
+			value: result?.presidingOfficer?.name || 'no data',
 			copy: false,
 		},
 		{
@@ -286,22 +221,6 @@ const ViewSubmitedResult = () => {
 						className='f-row-33 align-items-center mx-auto hw-mx px-3 rounded'
 						style={{ margin: '0 auto' }}
 					>
-						<div
-							className='hw-mx p-2 f-row-7 align-items-center justify-content-center'
-							onClick={onFlag}
-						>
-							<FlagSVG />
-							<p className={`m-0 text-tiny ${isLink(!!result.flags?.length)}`}>Flagged</p>
-							<p className='m-0 text-tiny color-label'>({result.flags?.length || 0})</p>
-						</div>
-						<div
-							className='hw-mx p-2 f-row-7 align-items-center justify-content-center'
-							onClick={onNotes}
-						>
-							<NotesSVG />
-							<p className={`m-0 text-tiny ${isLink(!!result.notes?.length)}`}>User Notes</p>
-							<p className='m-0 text-tiny color-label'>({result.notes?.length || 0})</p>
-						</div>
 						<Hvc
 							removeDOM
 							view={result.deleteIsRequested}
@@ -312,68 +231,10 @@ const ViewSubmitedResult = () => {
 						</Hvc>
 					</Hvc>
 				</div>
-				<Hvc
-					removeDOM
-					view={!review}
-				>
-					<ActionComponent
-						title='Options'
-						buttonSize='little'
-						buttonType='outlined'
-						actions={options}
-					/>
-				</Hvc>
 			</div>
-			<div className='f-column-33 align-items-stretch justify-content-between'>
+			<div className='f-column-33 align-items-stretch justify-content-between mb-5'>
 				<div className='flex-basis-65'>
-					<ReviewAction
-						result={result}
-						states={states!}
-						onReview={onReview}
-						addNotes={addNotes}
-						global={global}
-						approveResult={approveDeleteResult}
-						deleteResult={deleteResultRequest}
-						onClose={onClose}
-						successTxt={successTxt}
-						onDataRefresh={onRefresh}
-					/>
-				</div>
-
-				<div
-					className='flex-basis-35 w-100'
-					ref={bottomRef}
-				>
-					<div className='pb-2 f-row justify-content-between'>
-						<TabSection
-							tabProps={tabProps}
-							position='start'
-							tabGap='5'
-							type='block'
-						/>
-					</div>
-					<div
-						className='rounded p-3'
-						style={{ border: '1px solid #f0f0f0' }}
-					>
-						<ResultInfo
-							result={result}
-							view={isTab(tabs.INFO)}
-							resultType={rightPanel?.resultType!}
-						/>
-						<Hvc
-							removeDOM
-							view={isTab(tabs.USERNOTES)}
-						>
-							<UserNotes result={result} />
-						</Hvc>
-						<Hvc
-							removeDOM
-							view={isTab(tabs.FLAGS)}
-						>
-							<Flags result={result} />
-						</Hvc>
-					</div>
+					<ReviewAction result={result} />
 				</div>
 			</div>
 		</HvcLoad>

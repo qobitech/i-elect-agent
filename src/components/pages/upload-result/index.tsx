@@ -163,7 +163,7 @@ const UploadResult = () => {
 			actions?.push_IRevStateDataModel({
 				data: stateResultData,
 				onSuccess: (data) => {
-					actions?.get_StateResultByRefId({
+					actions?.get_IrevStateResultByRefId({
 						referenceId: data.referenceId,
 						onSuccess: () => {
 							onSuccess(data);
@@ -176,7 +176,7 @@ const UploadResult = () => {
 			actions?.push_IRevLGADataModel({
 				data: lgaResultData,
 				onSuccess: (data) => {
-					actions?.get_LgaResultByRefId({
+					actions?.get_IrevLgaResultByRefId({
 						referenceId: data.referenceId,
 						onSuccess: () => {
 							onSuccess(data);
@@ -189,7 +189,7 @@ const UploadResult = () => {
 			actions?.push_IRevWardDataModel({
 				data: wardResultData,
 				onSuccess: (data) => {
-					actions?.get_WardResultByRefId({
+					actions?.get_IrevWardResultByRefId({
 						referenceId: data.referenceId,
 						onSuccess: () => {
 							onSuccess(data);
@@ -202,7 +202,7 @@ const UploadResult = () => {
 			actions?.push_IRevPollingUnitDataModel({
 				data: pollingUnitResultData,
 				onSuccess: (data) => {
-					actions?.get_PollingUnitResultByRefId({
+					actions?.get_IrevPollingUnitResultByRefId({
 						referenceId: data.referenceId,
 						onSuccess: () => {
 							onSuccess(data);

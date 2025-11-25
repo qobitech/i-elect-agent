@@ -231,28 +231,28 @@ export interface IIRevAction {
 	}: IResponse<IIrevAnalyticsResponse> & {
 		data: IIrevAnalyticsStatsRequestArg;
 	}) => (dispatch: any) => Promise<void>;
-	get_PollingUnitResultByRefId: ({
+	get_IrevPollingUnitResultByRefId: ({
 		onFailure,
 		onSuccess,
 		referenceId,
 	}: IResponse<IIRevResultState> & {
 		referenceId: string;
 	}) => (dispatch: any) => Promise<void>;
-	get_WardResultByRefId: ({
+	get_IrevWardResultByRefId: ({
 		onFailure,
 		onSuccess,
 		referenceId,
 	}: IResponse<IIRevResultState> & {
 		referenceId: string;
 	}) => (dispatch: any) => Promise<void>;
-	get_LgaResultByRefId: ({
+	get_IrevLgaResultByRefId: ({
 		onFailure,
 		onSuccess,
 		referenceId,
 	}: IResponse<IIRevResultState> & {
 		referenceId: string;
 	}) => (dispatch: any) => Promise<void>;
-	get_StateResultByRefId: ({
+	get_IrevStateResultByRefId: ({
 		onFailure,
 		onSuccess,
 		referenceId,

@@ -37,8 +37,8 @@ export type IIrevReducer = GenerateReducerTypes<'push_IRevDataModel', any> &
 	GenerateReducerTypes<'deleteRequest_IRevStateDataModel', any> &
 	GenerateReducerTypes<'approveDeleteRequest_IRevStateDataModel', any> &
 	GenerateReducerTypes<'get_IRevResultAnalyticsStats', IIrevAnalyticsResponse> &
-	GenerateReducerTypes<'get_PollingUnitResultByRefId', IIRevResultState> &
-	GenerateReducerTypes<'get_WardResultByRefId', IIRevResultState> &
-	GenerateReducerTypes<'get_LgaResultByRefId', IIRevResultState> &
-	GenerateReducerTypes<'get_StateResultByRefId', IIRevResultState> &
+	GenerateReducerTypes<'get_IrevPollingUnitResultByRefId', IIRevResultState> &
+	GenerateReducerTypes<'get_IrevWardResultByRefId', IIRevResultState> &
+	GenerateReducerTypes<'get_IrevLgaResultByRefId', IIRevResultState> &
+	GenerateReducerTypes<'get_IrevStateResultByRefId', IIRevResultState> &
 	GenerateReducerTypes<'get_IRevPollingUnitDataModel', IIRevResultStates>;

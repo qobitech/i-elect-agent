@@ -912,7 +912,7 @@ export const get_IRevResultAnalyticsStats = ({
 		onFailure,
 	});
 
-export const get_PollingUnitResultByRefId = ({
+export const get_IrevPollingUnitResultByRefId = ({
 	onFailure,
 	onSuccess,
 	referenceId,
@@ -923,12 +923,12 @@ export const get_PollingUnitResultByRefId = ({
 			customurl: `${QUERYAPI}/api/v1/i-elect/PollingUnitResult/get-by-referenceid/${referenceId}`,
 			header: utils.header(),
 		},
-		actionType: irevType.get_PollingUnitResultByRefId,
+		actionType: irevType.get_IrevPollingUnitResultByRefId,
 		onSuccess,
 		onFailure,
 	});
 
-export const get_WardResultByRefId = ({
+export const get_IrevWardResultByRefId = ({
 	onFailure,
 	onSuccess,
 	referenceId,
@@ -939,12 +939,12 @@ export const get_WardResultByRefId = ({
 			customurl: `${QUERYAPI}/api/v1/i-elect/WardResult/get-by-referenceid/${referenceId}`,
 			header: utils.header(),
 		},
-		actionType: irevType.get_WardResultByRefId,
+		actionType: irevType.get_IrevWardResultByRefId,
 		onSuccess,
 		onFailure,
 	});
 
-export const get_LgaResultByRefId = ({
+export const get_IrevLgaResultByRefId = ({
 	onFailure,
 	onSuccess,
 	referenceId,
@@ -955,12 +955,12 @@ export const get_LgaResultByRefId = ({
 			customurl: `${QUERYAPI}/api/v1/i-elect/LocalGovernmentResult/get-by-referenceid/${referenceId}`,
 			header: utils.header(),
 		},
-		actionType: irevType.get_LgaResultByRefId,
+		actionType: irevType.get_IrevLgaResultByRefId,
 		onSuccess,
 		onFailure,
 	});
 
-export const get_StateResultByRefId = ({
+export const get_IrevStateResultByRefId = ({
 	onFailure,
 	onSuccess,
 	referenceId,
@@ -971,7 +971,7 @@ export const get_StateResultByRefId = ({
 			customurl: `${QUERYAPI}/api/v1/i-elect/StateResult/get-by-referenceid/${referenceId}`,
 			header: utils.header(),
 		},
-		actionType: irevType.get_StateResultByRefId,
+		actionType: irevType.get_IrevStateResultByRefId,
 		onSuccess,
 		onFailure,
 	});

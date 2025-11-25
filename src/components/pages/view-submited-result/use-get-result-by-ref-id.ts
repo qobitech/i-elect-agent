@@ -1,9 +1,9 @@
 import { useCallback } from 'react';
 
 import type { ResultType } from '../../../constants/global';
-import { useReduxContext } from '../../../context/redux';
+import { useGlobalContext } from '../../../context/global';
 import type { IIRevResultState } from '../../../interface/state/IRev';
-import type { IUGRefId } from '../utils';
+import { type IUGRefId } from './helpers';
 
 export const useGetResultsByRefID = ({
 	rstype,
@@ -14,27 +14,27 @@ export const useGetResultsByRefID = ({
 	onSuccess?: (res: IIRevResultState | undefined) => void;
 	onFailure?: () => void;
 }): IUGRefId => {
-	const { actions, states } = useReduxContext();
+	const { actions, states } = useGlobalContext();
 
-	const getResults = (refId: string) => {
+	const getResults = (referenceId: string) => {
 		const getFunc = () => {
 			if (rstype === 'EC8A') {
-				return actions?.get_IRevPollingUnitByRefId;
+				return actions?.get_IrevPollingUnitResultByRefId;
 			}
 			if (rstype === 'EC8B') {
-				return actions?.get_IRevWardByRefId;
+				return actions?.get_IrevWardResultByRefId;
 			}
 			if (rstype === 'EC8C') {
-				return actions?.get_IRevLGAByRefId;
+				return actions?.get_IrevLgaResultByRefId;
 			}
 			if (rstype === 'EC8D') {
-				return actions?.get_IRevStateByRefId;
+				return actions?.get_IrevStateResultByRefId;
 			}
 			return undefined;
 		};
 		getFunc?.()?.({
-			paged: true,
-			refId,
+			// paged: true,
+			referenceId,
 			onSuccess: (res) => {
 				onSuccess?.(res);
 			},
@@ -46,16 +46,16 @@ export const useGetResultsByRefID = ({
 		let response: IIRevResultState = {} as IIRevResultState;
 		const irev = states?._irev;
 		if (rstype === 'EC8A') {
-			response = irev?.get_IRevPollingUnitByRefId;
+			response = irev?.get_IrevPollingUnitResultByRefId!;
 		}
 		if (rstype === 'EC8B') {
-			response = irev?.get_IRevWardByRefId;
+			response = irev?.get_IrevWardResultByRefId!;
 		}
 		if (rstype === 'EC8C') {
-			response = irev?.get_IRevLGAByRefId;
+			response = irev?.get_IrevLgaResultByRefId!;
 		}
 		if (rstype === 'EC8D') {
-			response = irev?.get_IRevStateByRefId;
+			response = irev?.get_IrevStateResultByRefId!;
 		}
 		return response;
 	}, [states?._irev]);
