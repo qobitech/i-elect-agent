@@ -33,7 +33,7 @@ export const useStateHook = <T extends Record<string, any>>(initState: T): IUSH<
 	);
 
 	const updateState = useCallback(<A extends keyof T>(type: A, payload: T[A]) => {
-		// dispatch({ type, payload });
+		dispatch({ type, payload });
 		// encodeDraft(state)
 	}, []);
 

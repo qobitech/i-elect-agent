@@ -1,12 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { useGlobalContext } from '../../../context/global';
-import { ActionComponent, type IOptionAction } from '../../utils/action-component';
+import { type IOptionAction } from '../../utils/action-component';
 import { handleScrollRightSection } from '../../utils/helper';
 import { Hvc, HvcLoad } from '../../utils/hooks';
-import { FlagSVG, LeftNavSVG, NotesSVG, RightNavSVG, TrashSVG } from '../../utils/svgs';
-import { TabSection, useTabSection } from '../../utils/tab-section';
-import Flags from './flag-result';
+import { LeftNavSVG, RightNavSVG, TrashSVG } from '../../utils/svgs';
+import { useTabSection } from '../../utils/tab-section';
 import {
 	defaultResultState,
 	formatINECDate,
@@ -15,10 +14,8 @@ import {
 	type reviewType,
 	tabs,
 } from './helpers';
-import ResultInfo from './result-info';
 import ReviewAction from './review-action';
 import { useGetResultsByRefID } from './use-get-result-by-ref-id';
-import UserNotes from './user-notes';
 
 const ViewSubmitedResult = () => {
 	const { rsProps: rightPanel } = useGlobalContext();

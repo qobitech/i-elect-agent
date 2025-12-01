@@ -142,6 +142,7 @@ const Overview = () => {
 									},
 								])();
 							},
+							disabled: !!electionOfficialData?.referenceId,
 						},
 						{
 							label: 'View Uploaded Result',

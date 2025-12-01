@@ -10,7 +10,6 @@ import { useAppData, useGetCodes } from '../pages/upload-result/hooks';
 import type { ursType } from '../pages/upload-result/utils';
 import { TypeButton } from '../utils/button';
 import { useCopy, useInactivityTimeout, useSaveB4Changes } from '../utils/hooks';
-// import Toast from '../utils/toast'
 import NotificationModal, { useModal } from '../utils/new-modal';
 import { useRightSection } from '../utils/right-section';
 import { ClockSVG } from '../utils/svgs';
