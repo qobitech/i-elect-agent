@@ -123,6 +123,7 @@ export interface IIrevAnalyticsStatsRequestArg {
 	resultTypeA: string;
 	resultTypeB: string;
 	entityCode: string;
+	resultSource: number;
 }
 
 export interface IIrevAnalyticsResponseDataSourceVouteCount {

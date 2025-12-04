@@ -36,6 +36,7 @@ const ResultAnalytics = () => {
 				resultTypeA: getAPIResultType[electionOfficialData?.assignment.resultType.toUpperCase() as ResultType]?.resultB || '',
 				resultTypeB: getAPIResultType[electionOfficialData?.assignment.resultType.toUpperCase() as ResultType]?.resultA || '',
 				entityCode: electionOfficialData?.assignment.code,
+				resultSource: 2,
 			},
 		});
 	};
