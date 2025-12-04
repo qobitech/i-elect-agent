@@ -142,7 +142,7 @@ const Overview = () => {
 									},
 								])();
 							},
-							disabled: !!electionOfficialData?.referenceId,
+							// disabled: !!electionOfficialData?.referenceId,
 						},
 						{
 							label: 'View Uploaded Result',
@@ -163,7 +163,7 @@ const Overview = () => {
 									resultType: electionOfficialData?.assignment.resultType as ResultType,
 								});
 							},
-							disabled: !electionOfficialData?.referenceId,
+							// disabled: !electionOfficialData?.referenceId,
 						},
 						{
 							label: 'View Result Analytics',
