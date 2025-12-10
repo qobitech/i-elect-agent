@@ -12,6 +12,7 @@ import { type IOnboardingHK, nigerianBanks, onboardingSchema } from './Onboardin
 
 const Onboarding = () => {
 	const navigate = useNavigate();
+	const [pageLoading, setPageLoading] = useState<boolean>(false);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [error, setError] = useState<string>('');
 	const queries = useQuery();
@@ -66,15 +67,15 @@ const Onboarding = () => {
 	];
 
 	const verify = () => {
-		setLoading(true);
+		setPageLoading(true);
 
 		actions?.verify_Volunteer_Onboarding({
 			token: queries.token,
 			onSuccess: () => {
-				setLoading(false);
+				setPageLoading(false);
 			},
 			onFailure: () => {
-				setLoading(false);
+				setPageLoading(false);
 				setError('Invalid onboarding link');
 			},
 		});
@@ -87,6 +88,7 @@ const Onboarding = () => {
 	const dataRes = states?._volunteer?.verify_Volunteer_Onboarding?.data;
 
 	const onSubmit = (data: IOnboardingHK) => {
+		setPageLoading(true);
 		const governmentformData = new FormData();
 		governmentformData.append('Upload', data?.governmentDocument as unknown as File);
 
@@ -115,9 +117,11 @@ const Onboarding = () => {
 							onSuccess: () => {
 								setSuccess(true);
 								actions.notificationGlobal('Agent created.', true);
+								setPageLoading(false);
 							},
 							onFailure: () => {
 								actions.notificationGlobal('Onboarding unsuccessful.', false);
+								setPageLoading(false);
 							},
 						});
 					},
@@ -186,7 +190,7 @@ const Onboarding = () => {
 
 								<TypeButton
 									title='Submit'
-									load={states?._volunteer?.verify_Volunteer_OnboardingLoading}
+									load={pageLoading}
 									type='submit'
 								/>
 							</>

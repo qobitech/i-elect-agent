@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import type { ResultType } from '../../../constants/global';
 import { useGlobalContext } from '../../../context/global';
@@ -37,6 +37,10 @@ const ChildCodesStage = () => {
 	};
 
 	const { handleCodes, load } = getCodeProps;
+
+	useEffect(() => {
+		handleCodes();
+	}, []);
 
 	return (
 		<div className='f-column-33'>
