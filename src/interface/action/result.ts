@@ -65,10 +65,10 @@ export interface IResultAction {
 		data: any;
 	}) => (dispatch: any) => Promise<void>;
 	extract_ResultUrl: ({
-		url,
+		document_urls,
 		onFailure,
 		onSuccess,
 	}: IResponse<IExtractResult> & {
-		url: string;
+		document_urls: string[];
 	}) => (dispatch: any) => Promise<void>;
 }

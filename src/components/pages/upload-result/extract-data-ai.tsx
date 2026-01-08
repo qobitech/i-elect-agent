@@ -25,7 +25,7 @@ const ExtractDataAI = () => {
 		//   onSuccess: () => {}
 		// })
 		actions?.extract_ResultUrl({
-			url: state.uploadedFiles[navIndex],
+			document_urls: [state.uploadedFiles[navIndex]],
 			onSuccess: () => {},
 		});
 		setIsExtract(true);

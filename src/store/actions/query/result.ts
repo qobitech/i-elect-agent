@@ -308,18 +308,18 @@ export const extract_ResultFile = ({
 	});
 
 export const extract_ResultUrl = ({
-	url,
+	document_urls,
 	onFailure,
 	onSuccess,
 }: IResponse<IExtractResult> & {
-	url: string;
+	document_urls: string[];
 }) =>
 	utils.httpPostMethod({
 		apiData: {
 			url: '',
 			customurl: `${EXTRACTAPI}/extract`,
 			header: utils.header(),
-			data: { url },
+			data: { document_urls },
 		},
 		actionType: resultType.extract_ResultUrl,
 		onFailure,
