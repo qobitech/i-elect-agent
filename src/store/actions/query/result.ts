@@ -317,7 +317,7 @@ export const extract_ResultUrl = ({
 	utils.httpPostMethod({
 		apiData: {
 			url: '',
-			customurl: `${EXTRACTAPI}/extract-election-results/url`,
+			customurl: `${EXTRACTAPI}/extract`,
 			header: utils.header(),
 			data: { url },
 		},
