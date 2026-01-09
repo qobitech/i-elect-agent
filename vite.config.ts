@@ -93,6 +93,7 @@ export default defineConfig(({ mode }) => {
 						'https://e464fe81f852.ngrok-free.app/',
 						'https://f6a4f0f4da85.ngrok-free.app',
 						'https://erms-ocr.ngrok.app',
+						'https://extract-ielect.ngrok.app',
 						'blob:',
 						'data:',
 					],

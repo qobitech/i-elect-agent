@@ -40,7 +40,7 @@ const ExtractDataAI = () => {
 		setNavIndex(vigate);
 	};
 
-	const isSuccessful = !!states?._result?.extract_ResultUrl?.documentTitle;
+	const isSuccessful = !!states?._result?.extract_ResultUrl?.results?.length;
 
 	const prompt = load ? 'Extracting Results...' : isSuccessful ? 'Extraction Successful' : 'Extraction Failed';
 

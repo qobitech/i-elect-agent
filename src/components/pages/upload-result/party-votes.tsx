@@ -41,11 +41,11 @@ const PartyVotes = () => {
 	const id = selectedChildCode?.codeId || selectedParentCode?.codeId;
 
 	useEffect(() => {
-		const extractedVotes = states?._result?.extract_ResultUrl?.voteTabulation!;
+		const extractedVotes = states?._result?.extract_ResultUrl?.results[0]['Votes Scored']!;
 
 		const getVoteCount = (voteItem: IVoteCount) => {
-			const vote = extractedVotes?.find((v) => v.politicalParty === voteItem.label);
-			return vote?.votesInFigures || 0;
+			const vote = extractedVotes?.find((v) => v['Political Party'].toLowerCase() === voteItem.label.toLowerCase());
+			return vote?.['In Figures'] || 0;
 		};
 
 		const pv = partyVotes.map((i) => ({

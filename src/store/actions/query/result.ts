@@ -263,29 +263,66 @@ export interface IElectionResultDetails {
 	totalNumberOfUsedBallotPapers: number;
 }
 
+// export interface IExtractResultData {
+// 	documentTitle: string;
+// 	electionFormType: string;
+// 	electionFormSerialNumber: number;
+// 	electionDetails: {
+// 		state: string;
+// 		localGovernmentArea: string;
+// 		registrationArea: string;
+// 		pollingUnit: string;
+// 		pollingUnitCode1: number;
+// 		pollingUnitCode2: number;
+// 		pollingUnitCode3: number;
+// 		pollingUnitCode4: number;
+// 	};
+// 	pollingUnitDetails?: IElectionResultDetails;
+// 	wardDetails?: IElectionResultDetails;
+// 	lgaDetails?: IElectionResultDetails;
+// 	stateDetails?: IElectionResultDetails;
+// 	voteTabulation: IVoteTabulation[];
+// 	signatures: {
+// 		presidingOfficer: string;
+// 		presidingOfficerSignature: string;
+// 	};
+// }
+
+interface IVoteScored {
+	'SN': number;
+	'Political Party': string;
+	'In Figures': number;
+	'In Words': string;
+}
+
+export interface IExtractResultData {
+	'Election Name': string;
+	'Serial Number': number;
+	'State Code': string;
+	'Local Government Area Code': string;
+	'Registeration Area Code': string;
+	'Polling Unit Code': string;
+	'State': string;
+	'Local Government Area': string;
+	'Registeration Area': string;
+	'Polling Unit': string;
+	'Number of Voters on the Register': number;
+	'Number of Accreditted Voters': number;
+	'Number of Ballot Papers Issued to the Polling Unit': number;
+	'Number of Unused Ballot Papers': number;
+	'Number of Spoiled Ballot Papers': number;
+	'Number of Rejected Ballots': number;
+	'Number of Total Valid Votes (Total Valid Votes cast for all parties)': number;
+	'Total Numbe rof Used Ballots Papers (Total of #5 + #6 + #7 above)': string;
+	'Name of Presiding Officer': string;
+	'Total Valid Votes': {
+		'In Figures': number;
+		'In Word': string;
+	};
+	'Votes Scored': IVoteScored[];
+}
 export interface IExtractResult {
-	documentTitle: string;
-	electionFormType: string;
-	electionFormSerialNumber: number;
-	electionDetails: {
-		state: string;
-		localGovernmentArea: string;
-		registrationArea: string;
-		pollingUnit: string;
-		pollingUnitCode1: number;
-		pollingUnitCode2: number;
-		pollingUnitCode3: number;
-		pollingUnitCode4: number;
-	};
-	pollingUnitDetails?: IElectionResultDetails;
-	wardDetails?: IElectionResultDetails;
-	lgaDetails?: IElectionResultDetails;
-	stateDetails?: IElectionResultDetails;
-	voteTabulation: IVoteTabulation[];
-	signatures: {
-		presidingOfficer: string;
-		presidingOfficerSignature: string;
-	};
+	results: IExtractResultData[];
 }
 
 export const extract_ResultFile = ({
