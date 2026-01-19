@@ -1,0 +1,103 @@
+import { useEffect, useState } from 'react';
+
+import { getUserData, type ResultType } from '../constants/global';
+import { type IActions } from '../interface/IAction';
+import { type IStates } from '../interface/IReducer';
+import { type IElectionOfficialByQuery } from '../interface/state/IElectionState';
+
+export const useResultAnalytics = (
+	actions: IActions | undefined,
+	states: IStates | undefined,
+	electionOfficialData: IElectionOfficialByQuery | undefined,
+	isUploaded: boolean
+) => {
+	const resultType: Partial<Record<ResultType, ResultType>> = {
+		EC8B: 'EC8A',
+		EC8C: 'EC8B',
+		EC8D: 'EC8C',
+	};
+
+	const electoralDivisionProps = (resultType: ResultType) => {
+		if (resultType !== electionOfficialData?.assignment.resultType.toUpperCase()) {
+			return { id: '', code: '' };
+		}
+		return {
+			id: electionOfficialData.assignment.id,
+			code: electionOfficialData.assignment.code,
+		};
+	};
+
+	const getResults = (pageNumber?: number) => {
+		actions?.get_ElectionResultAnalytics({
+			query: [
+				{
+					key: 'PageNumber',
+					value: isNaN(pageNumber || 0) ? 1 : pageNumber,
+				},
+				{
+					key: 'PageSize',
+					value: 20,
+				},
+				{
+					key: 'ElectionId',
+					value: electionOfficialData?.electionId,
+				},
+				// {
+				// 	key: 'PartyId',
+				// 	value: getUserData().user?.PartyId,
+				// },
+				// {
+				// 	key: 'IsUploaded',
+				// 	value: isUploaded,
+				// },
+				{
+					key: 'ResultType',
+					value: resultType[electionOfficialData?.assignment?.resultType?.toUpperCase() as ResultType]?.toLowerCase(),
+				},
+				{
+					key: 'StateId',
+					value: electoralDivisionProps('EC8D').id,
+				},
+				{
+					key: 'LgaId',
+					value: electoralDivisionProps('EC8C').id,
+				},
+				{
+					key: 'WardId',
+					value: electoralDivisionProps('EC8B').id,
+				},
+				{
+					key: 'PollingUnitId',
+					value: electoralDivisionProps('EC8A').id,
+				},
+				// {
+				// 	key: 'Code',
+				// 	value: electionOfficialData?.assignment?.code,
+				// },
+				// {
+				// 	key: 'IsAssigned',
+				// 	value: '',
+				// },
+				// {
+				// 	key: 'HasApplicant',
+				// 	value: '',
+				// },
+			],
+		});
+	};
+
+	useEffect(() => {
+		if (electionOfficialData?.electionId) {
+			getResults();
+		}
+	}, [electionOfficialData?.electionId]);
+
+	const data = states?._election?.get_ElectionResultAnalytics;
+
+	return {
+		refresh: getResults,
+		data,
+		load: states?._election?.get_ElectionResultAnalyticsLoading,
+		resultType: resultType[electionOfficialData?.assignment?.resultType?.toUpperCase() as ResultType],
+	};
+};

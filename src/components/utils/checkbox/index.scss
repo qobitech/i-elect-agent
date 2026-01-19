@@ -1,0 +1,24 @@
+@import '../../../assets/style/variables.scss';
+
+.type-checkbox {
+	label {
+		color: #235a62;
+		font-size: 0.875rem;
+		font-style: normal;
+		font-weight: 400;
+		line-height: normal;
+		margin: 0 0 0.81rem;
+	}
+	.checkbox-content {
+		display: flex;
+		align-items: center;
+		input {
+			outline: #dbeaff;
+			border-radius: 3px;
+			height: 14px;
+			width: 14px;
+			background: none;
+			border: 1px solid #a1a1a1;
+		}
+	}
+}

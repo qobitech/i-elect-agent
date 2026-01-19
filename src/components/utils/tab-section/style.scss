@@ -1,0 +1,16 @@
+@import '../../../assets/style/variables.scss';
+
+.tab-title {
+	cursor: pointer;
+	font-size: 14px;
+	transition: 0.1s ease;
+	//   @media (max-width: $lg-breakpoint) {
+	//     font-size: 13px;
+	//   }
+}
+
+.tab-header-section {
+	&.bottom {
+		border-bottom: 1px solid #f0f0f0;
+	}
+}

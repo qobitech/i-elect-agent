@@ -1,0 +1,104 @@
+@import '../../../assets/style/variables.scss';
+
+.type-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: max-content;
+	width: max-content;
+	button {
+		display: inline-flex;
+		padding: 1rem 1.75rem;
+		justify-content: center;
+		align-items: center;
+		gap: 0.625rem;
+		border-radius: 0.2625rem;
+		background: rgb(33, 39, 57);
+		outline: none;
+		color: #fff;
+		font-size: 1rem;
+		font-style: normal;
+		font-weight: 700;
+		line-height: normal;
+		border: none;
+		cursor: pointer;
+		&.disabled {
+			background: #eaeaea;
+			cursor: not-allowed;
+			opacity: 0.3;
+		}
+		&.outlined {
+			background: none;
+			color: green;
+			border: 0.1px solid #54878f;
+		}
+		&.danger {
+			color: #f56e9d;
+			background: #fffafc;
+			border: 0.5px solid #ffe1ec;
+		}
+		&.little {
+			font-size: 16px;
+			font-weight: 400;
+			line-height: normal;
+			display: inline-flex;
+			padding: 0.52rem 0.79rem;
+			width: max-content;
+		}
+		&.small {
+			font-size: 16px;
+			font-weight: 400;
+			line-height: normal;
+			display: inline-flex;
+			padding: 0.78rem 1.19rem;
+			width: max-content;
+		}
+		&.medium {
+			font-size: 0.8rem;
+			font-weight: 700;
+			line-height: normal;
+			display: inline-flex;
+			padding: 0.79rem 1.19rem;
+			width: max-content;
+			height: auto;
+		}
+	}
+}
+
+.type-small-button {
+	button {
+		display: inline-flex;
+		padding: 0.5rem 1.19rem;
+		width: max-content;
+		height: auto;
+		justify-content: center;
+		align-items: center;
+		font-size: 0.875rem;
+		font-style: normal;
+		font-weight: 700;
+		line-height: normal;
+		border: none;
+		flex-shrink: 0;
+		border-radius: 0.1875rem;
+		cursor: pointer;
+		&.disabled {
+			cursor: not-allowed;
+			opacity: 0.2;
+		}
+		&.outlined {
+			background: none;
+			color: #485e82;
+			border: 1px solid #485e82;
+		}
+		&.danger {
+			color: #f56e9d;
+		}
+		&.active {
+			color: #0f9979;
+			background: #e8faf6;
+		}
+		&.status {
+			cursor: default;
+		}
+	}
+}
