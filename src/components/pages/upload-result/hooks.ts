@@ -640,6 +640,7 @@ export const useAppData = (
 		// resultType: '',
 		// electionData: defaultElectionData,
 		// load: false
+
 		const {
 			state: {
 				childCodes,

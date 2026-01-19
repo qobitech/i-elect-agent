@@ -7,6 +7,7 @@ import { Hvc, RefreshComponent } from '../../utils/hooks';
 import { BackArrowSVG } from '../../utils/svgs';
 import ChildCodesStage from './child-codes';
 import PartyVotes from './party-votes';
+import PartyVotesStageCTA from './party-votes-stage-cta';
 
 export const getResultCodeTitle = (resultType: ResultType) => {
 	switch (resultType) {
@@ -62,46 +63,13 @@ const PartyVotesStage = () => {
 					<p className='m-0 text-little'>Back</p>
 				</div>
 				<ChildCodesStage />
-				<Hvc
-					removeDOM
-					view={isDone}
-					className='f-column-23'
-				>
-					<div className='f-row-12'>
-						<TypeButton
-							title='Previous'
-							buttonType='outlined'
-							buttonSize='small'
-							className={`${preview ? 'w-100' : ''} border-0`}
-							onClick={() => onStage('Result Summary')}
-						/>
-						{!preview && (
-							<TypeButton
-								title='Next >> Preview'
-								className='w-100'
-								buttonSize='small'
-								onClick={onDone}
-							/>
-						)}
-					</div>
-					{preview ? (
-						<div className='f-row-12'>
-							<TypeButton
-								buttonSize='small'
-								buttonType='outlined'
-								title='End Preview'
-								onClick={() => onStage('Preview')}
-								className='w-100 border-0'
-							/>
-							{isUpdate && (
-								<TypeButton
-									buttonSize='small'
-									title='Update'
-								/>
-							)}
-						</div>
-					) : null}
-				</Hvc>
+				<PartyVotesStageCTA
+					isDone={isDone}
+					onDone={onDone}
+					preview={preview}
+					onStage={onStage}
+					isUpdate={isUpdate}
+				/>
 			</Hvc>
 			<Hvc
 				removeDOM

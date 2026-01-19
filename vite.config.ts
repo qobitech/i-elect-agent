@@ -16,13 +16,9 @@ export default defineConfig(({ mode }) => {
 	process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
 
 	const devServerOptions: Partial<ServerOptions> = {
-		host: 'ielect.agent.local',
+		host: 'localhost',
 		port: 3001,
 		strictPort: true,
-		https: {
-			cert: './.cert/cert.pem',
-			key: './.cert/key.pem',
-		},
 	};
 
 	const currentDate = Date.now();

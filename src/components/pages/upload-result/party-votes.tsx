@@ -43,6 +43,8 @@ const PartyVotes = () => {
 	useEffect(() => {
 		const extractedVotes = states?._result?.extract_ResultUrl?.results[0]['Votes Scored']!;
 
+		if (!extractedVotes?.length) return;
+
 		const getVoteCount = (voteItem: IVoteCount) => {
 			const vote = extractedVotes?.find((v) => v['Political Party'].toLowerCase() === voteItem.label.toLowerCase());
 			return vote?.['In Figures'] || 0;
